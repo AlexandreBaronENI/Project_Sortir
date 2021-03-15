@@ -13,7 +13,6 @@ if ($_SERVER['APP_DEBUG']) {
     umask(0000);
 
     Debug::enable();
-    console.log(toto);
 }
 
 $kernel = new Kernel($_SERVER['APP_ENV'], (bool) $_SERVER['APP_DEBUG']);
