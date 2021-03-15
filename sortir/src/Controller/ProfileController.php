@@ -23,7 +23,7 @@ class ProfileController extends AbstractController
     public function home()
     {
         $loginForm = $this->createForm(loginFormType::class);
-        return $this->render('home/loginPage.html.twig', 
+        return $this->render('home/loginPage.html.twig',
         ['loginForm'=>$loginForm->createView()]);
     }
     /**
