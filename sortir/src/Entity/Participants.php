@@ -54,16 +54,16 @@ class Participants
     /**
      * @var string
      *
-     * @ORM\Column(name="mail", type="string", length=20, nullable=false)
+     * @ORM\Column(name="mail", type="string", length=255, nullable=false)
      */
     private $mail;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="mot_de_passe", type="string", length=20, nullable=false)
+     * @ORM\Column(name="password", type="string", length=255, nullable=false)
      */
-    private $motDePasse;
+    private $password;
 
     /**
      * @var bool
