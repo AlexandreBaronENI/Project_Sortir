@@ -4,7 +4,7 @@
 namespace App\Controller;
 
 
-use App\Entity\Participants;
+use App\Entity\Utilisateur;
 use App\Form\ForgotPasswordType;
 use App\Form\ResetPasswordType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -22,14 +22,14 @@ class ProfileController extends AbstractController
     public function forgotpassword(EntityManagerInterface $em, Request $request)
     {
 
-        $participant = new Participants();
-        $forgotPasswordForm = $this->createForm(ForgotPasswordType::class, $participant);
+        $userForm = new Utilisateur();
+        $forgotPasswordForm = $this->createForm(ForgotPasswordType::class, $userForm);
         $forgotPasswordForm->handleRequest($request);
 
         if($forgotPasswordForm->isSubmitted() && $forgotPasswordForm->isValid()){
 
-            if($participant->getMail() !== null){
-                $user = $this->getDoctrine()->getRepository(Participants::class)->findOneBy(['mail' => $participant->getMail()]);
+            if($userForm->getMail() !== null){
+                $user = $this->getDoctrine()->getRepository(Utilisateur::class)->findOneBy(['mail' => $userForm->getMail()]);
 
                 if ($user == null) {
                     throw $this->createNotFoundException('Utilisateur nas pas été trouvé !');
@@ -53,12 +53,12 @@ class ProfileController extends AbstractController
     public function resetpassword(EntityManagerInterface $em, Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
 
-        $participant = new Participants();
-        $resetPasswordForm = $this->createForm(ResetPasswordType::class, $participant);
+        $userForm = new Utilisateur();
+        $resetPasswordForm = $this->createForm(ResetPasswordType::class, $userForm);
         $resetPasswordForm->handleRequest($request);
 
         $mail = $request->getSession()->get('mail');
-        $user = $this->getDoctrine()->getRepository(Participants::class)->findOneBy(['mail' => $mail]);
+        $user = $this->getDoctrine()->getRepository(Utilisateur::class)->findOneBy(['mail' => $mail]);
 
         if ($user == null) {
             throw $this->createNotFoundException('Utilisateur nas pas été trouvé !');
@@ -66,11 +66,11 @@ class ProfileController extends AbstractController
 
         if($resetPasswordForm->isSubmitted() && $resetPasswordForm->isValid()){
 
-            if($user->getMail() !== null && $participant->getPassword() != null){
+            if($user->getMail() !== null && $userForm->getPassword() != null){
                 $user->setPassword(
                     $passwordEncoder->encodePassword(
                         $user,
-                        $participant->getPassword()
+                        $userForm->getPassword()
                     )
                 );
                 $em->persist($user);
