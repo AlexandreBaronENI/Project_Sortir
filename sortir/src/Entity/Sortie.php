@@ -77,18 +77,18 @@ class Sortie
     private $site;
 
     /**
-     * @ORM\OneToMany(targetEntity="Inscription", mappedBy="saSortie")
+     * @ORM\OneToMany(targetEntity="Inscription", mappedBy="inscriptions")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $rejoindre;
+    private $inscriptions;
 
     /**
      * Sortie constructor.
-     * @param $rejoindre
+     * @param $inscriptions
      */
     public function __construct()
     {
-        $this->rejoindre = new ArrayCollection();
+        $this->inscriptions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -216,34 +216,26 @@ class Sortie
         return $this;
     }
 
-    public function getRejoindre(): ?PersistentCollection
+    public function getInscriptions(): ?ArrayCollection
     {
-        return $this->rejoindre;
+        return $this->inscriptions;
     }
 
-    public function setRejoindre(?Inscription $rejoindre): self
+    public function addInscription(Inscription $inscription): self
     {
-        $this->rejoindre = $rejoindre;
-
-        return $this;
-    }
-
-    public function addRejoindre(Inscription $rejoindre): self
-    {
-        if (!$this->rejoindre->contains($rejoindre)) {
-            $this->rejoindre[] = $rejoindre;
-            $rejoindre->setSaSortie($this);
+        if (!$this->inscriptions->contains($inscription)) {
+            $this->inscriptions[] = $inscription;
         }
 
         return $this;
     }
 
-    public function removeRejoindre(Inscription $rejoindre): self
+    public function removeInscription(Inscription $inscription): self
     {
-        if ($this->rejoindre->removeElement($rejoindre)) {
+        if ($this->inscriptions->removeElement($inscription)) {
             // set the owning side to null (unless already changed)
-            if ($rejoindre->getSaSortie() === $this) {
-                $rejoindre->setSaSortie(null);
+            if ($inscription->getSortie() === $this) {
+                $inscription->setSortie(null);
             }
         }
 
