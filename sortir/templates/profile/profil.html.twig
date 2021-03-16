@@ -3,77 +3,10 @@
 
 {% block main %}
 
-    <h1>Mon profil</h1>
-<form>
-    <div class="form-group row">
-        <label for="inputPseudo" class="col-sm-2 col-form-label">Pseudo:</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" id="inputPseudo" placeholder="Pseudo">
-        </div>
-    </div>
+    {{form_start(profilForm)}}
+    {{form_widget(profilForm)}}
 
-    <div class="form-group row">
-        <label for="inputPrenom" class="col-sm-2 col-form-label">Prenom:</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" id="inputPrenom" placeholder="Prenom">
-        </div>
-    </div>
-
-    <div class="form-group row">
-        <label for="inputTelephone" class="col-sm-2 col-form-label">Telephone:</label>
-        <div class="col-sm-10">
-            <input type="number" class="form-control" id="inputTelephone" placeholder="Telephone">
-        </div>
-    </div>
-
-    <div class="form-group row">
-        <label for="inputEmail" class="col-sm-2 col-form-label">Email:</label>
-        <div class="col-sm-10">
-            <input type="email" class="form-control" id="inputEmail" placeholder="Email">
-        </div>
-    </div>
-
-    <div class="form-group row">
-        <label for="inputMotDePasse" class="col-sm-2 col-form-label">Mot de passe:</label>
-        <div class="col-sm-10">
-            <input type="password" class="form-control" id="inputMotDePasse" placeholder="MotDePasse">
-        </div>
-    </div>
-
-    <div class="form-group row">
-        <label for="inputConfirmation" class="col-sm-2 col-form-label">Confirmation:</label>
-        <div class="col-sm-10">
-            <input type="password" class="form-control" id="inputConfirmation" placeholder="Confirmation">
-        </div>
-    </div>
-    <div class="form-group row">
-        <label for="inputSite" class="col-sm-2 col-form-label">Site de rattachement:</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" id="inputSite" placeholder="Site">
-        </div>
-    </div>
-
-    <select class="form-control">
-        <option>Default select</option>
-    </select>
-
-
-
-    <div class="form-group">
-        <label for="Telecharger">Télécharger vers le serveur</label>
-        <input type="file" class="form-control-file" id="Telecharger">
-    </div>
-
-    <div class="form-group row">
-        <div class="col-sm-10">
-            <button type="submit" class="btn btn-primary">Enregistrer</button>
-        </div>
-
-        <div class="col-sm-10">
-            <button type="reset" class="btn btn-primary">Annuler</button>
-        </div>
-    </div>
-
-</form>
+    <button type="submit">Valider</button>
+    {{form_end(profilForm)}}
 
 {% endblock %}
