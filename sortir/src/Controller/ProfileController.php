@@ -4,10 +4,11 @@
 namespace App\Controller;
 
 
-use App\Entity\Participants;
+use App\Entity\Utilisateur;
 use App\Form\ForgotPasswordType;
 use App\Form\ResetPasswordType;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Form\LoginFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,6 +16,16 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class ProfileController extends AbstractController
 {
+     /**
+     * Page de connexion
+     * @Route("/home", name="home")
+     */
+    public function home()
+    {
+        $loginForm = $this->createForm(loginFormType::class);
+        return $this->render('home/loginPage.html.twig', 
+        ['loginForm'=>$loginForm->createView()]);
+    }
     /**
      * * Mot de passe oublié utilisateur
      * @Route("/forgotpassword", name="forgotPassword")
@@ -24,12 +35,14 @@ class ProfileController extends AbstractController
 
         $participant = new Participants();
         $forgotPasswordForm = $this->createForm(ForgotPasswordType::class, $participant);
+        $userForm = new Utilisateur();
+        $forgotPasswordForm = $this->createForm(ForgotPasswordType::class, $userForm);
         $forgotPasswordForm->handleRequest($request);
 
         if($forgotPasswordForm->isSubmitted() && $forgotPasswordForm->isValid()){
 
-            if($participant->getMail() !== null){
-                $user = $this->getDoctrine()->getRepository(Participants::class)->findOneBy(['mail' => $participant->getMail()]);
+            if($userForm->getMail() !== null){
+                $user = $this->getDoctrine()->getRepository(Utilisateur::class)->findOneBy(['mail' => $userForm->getMail()]);
 
                 if ($user == null) {
                     throw $this->createNotFoundException('Utilisateur nas pas été trouvé !');
@@ -53,12 +66,12 @@ class ProfileController extends AbstractController
     public function resetpassword(EntityManagerInterface $em, Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
 
-        $participant = new Participants();
-        $resetPasswordForm = $this->createForm(ResetPasswordType::class, $participant);
+        $userForm = new Utilisateur();
+        $resetPasswordForm = $this->createForm(ResetPasswordType::class, $userForm);
         $resetPasswordForm->handleRequest($request);
 
         $mail = $request->getSession()->get('mail');
-        $user = $this->getDoctrine()->getRepository(Participants::class)->findOneBy(['mail' => $mail]);
+        $user = $this->getDoctrine()->getRepository(Utilisateur::class)->findOneBy(['mail' => $mail]);
 
         if ($user == null) {
             throw $this->createNotFoundException('Utilisateur nas pas été trouvé !');
@@ -66,11 +79,11 @@ class ProfileController extends AbstractController
 
         if($resetPasswordForm->isSubmitted() && $resetPasswordForm->isValid()){
 
-            if($user->getMail() !== null && $participant->getPassword() != null){
+            if($user->getMail() !== null && $userForm->getPassword() != null){
                 $user->setPassword(
                     $passwordEncoder->encodePassword(
                         $user,
-                        $participant->getPassword()
+                        $userForm->getPassword()
                     )
                 );
                 $em->persist($user);

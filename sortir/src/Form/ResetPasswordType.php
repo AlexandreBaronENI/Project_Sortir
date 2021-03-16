@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\Participants;
+use App\Entity\Utilisateur;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -29,7 +29,7 @@ class ResetPasswordType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Participants::class,
+            'data_class' => Utilisateur::class,
         ]);
     }
 }
