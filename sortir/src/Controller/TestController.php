@@ -14,7 +14,7 @@ class TestController extends AbstractController
 {
 
     /**
-     * @Route("/test/add", name="test.add")
+     * @Route("/test/add", name="test_add")
      */
     public function add(EntityManagerInterface $em, Request $request)
     {
@@ -22,16 +22,15 @@ class TestController extends AbstractController
         $profilForm = $this->createForm(ProfilType::class, $participant);
 
         $profilForm->handleRequest($request);
-        if ($profilForm->isSubmitted() && $profilForm->isValid()) {
+        if ($profilForm->isSubmitted() && $profilForm->isValid() ) {
             $em->persist($participant);
             $em->flush();
             $this->addFlash('success', 'Votre profil a bien été sauvegardé !');
-            return $this->redirectToRoute('/forgotpassword', ['NoParticipant' => $participant->getNoParticipant()]);
+            return $this->redirectToRoute('/forgotpassword');
         }
 
-        return $this->render('profile/profil.html.twig', [
-
-            "profilForm" => $profilForm->createView()
+        return $this->render('profile/reset_password.html.twig',[
+            '$profilForm' => $profilForm->createView()
         ]);
     }
 

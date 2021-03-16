@@ -71,7 +71,7 @@ class ProfileController extends AbstractController
         $user = $this->getDoctrine()->getRepository(Utilisateur::class)->findOneBy(['mail' => $mail]);
 
         if ($user == null) {
-            throw $this->createNotFoundException('Utilisateur nas pas été trouvé !');
+            throw $this->createNotFoundException('Utilisateur n a pas été trouvé !');
         }
 
         if($resetPasswordForm->isSubmitted() && $resetPasswordForm->isValid()){

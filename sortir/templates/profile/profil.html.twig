@@ -1,12 +1,11 @@
 {% extends 'base.html.twig' %}
-{% block fichier %}profil{% endblock %}
 
 {% block main %}
 
-    {{form_start(profilForm)}}
-    {{form_widget(profilForm)}}
+    {{form_start($profilForm)}}
+    {{form_widget($profilForm)}}
 
     <button type="submit">Valider</button>
-    {{form_end(profilForm)}}
+    {{form_end($profilForm)}}
 
 {% endblock %}

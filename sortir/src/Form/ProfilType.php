@@ -3,8 +3,10 @@
 namespace App\Form;
 
 use App\Entity\Participants;
+use Doctrine\DBAL\Types\BooleanType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -49,10 +51,7 @@ class ProfilType extends AbstractType
                     'first_options'  => array('label' => 'Mot de passe'),
                     'second_options' => array('label' => 'Confirmation')
                 ])
-            ->add('administrateur')
-            ->add('actif')
-            ->add('sitesNoSite')
-            ->add('sortiesNoSortie')
+
         ;
     }
 
