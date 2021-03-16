@@ -22,12 +22,15 @@ class ResetPasswordType extends AbstractType
                 ],
                 'second_options' => [
                     'label' => 'Confirmez votre mot de passe',
+                ],
+                'attr' => [
+                    'class' => 'form-control'
                 ]
             ])
             ->add('reset', SubmitType::class, [
                 'label' => 'Réinitialiser',
                 'attr' => [
-                    'class' => 'btn btn-light'
+                    'class' => 'btn btn-primary'
                 ]
             ]);
     }

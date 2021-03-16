@@ -31,25 +31,48 @@ class AddSortieType extends AbstractType
     {
         $builder
             ->add('nom', TextType::class, [
-                'label' => "Nom de la sortie"
+                'label' => "Nom de la sortie",
+                'attr' => [
+                    'class' => 'form-control'
+                ]
             ])
             ->add('dateDebut', DateTimeType::class, [
-                'label' => "Date de début de la sortie"
+                'label' => "Date de début de la sortie",
+                'widget' => 'single_text',
+                'attr' => [
+                    'class' => 'form-control'
+                ]
             ])
             ->add('dateCloture', DateType::class, [
-                'label' => "Date limite d'inscription"
+                'label' => "Date limite d'inscription",
+                'widget' => 'single_text',
+                'attr' => [
+                    'class' => 'form-control'
+                ]
             ])
             ->add('nbInscriptionMax', NumberType::class, [
-                'label' => "Nombre de places"
+                'label' => "Nombre de places",
+                'attr' => [
+                    'class' => 'form-control'
+                ]
             ])
             ->add('duree', NumberType::class, [
-                'label' => "Durée"
+                'label' => "Durée",
+                'attr' => [
+                    'class' => 'form-control'
+                ]
             ])
             ->add('commentaire', TextareaType::class, [
-                'label' => "Description et infos"
+                'label' => "Description et infos",
+                'attr' => [
+                    'class' => 'form-control'
+                ]
             ])
             ->add('commentaire', TextareaType::class, [
-                'label' => "Description et infos"
+                'label' => "Description et infos",
+                'attr' => [
+                    'class' => 'form-control'
+                ]
             ])
             ->add('lieu', EntityType::class, [
                 'label' => "Lieu",
@@ -57,11 +80,14 @@ class AddSortieType extends AbstractType
                 'choice_label' => function ($lieu) {
                     return $lieu->getNom();
                 },
+                'attr' => [
+                    'class' => 'form-control'
+                ]
             ])
             ->add('save', SubmitType::class, [
                 'label' => 'Enregistrer le brouillon',
                 'attr' => [
-                    'class' => 'btn btn-light'
+                    'class' => 'btn btn-info'
                 ]
             ])
             ->add('publish', SubmitType::class, [

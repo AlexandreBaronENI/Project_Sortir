@@ -15,12 +15,15 @@ class ForgotPasswordType extends AbstractType
     {
         $builder
             ->add('mail', EmailType::class, [
-                'label' => "Email"
+                'label' => "Email",
+                'attr' => [
+                    'class' => 'form-control'
+                ]
             ])
             ->add('reset', SubmitType::class, [
                 'label' => 'Retrouvez le mot de passe',
                 'attr' => [
-                    'class' => 'btn btn-light'
+                    'class' => 'btn btn-primary'
                 ]
             ])
         ;
