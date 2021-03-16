@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Utilisateur;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,6 +16,12 @@ class ForgotPasswordType extends AbstractType
         $builder
             ->add('mail', EmailType::class, [
                 'label' => "Email"
+            ])
+            ->add('reset', SubmitType::class, [
+                'label' => 'Retrouvez le mot de passe',
+                'attr' => [
+                    'class' => 'btn btn-light'
+                ]
             ])
         ;
     }

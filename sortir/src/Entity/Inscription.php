@@ -5,9 +5,9 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Inscriptions
+ * Inscription
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\InscriptionRepository")
  * @ORM\Table(name="inscription")
  */
 class Inscription
