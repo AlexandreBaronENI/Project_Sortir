@@ -8,6 +8,7 @@ use App\Entity\Utilisateur;
 use App\Form\ForgotPasswordType;
 use App\Form\ResetPasswordType;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Form\LoginFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,6 +16,16 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class ProfileController extends AbstractController
 {
+     /**
+     * Page de connexion
+     * @Route("/home", name="home")
+     */
+    public function home()
+    {
+        $loginForm = $this->createForm(loginFormType::class);
+        return $this->render('home/loginPage.html.twig', 
+        ['loginForm'=>$loginForm->createView()]);
+    }
     /**
      * * Mot de passe oublié utilisateur
      * @Route("/forgotpassword", name="forgotPassword")
