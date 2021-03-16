@@ -21,7 +21,6 @@ class ProfileController extends AbstractController
      */
     public function forgotpassword(EntityManagerInterface $em, Request $request)
     {
-
         $userForm = new Utilisateur();
         $forgotPasswordForm = $this->createForm(ForgotPasswordType::class, $userForm);
         $forgotPasswordForm->handleRequest($request);

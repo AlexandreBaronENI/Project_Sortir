@@ -1,0 +1,15 @@
+{% extends 'home.html.twig' %}
+ {% block main %}
+     <div class="text-center">
+         <h1>Bienvenue sur Sortir.com !</h1>
+
+     </div>
+    {% form_theme loginForm 'forms/bootstrap_4_layout.html.twig' %}
+    {{ form_start(loginForm) }}
+    {{ form_widget(loginForm) }}
+    {{ form_end(loginForm) }}
+    <div class="d-flex justify-content-around">
+        <a href="{{ path('forgotPassword') }}">mot de pass oublié ?</a>
+        <a href="{{ path('forgotPassword') }}">vous n'êtes pas encore inscrit ?</a>
+    </div>
+ {% endblock %}
