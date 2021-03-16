@@ -26,7 +26,6 @@ class ProfileController extends AbstractController
         return $this->render('home/loginPage.html.twig', 
         ['loginForm'=>$loginForm->createView()]);
     }
-
     /**
      * * Mot de passe oublié utilisateur
      * @Route("/forgotpassword", name="forgotPassword")
