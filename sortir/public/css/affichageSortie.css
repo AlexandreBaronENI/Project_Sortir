@@ -1,9 +1,23 @@
-.titleSortie {
+.item {
+    width: 100%
+}
+
+.container {
     display: flex;
+    flex-wrap: wrap;
+    box-shadow: 0 0 0 1px black;
     justify-content: center;
 }
 
-.infoSortie {
-    display: flex;
-    justify-content: center;
+.container>div {
+    flex: 50%;
+    margin-bottom: 10px;
+}
+
+h2 {
+    text-align: left;
+}
+
+h3 {
+    text-align: center;
 }

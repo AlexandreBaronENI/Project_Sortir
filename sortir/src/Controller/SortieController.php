@@ -105,4 +105,20 @@ class SortieController extends AbstractController
             "sortieForm" => $sortieForm->createView()
         ]);
     }
+    /**
+     * Afficher une sortie
+     * @Route("/display_sortie/{id}", name="display_sortie")
+     */
+    public function afficherSortie(int $id, EntityManagerInterface $em)
+    {
+        $sortie = $this->getDoctrine()
+        ->getRepository(Sortie::class)
+        ->find($id);
+        return $sortie
+            ? $this->render('sortie/affichageSortie.html.twig', [  
+                'sortie'          => $sortie
+            ])
+            : throw $this->createNotFoundException("Cette sortie n'existe pas");
+    }
+
 }
