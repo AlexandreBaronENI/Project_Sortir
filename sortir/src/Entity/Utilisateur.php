@@ -69,6 +69,7 @@ class Utilisateur implements UserInterface
 
     public function getRoles()
     {
+        return ['ROLE_USER'];
     }
 
     public function getPassword()
@@ -78,6 +79,7 @@ class Utilisateur implements UserInterface
 
     public function getSalt()
     {
+        return null;
     }
 
     public function getUsername()
