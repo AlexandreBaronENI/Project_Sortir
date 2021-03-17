@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class ProfileController extends AbstractController
 {
@@ -93,4 +94,15 @@ class ProfileController extends AbstractController
             'resetPasswordForm' => $resetPasswordForm->createView()
         ]);
     }
+
+    /**
+     * * Réinitialisation du mot de passe utilisateur
+     * @Route("/login", name="login")
+     */
+    public function login(AuthenticationUtils $authUtils){
+        $error = $authUtils->getLastAuthenticationError();
+
+        return $this->render("home/loginPage.html.twig",array('error' => $error));
+    }
+
 }

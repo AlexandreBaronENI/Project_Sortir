@@ -4,8 +4,7 @@
          <h1>Bienvenue sur Sortir.com !</h1>
 
      </div>
-    {% form_theme loginForm 'forms/bootstrap_4_layout.html.twig' %}
-    <form>
+    <form method="post">
   <div class="form-group">
     <label for="username">Identifiant</label>
     <input type="text" class="form-control" id="username" placeholder="Identifiant" name="_username">
@@ -18,7 +17,11 @@
     <input type="checkbox" class="form-check-input" id="remember">
     <label class="form-check-label" for="remember">Se souvenir de moi</label>
   </div>
-  <button type="submit" class="btn btn-primary">Connexion</button>
+        {% if error %}
+            <div><ul><li>{{ error.messageKey|trans(error.messageData, 'security') }}</li></ul></div>
+        {% endif %}
+
+        <button type="submit" class="btn btn-primary">Connexion</button>
 </form>
     <div class="d-flex justify-content-around">
         <a href="{{ path('forgotPassword') }}">mot de pass oublié ?</a>
