@@ -1,0 +1,9 @@
+.titleSortie {
+    display: flex;
+    justify-content: center;
+}
+
+.infoSortie {
+    display: flex;
+    justify-content: center;
+}
