@@ -3,8 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use PhpParser\ErrorHandler\Collecting;
 
 /**
  * Sortie
@@ -215,11 +215,6 @@ class Sortie
         return $this;
     }
 
-    public function getInscriptions(): ?ArrayCollection
-    {
-        return $this->inscriptions;
-    }
-
     public function addInscription(Inscription $inscription): self
     {
         if (!$this->inscriptions->contains($inscription)) {
@@ -227,6 +222,14 @@ class Sortie
         }
 
         return $this;
+    }
+
+    public function getInscriptions(): array
+    {
+        if(isset($this->inscriptions)){
+            $this->inscriptions = new ArrayCollection();
+        }
+        return $this->inscriptions->toArray();
     }
 
     public function removeInscription(Inscription $inscription): self

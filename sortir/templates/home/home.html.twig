@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+{% block main %}
+    <div class="row">
+        <div class="col align-self-end">
+            <p>{{ "now"|date("m/d/Y") }}</p>
+            <p>Alexandre Baron</p>
+        </div>
+    </div>
+    <div>
+        <h2>Filtrer les sorties</h2>
+        {% form_theme searchForm 'forms/bootstrap_4_layout.html.twig' %}
+        {{ form_start(searchForm) }}
+        {{ form_widget(searchForm) }}
+        <input value="Rechercher" class="btn btn-info" type="submit">
+        <input value="Supprimer les filtres" class="btn btn-info" type="reset">
+        {{ form_end(searchForm) }}
+    </div>
+    <div>
+        <table id="maintable" class="table table-striped table-bordered table" style="width: 100%">
+            <thead>
+                <tr>
+                    <th>Nom de la sortie</th>
+                    <th>Date de la sortie</th>
+                    <th>Date de clôture</th>
+                    <th>Inscrits/places</th>
+                    <th>Etat</th>
+                    <th>Inscrit</th>
+                    <th>Organisateur</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sortie in sorties %}
+                    <tr>
+                        <td>{{ sortie.nom }}</td>
+                        <td>{{ sortie.dateDebut|date('d/m/y h:m') }}</td>
+                        <td>{{ sortie.dateCloture|date('d/m/y h:m') }}</td>
+                        <td>{{ sortie.inscriptions |length}}/{{ sortie.nbInscriptionMax }}</td>
+                        <td>
+                            {% if sortie.etat.id == 1 %}
+                                Ouvert
+                            {% elseif sortie.etat.id == 2 %}
+                                Brouillon
+                            {% elseif sortie.etat.id == 3 %}
+                                Fermé
+                            {% elseif sortie.etat.id == 4 %}
+                                En cours
+                            {% elseif sortie.etat.id == 5 %}
+                                Terminé
+                            {% elseif sortie.etat.id == 6 %}
+                                Annulé
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% set isInscrit = false %}
+                            {% for inscrit in (sortie.inscriptions) %}
+                                {% if inscrit.id == user.id %}
+                                    {% set isInscrit = true %}
+                                {% endif %}
+                            {% endfor %}
+                            {% if isInscrit %}
+                                ✅
+                            {% else %}
+                                ❌
+                            {% endif %}
+                        </td>
+                        <td>{{ sortie.organisateur.prenom }} {{ sortie.organisateur.nom|first }}.</td>
+                        <td>
+                            {% if sortie.organisateur.id == 1 %}
+                                <a href="{{ path("editSortie", {id:sortie.id}) }}">Modifier la sortie</a>
+                            {% endif %}
+                        </td>
+                    <tr/>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <div>
+        <a class="btn btn-info" href="{{ path('addSortie') }}">Créer une sortie</a>
+    </div>
+{% endblock %}
