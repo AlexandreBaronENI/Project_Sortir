@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Participants;
+use App\Entity\Utilisateur;
 use App\Form\ProfilType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,19 +19,24 @@ class TestController extends AbstractController
      */
     public function add(EntityManagerInterface $em, Request $request)
     {
-        $participant = new Participants();
-        $profilForm = $this->createForm(ProfilType::class, $participant);
+        $utilisateur = new Utilisateur();
+        $utilisateur->setActif(true);
+        $utilisateur->setAdmin(false);
 
+        $profilForm = $this->createForm(ProfilType::class, $utilisateur);
         $profilForm->handleRequest($request);
+
+
         if ($profilForm->isSubmitted() && $profilForm->isValid() ) {
-            $em->persist($participant);
+            $em->persist($utilisateur);
             $em->flush();
+
             $this->addFlash('success', 'Votre profil a bien été sauvegardé !');
-            return $this->redirectToRoute('/forgotpassword');
+            return $this->redirectToRoute('home',['id'=>$utilisateur->getId()]);
         }
 
-        return $this->render('profile/reset_password.html.twig',[
-            '$profilForm' => $profilForm->createView()
+        return $this->render('profile/profil.html.twig',[
+            'profilForm' => $profilForm->createView()
         ]);
     }
 
