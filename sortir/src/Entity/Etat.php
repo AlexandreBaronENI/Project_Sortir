@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Repository\EtatRepository;
+use App\Repository\LieuRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -12,6 +14,25 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Etat
 {
+    /**
+     * Etats
+     *
+     * 0 Open
+     * 1 Draft
+     * 2 Closed
+     * 3 Active
+     * 4 Finished
+     * 5 Canceled
+     */
+    static $etats;
+
+    public function __construct(EtatRepository $etatRepository)
+    {
+        if(self::$etats == null){
+            self::$etats = $etatRepository->findAll();
+        }
+    }
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -39,5 +60,65 @@ class Etat
         $this->libelle = $libelle;
 
         return $this;
+    }
+
+    public static function isOpen($id): bool
+    {
+        return $id == self::$etats[0]->getId();
+    }
+
+    public function getOpen()
+    {
+        return self::$etats[0];
+    }
+
+    public static function isDraft($id): bool
+    {
+        return $id == self::$etats[1]->getId();
+    }
+
+    public function getDraft()
+    {
+        return self::$etats[1];
+    }
+
+    public static function isClosed($id): bool
+    {
+        return $id == self::$etats[2]->getId();
+    }
+
+    public function getClosed()
+    {
+        return self::$etats[2];
+    }
+
+    public static function isActive($id): bool
+    {
+        return $id == self::$etats[3]->getId();
+    }
+
+    public function getActive()
+    {
+        return self::$etats[3];
+    }
+
+    public static function isFinished($id): bool
+    {
+        return $id == self::$etats[4]->getId();
+    }
+
+    public function getFinished()
+    {
+        return self::$etats[4];
+    }
+
+    public static function isCanceled($id): bool
+    {
+        return $id == self::$etats[5]->getId();
+    }
+
+    public function getCanceled()
+    {
+        return self::$etats[5];
     }
 }

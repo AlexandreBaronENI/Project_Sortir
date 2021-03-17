@@ -238,4 +238,13 @@ ALTER TABLE `sortie`
 --
 ALTER TABLE `utilisateur`
     ADD CONSTRAINT `FK_1D1C63B3F6BD1646` FOREIGN KEY (`site_id`) REFERENCES `site` (`id`);
+
+
+INSERT INTO `etat` (`id`, `libelle`) VALUES
+(1, 'open'),
+(2, 'draft'),
+(3, 'closed'),
+(4, 'active'),
+(5, 'finished'),
+(6, 'canceled');
 COMMIT;
