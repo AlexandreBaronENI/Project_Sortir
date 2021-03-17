@@ -2,19 +2,44 @@
     <head>
         <link rel="stylesheet" href="../../public/css/affichageSortie.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-
         <h2>Info sortie :  </h2>
-
             <div class="container">
-                <div class="item" id="sortie_name">
-                    <span  class=Nom de la sortie : 
+                <div class=" card item" id="sortie_name">
+                    <span class="col-form-label-lg">Nom de la sortie :</span>
+                    <span class="col-form-label-lg">{{ sortie.nom}}</span> 
                 </div>
-                <div class="item" id="lieu"> Lieu : </div>
-                <div class="item" id="date_sortie">Date  et heure</div>
-                <div class="item" id="rue"> rue</div>
-                <div class="item" id="date_limite_inscription">Date limite d'inscription</div>
-                <div class="item" id="ville_sortie">Ville</div>
+                <div class="card item" id="lieu">
+                    <span class="col-form-label-lg">  Lieu : </span>
+                    <span class="col-form-label-lg">{{ sortie.lieu.nom}}</span></div>
+                <div class="card item" id="date_sortie">
+                    <div class="card-icon">
+                        <img src="../../templates/img/date.png">
+                    </div>
+                    <span class="col-form-label-lg">Date  et heure</span>
+                    <span class="col-form-label-lg">{{sortie.dateDebut|date("d/m/Y H:i")}}
+                </div>
+                <div class="card item" id="rue">
+                <div class="card-icon">
+                        <img src="../../templates/img/street.png">
+                        <span class="col-form-label-lg">Rue :</span>
+                    </div>
+                    
+                    <span class="col-form-label-lg">{{ sortie.lieu.adresse}}</span>
+                 </div>
+                <div class="card item" id="date_limite_inscription">
+                <div class="card-icon">
+                        <img src="../../templates/img/deadline.png">
+                    </div>
+                    <span class="col-form-label-lg">Date limite d'inscription</span>
+                    <span class="col-form-label-lg">{{sortie.dateCloture|date("d/m/Y H:i")}}
+                </div>
+                <div class="card item" id="ville_sortie">
+                    <div class="card-icon">
+                        <img src="../../templates/img/town.png">
+                    </div>
+                    <span class="col-form-label-lg">Ville</span>
+                    <span class="col-form-label-lg">{{sortie.ville.nom}}</span>
+                </div>
                 <div class="item" id="nb_place">Nombre de places</div>
                 <div class="item" id="code_postal">Code postal</div>
                 <div class="item" id="duration">Durée</div>
@@ -22,3 +47,4 @@
                 <div class="item" id="description">Description et info</div>
                 <div class="item" id="longitude">Longitude</div>
             </div>
+</body>

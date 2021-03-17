@@ -76,6 +76,12 @@ class Sortie
     private $site;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Ville")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $ville;
+
+    /**
      * @ORM\OneToMany(targetEntity="Inscription", mappedBy="inscriptions")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -241,6 +247,17 @@ class Sortie
             }
         }
 
+        return $this;
+    }
+
+    public function getVille(): ?Ville
+    {
+        return $this->ville;
+    }
+
+    public function setVille(?Ville $ville): self
+    {
+        $this->ville = $ville;
         return $this;
     }
 
