@@ -51,16 +51,6 @@ class ProfileController extends AbstractController
             'profilForm' => $profilForm->createView()
         ]);
     }
-     /**
-     * Page de connexion
-     * @Route("/home", name="home")
-     */
-    public function home()
-    {
-        $loginForm = $this->createForm(loginFormType::class);
-        return $this->render('home/loginPage.html.twig',
-        ['loginForm'=>$loginForm->createView()]);
-    }
     /**
      * * Mot de passe oublié utilisateur
      * @Route("/forgotpassword", name="forgotPassword")
