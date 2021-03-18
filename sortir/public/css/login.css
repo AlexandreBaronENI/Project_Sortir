@@ -1,0 +1,9 @@
+.logo {
+    display: flex;
+    justify-content: flex-start;
+}
+
+form[name="login_form"] {
+    display: flex;
+    justify-content: center;
+}

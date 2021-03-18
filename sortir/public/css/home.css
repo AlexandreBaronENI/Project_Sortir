@@ -1,9 +1,4 @@
-.logo {
-    display: flex;
-    justify-content: flex-start;
+.dataTables_filter {
+    display: none;
 }
 
-form[name="login_form"] {
-    display: flex;
-    justify-content: center;
-}
