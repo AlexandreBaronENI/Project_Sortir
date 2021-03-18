@@ -230,12 +230,9 @@ class Sortie
         return $this;
     }
 
-    public function getInscriptions(): array
+    public function getInscriptions(): ?ArrayCollection
     {
-        if(isset($this->inscriptions)){
-            $this->inscriptions = new ArrayCollection();
-        }
-        return $this->inscriptions->toArray();
+        return $this->inscriptions;
     }
 
     public function removeInscription(Inscription $inscription): self
