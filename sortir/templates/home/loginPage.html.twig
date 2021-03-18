@@ -17,7 +17,7 @@
     <input type="checkbox" class="form-check-input" id="remember">
     <label class="form-check-label" for="remember">Se souvenir de moi</label>
   </div>
-        {% if error %}
+        {% if error is defined %}
             <div><ul><li>{{ error.messageKey|trans(error.messageData, 'security') }}</li></ul></div>
         {% endif %}
 
