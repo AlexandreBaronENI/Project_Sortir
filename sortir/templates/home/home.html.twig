@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block fichier %}home{% endblock %}
+{% block css %}<link rel="stylesheet" href="{{ css/home.css }}">{% endblock %}
 {% block main %}
     <div class="d-flex align-items-end flex-column">
         <p>{{ "now"|date("m/d/Y") }}</p>
