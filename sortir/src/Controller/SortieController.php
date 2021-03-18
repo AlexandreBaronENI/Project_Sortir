@@ -15,12 +15,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/sortie")
+ */
 class SortieController extends AbstractController
 {
 
     /**
      * Créer une sortie
-     * @Route("/addSortie", name="addSortie")
+     * @Route("/add", name="sortie-add")
      */
     public function add(EntityManagerInterface $em, Request $request)
     {
@@ -58,7 +61,7 @@ class SortieController extends AbstractController
 
     /**
      * Modifier une sortie
-     * @Route("/editsortie-{id}", name="editSortie", requirements={"id"="\d+"})
+     * @Route("/edit/{id}", name="sortie-edit", requirements={"id"="\d+"})
      */
     public function edit($id, EntityManagerInterface $em, Request $request)
     {
@@ -107,17 +110,27 @@ class SortieController extends AbstractController
     }
     /**
      * Afficher une sortie
-     * @Route("/display_sortie/{id}", name="display_sortie")
+     * @Route("/{id}", name="sortie-affichage")
      */
     public function afficherSortie(int $id, EntityManagerInterface $em)
-{
-    $sortie = $this->getDoctrine()
-    ->getRepository(Sortie::class)
-    ->find($id);
-    if( $sortie ==  null){
-        throw $this->createNotFoundException("Cette sortie n'existe pas");
+    {
+        $sortie = $this->getDoctrine()
+        ->getRepository(Sortie::class)
+        ->find($id);
+        if( $sortie ==  null){
+            throw $this->createNotFoundException("Cette sortie n'existe pas");
+        }
+        return $this->render('sortie/affichageSortie.html.twig', [ 'sortie' => $sortie]);
     }
-    return $this->render('sortie/affichageSortie.html.twig', [ 'sortie' => $sortie]);
-}
+
+    /**
+     * Se desinscrire d'une sortie
+     * @Route("/cancel/{id}", name="sortie-cancel")
+     */
+    public function cancel(int $id)
+    {
+        // requirements={"id"="\d+"} /!\ to add in route
+        return $this->redirectToRoute('home');
+    }
 
 }

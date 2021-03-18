@@ -17,8 +17,8 @@ security:
             lazy: true
             provider: in_database
             form_login:
-                login_path: login
-                check_path: login
+                login_path: main-login
+                check_path: main-login
 
 
 
