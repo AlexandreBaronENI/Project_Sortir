@@ -3,11 +3,12 @@
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet"href="{{ asset('css/global.css')}}">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">
     {% block css %}{% endblock %}
     <meta charset="UTF-8">
     <link rel="icon" type="image/png"  href="{{ asset('img/icon.png')}}" />
-    <meta name="viewport"
-          content="width=device-width,  initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,  initial-scale=1.0">
 
     <title>{% block title %}Sortir.com{% endblock %}</title>
 </head>
@@ -31,5 +32,10 @@
     <footer class="site-footer text-center text-white bg-dark fixed-bottom">
         {% block footer %}&copy;{{ "now"|date("Y")}}&nbsp;Sortir.com{% endblock %}
     </footer>
+
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="{{ asset('js/script.js')}}"></script>
 </body>
 </html>
