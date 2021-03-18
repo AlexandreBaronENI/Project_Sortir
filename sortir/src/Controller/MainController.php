@@ -14,19 +14,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/")
+ */
 class MainController extends AbstractController
 {
 
     /**
      * Page de connexion
-     * @Route("/login", name="login")
+     * @Route("/login", name="main-login")
      */
-    public function login()
-    {
-        $loginForm = $this->createForm(LoginFormType::class);
-        return $this->render('home/loginPage.html.twig', [
-            'loginForm'=>$loginForm->createView()
-        ]);
+    public function login(AuthenticationUtils $authUtils){
+        $error = $authUtils->getLastAuthenticationError();
+
+        return $this->render("home/loginPage.html.twig",array('error' => $error));
     }
 
     /**
@@ -106,5 +107,14 @@ class MainController extends AbstractController
             'user' => $this->getUser(),
             'searchForm' => $searchForm->createView()
         ]);
+    }
+
+    /**
+     * Logout
+     * @Route("/logout" name="main-logout")
+     */
+    public function logout()
+    {
+
     }
 }

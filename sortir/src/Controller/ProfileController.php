@@ -16,18 +16,21 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
+/**
+ * @Route("/profile")
+ */
 class ProfileController extends AbstractController
 {
     /**
-     * @Route("/profile", name="profile")
+     * @Route("/{id}", name="profile-affichage")
      */
-    public function profil(){
+    public function profil(int $id){
         return $this->render('profile/view_profile.html.twig',
             []);
     }
 
     /**
-     * @Route("/add", name="add")
+     * @Route("/add", name="profile-add")
      */
     public function add(EntityManagerInterface $em, Request $request)
     {
@@ -53,7 +56,7 @@ class ProfileController extends AbstractController
     }
     /**
      * * Mot de passe oublié utilisateur
-     * @Route("/forgotpassword", name="forgotPassword")
+     * @Route("/forgotpassword", name="profile-forgotPassword")
      */
     public function forgotpassword(EntityManagerInterface $em, Request $request)
     {
@@ -83,7 +86,7 @@ class ProfileController extends AbstractController
     }
     /**
      * * Réinitialisation du mot de passe utilisateur
-     * @Route("/resetpassword", name="resetPassword")
+     * @Route("/resetpassword", name="profile-resetPassword")
      */
     public function resetpassword(EntityManagerInterface $em, Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
@@ -118,15 +121,4 @@ class ProfileController extends AbstractController
             'resetPasswordForm' => $resetPasswordForm->createView()
         ]);
     }
-
-    /**
-     * * Réinitialisation du mot de passe utilisateur
-     * @Route("/login", name="login")
-     */
-    public function login(AuthenticationUtils $authUtils){
-        $error = $authUtils->getLastAuthenticationError();
-
-        return $this->render("home/loginPage.html.twig",array('error' => $error));
-    }
-
 }
