@@ -1,71 +1,70 @@
-<html>
-    <head>
-        <link rel="stylesheet" href="../../public/css/affichageSortie.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+{% extends 'base.html.twig' %}
+{% block css %}<link rel="stylesheet" href="{{ asset('css/affichageSortie.css') }}">{% endblock %}
+{% block main %}
         <h2>Info sortie :  </h2>
             <div class="container">
                 <div class=" card item" id="sortie_name">
                     <span class="col-form-label-lg">Nom de la sortie :</span>
-                    <span class="col-form-label-lg">{{ sortie.nom}}</span> 
+                    <span class="col-form-label-lg displayed-data">{{ sortie.nom}}</span> 
                 </div>
                 <div class="card item" id="lieu">
                     <div class="card-icon">
                         <img src="../../templates/img/street.png">
                     </div>
                     <span class="col-form-label-lg">  Lieu : </span>
-                    <span class="col-form-label-lg">{{ sortie.lieu.nom}}</span></div>
+                    <span class="col-form-label-lg displayed-data">{{ sortie.lieu.nom}}</span></div>
                 <div class="card item" id="date_sortie">
                     <div class="card-icon">
                         <img src="../../templates/img/date.png">
                     </div>
                     <span class="col-form-label-lg">Date  et heure</span>
-                    <span class="col-form-label-lg">{{sortie.dateDebut|date("d/m/Y H:i")}}
+                    <span class="col-form-label-lg displayed-data">{{sortie.dateDebut|date("d/m/Y H:i")}}
                 </div>
                 <div class="card item" id="rue">
                     <div class="card-icon">
                         <img src="../../templates/img/street.png">
                     </div>
                         <span class="col-form-label-lg">Rue :</span>
-                        <span class="col-form-label-lg">{{sortie.lieu.adresse}}
+                        <span class="col-form-label-lg displayed-data">{{sortie.lieu.adresse}}
                  </div>
                 <div class="card item" id="date_limite_inscription">
                     <div class="card-icon">
                         <img src="../../templates/img/deadline.png">
                     </div>
                     <span class="col-form-label-lg">Date limite d'inscription</span>
-                    <span class="col-form-label-lg">{{sortie.dateCloture|date("d/m/Y H:i")}}
+                    <span class="col-form-label-lg displayed-data">{{sortie.dateCloture|date("d/m/Y H:i")}}
                 </div>
                 <div class="card item" id="ville_sortie">
                     <div class="card-icon">
                         <img src="../../templates/img/town.png">
                     </div>
                     <span class="col-form-label-lg">Ville</span>
-                    <span class="col-form-label-lg">{{sortie.ville.nom}}</span>
+                    <span class="col-form-label-lg displayed-data">{{sortie.ville.nom}}</span>
                 </div>
                 <div class="card item" id="nb_place">
                     <div class="card-icon">
                         <img src="../../templates/img/nb_users.png">
                     </div>
                     <span class="col-form-label-lg">Nombre de places</span>
-                    <span class="col-form-label-lg">{{sortie.nbInscriptionMax}}
+                    <span class="col-form-label-lg displayed-data">{{sortie.nbInscriptionMax}}
                 </div>
                 <div class="card item" id="code_postal">
                     <span class="col-form-label-lg">Code postal</span>
-                    <span class="col-form-label-lg">{{sortie.ville.codePostal}}</span>
+                    <span class="col-form-label-lg displayed-data">{{sortie.ville.codePostal}}</span>
                 </div>
                 <div class="card item" id="duration">
                     <div class"card-icon">
                         <img src="../../templates/img/duration.png">
                     </div>
                     <span class="col-form-label-lg">Durée</span>
-                    <span class="col-form-label-lg">{{sortie.duree}}</span>  
+                    <span class="col-form-label-lg displayed-data">{{sortie.duree}}</span>  
                 </div>
                 <div class="card item" id="description">
                     <div class="card-icon">
                         <img src="../../templates/img/information.png">
                     </div>  
                     <span class="col-form-label-lg">Description et info</span>
-                    <span class="col-form-label-lg">{{sortie.commentaire}}    
+                    <span class="col-form-label-lg displayed-data">{{sortie.commentaire}}    
                 </div>
             </div>
-</body>
+{% endblock %}
