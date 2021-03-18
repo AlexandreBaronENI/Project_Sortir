@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Entity\Utilisateur;
 use App\Form\ForgotPasswordType;
+use App\Form\ProfilType;
 use App\Form\ResetPasswordType;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Form\LoginFormType;
@@ -17,6 +18,39 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class ProfileController extends AbstractController
 {
+    /**
+     * @Route("/profile", name="profile")
+     */
+    public function profil(){
+        return $this->render('profile/view_profile.html.twig',
+            []);
+    }
+
+    /**
+     * @Route("/add", name="add")
+     */
+    public function add(EntityManagerInterface $em, Request $request)
+    {
+        $utilisateur = new Utilisateur();
+        $utilisateur->setActif(true);
+        $utilisateur->setAdmin(false);
+
+        $profilForm = $this->createForm(ProfilType::class, $utilisateur);
+        $profilForm->handleRequest($request);
+
+
+        if ($profilForm->isSubmitted() && $profilForm->isValid() ) {
+            $em->persist($utilisateur);
+            $em->flush();
+
+            $this->addFlash('success', 'Votre profil a bien été sauvegardé !');
+            return $this->redirectToRoute('home',['id'=>$utilisateur->getId()]);
+        }
+
+        return $this->render('profile/add_profile.html.twig',[
+            'profilForm' => $profilForm->createView()
+        ]);
+    }
      /**
      * Page de connexion
      * @Route("/home", name="home")
