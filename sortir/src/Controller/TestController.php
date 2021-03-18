@@ -15,7 +15,7 @@ class TestController extends AbstractController
 {
 
     /**
-     * @Route("/test/add", name="test_add")
+     * @Route("/add", name="add")
      */
     public function add(EntityManagerInterface $em, Request $request)
     {
@@ -35,16 +35,10 @@ class TestController extends AbstractController
             return $this->redirectToRoute('home',['id'=>$utilisateur->getId()]);
         }
 
-        return $this->render('profile/profil.html.twig',[
+        return $this->render('profile/add_profile.html.twig',[
             'profilForm' => $profilForm->createView()
         ]);
     }
 
-    /**
-     * @Route("/test", name="test")
-     */
-    public function test()
-    {
-        return $this->render("profile/profiltemp.html.twig");
-    }
+
 }
