@@ -1,9 +1,36 @@
-.titleSortie {
-    display: flex;
-    justify-content: center;
+.item {
+    width: 100%
 }
 
-.infoSortie {
+.container {
     display: flex;
+    flex-wrap: wrap;
+    box-shadow: 0 0 0 1px black;
     justify-content: center;
+    background: linear-gradient(90deg, rgba(187, 120, 208, 1) 0%, rgba(141, 74, 230, 1) 57%, rgba(131, 112, 131, 1) 100%);
+}
+
+.container>div {
+    flex: 50%;
+    margin-bottom: none;
+}
+
+h2 {
+    text-align: left;
+}
+
+h3 {
+    text-align: center;
+}
+
+.card {
+    opacity: 70%;
+}
+
+body {
+    background-color: rgba(192, 200, 194, 1);
+}
+
+.card>span {
+    color: black
 }
