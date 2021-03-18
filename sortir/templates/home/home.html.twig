@@ -3,7 +3,7 @@
 {% block main %}
     <div class="d-flex align-items-end flex-column">
         <p>{{ "now"|date("m/d/Y") }}</p>
-        <p>Alexandre Baron</p>
+        <p>{{ user.prenom }} {{ user.nom }}</p>
     </div>
     <div>
         <h2>Filtrer les sorties</h2>

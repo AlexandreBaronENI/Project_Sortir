@@ -60,7 +60,7 @@ class MainController extends AbstractController
             if(!empty($choices)){
                 if(in_array(1, $choices)){
                     foreach ($sortiesFiltered as $sortieTemp){
-                        if($sortieTemp->getOrganisateur()->getId() == 1){
+                        if($sortieTemp->getOrganisateur()->getId() == $this->getUser()->getId()){
                             $sorties[] = $sortieTemp;
                         }
                     }
@@ -69,7 +69,7 @@ class MainController extends AbstractController
                     $sortiesPartipate = [];
                     foreach ($sortiesFiltered as $sortieTemp) {
                         foreach ($sortieTemp->getInscriptions() as $inscription) {
-                            if($inscription->getParticipant()->getId() == 1){
+                            if($inscription->getParticipant()->getId() == $this->getUser()->getId()){
                                 $sortiesPartipate[] = $sortieTemp;
                             }
                         }
@@ -103,6 +103,7 @@ class MainController extends AbstractController
 
         return $this->render('home/home.html.twig', [
             'sorties' => $sorties,
+            'user' => $this->getUser(),
             'searchForm' => $searchForm->createView()
         ]);
     }
