@@ -22,7 +22,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class ProfileController extends AbstractController
 {
     /**
-     * @Route("/{id}", name="profile-affichage")
+     * @Route("/", name="profile-affichage")
      */
     public function profil(int $id){
         return $this->render('profile/view_profile.html.twig',
@@ -76,7 +76,7 @@ class ProfileController extends AbstractController
                 $session = $request->getSession();
                 $session->set('mail', $user->getMail());
 
-                return $this->redirectToRoute('resetPassword');
+                return $this->redirectToRoute('profile-resetPassword');
             }
 
         }

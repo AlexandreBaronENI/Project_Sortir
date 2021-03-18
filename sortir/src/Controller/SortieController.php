@@ -16,14 +16,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route('/sortie')
+ * @Route("/sortie")
  */
 class SortieController extends AbstractController
 {
 
     /**
      * Créer une sortie
-     * @Route("/add", name="add-sortie")
+     * @Route("/add", name="sortie-add")
      */
     public function add(EntityManagerInterface $em, Request $request)
     {
@@ -125,11 +125,12 @@ class SortieController extends AbstractController
 
     /**
      * Se desinscrire d'une sortie
-     * @Route("/cancel/{id} name="sortie-cancel, requirements={"id"="\d+"})
+     * @Route("/cancel/{id}", name="sortie-cancel")
      */
     public function cancel(int $id)
     {
-        
+        // requirements={"id"="\d+"} /!\ to add in route
+        return $this->redirectToRoute('home');
     }
 
 }

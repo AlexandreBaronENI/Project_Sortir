@@ -103,7 +103,7 @@
                 <td>{{ sortie.organisateur.prenom }} {{ sortie.organisateur.nom|first }}.</td>
                 <td>
                     {% if sortie.organisateur.id == 1 %}
-                        <a href="{{ path("editSortie", {id:sortie.id}) }}">Modifier la sortie</a>
+                        <a href="{{ path("sortie-edit", {id:sortie.id}) }}">Modifier la sortie</a>
                     {% endif %}
                 </td>
             </tr>
@@ -112,6 +112,6 @@
         </table>
     </div>
     <div>
-        <a class="btn btn-info" href="{{ path('addSortie') }}">Créer une sortie</a>
+        <a class="btn btn-info" href="{{ path('sortie-add') }}">Créer une sortie</a>
     </div>
 {% endblock %}
