@@ -2,15 +2,14 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections;
+use App\Listener\SortieListener;
 use Doctrine\ORM\Mapping as ORM;
-use PhpParser\ErrorHandler\Collecting;
-use Doctrine\ORM\PersistentCollection; 
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\PersistentCollection;
 
 /**
  * Sortie
  *
+ * @ORM\EntityListeners({SortieListener::class})
  * @ORM\Entity(repositoryClass="App\Repository\SortieRepository")
  * @ORM\Table(name="sortie")
  */
