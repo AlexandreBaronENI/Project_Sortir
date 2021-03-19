@@ -99,6 +99,7 @@ class MainController extends AbstractController
                         }
                     }
                 }
+                $sorties = array_unique($sorties, SORT_REGULAR);
             }else{
                 $sorties = $sortiesFiltered;
             }
