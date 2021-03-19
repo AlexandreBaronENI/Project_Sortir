@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Listener\SortieListener;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
 
@@ -238,9 +239,13 @@ class Sortie
         return $this;
     }
 
-    public function getInscriptions(): ?PersistentCollection
+    public function getInscriptions(): ?ArrayCollection
     {
-        return $this->inscriptions;
+        $inscriptions = new ArrayCollection();
+        foreach ($this->inscriptions as $inscription){
+            $inscriptions[] = $inscription;
+        }
+        return $inscriptions;
     }
     public function getnbInscription(): int
     {
