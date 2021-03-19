@@ -114,12 +114,18 @@ class SortieController extends AbstractController
      */
     public function afficherSortie(int $id, EntityManagerInterface $em)
     {
+        $etatManager = new Etat($em->getRepository(Etat::class));
+
         $sortie = $this->getDoctrine()
-        ->getRepository(Sortie::class)
-        ->find($id);
+            ->getRepository(Sortie::class)
+            ->find($id);
         if( $sortie ==  null){
             throw $this->createNotFoundException("Cette sortie n'existe pas");
         }
+        if ($etatManager->IsArchived($sortie->getEtat()->getId())) {
+            throw $this->createNotFoundException('Cette sortie n\'existe plus !');
+        }
+
         return $this->render('sortie/affichageSortie.html.twig', [ 
             'sortie' => $sortie,
         ]);
