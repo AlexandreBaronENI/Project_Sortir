@@ -29,6 +29,7 @@ class SortieController extends AbstractController
      */
     public function add(EntityManagerInterface $em, Request $request)
     {
+        $etatManager = new Etat($em->getRepository(Etat::class));
         $sortie = new Sortie();
         $sortieForm = $this->createForm(AddSortieType::class, $sortie);
         $sortieForm->handleRequest($request);
@@ -36,7 +37,7 @@ class SortieController extends AbstractController
 
         if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
             if ($sortieForm->get('save')->isClicked()) {
-                $etat = $em->getRepository(Etat::class)->findOneBy(['libelle' => 'draft']);
+                $etat = $etatManager->getDraft();
                 $sortie->setOrganisateur($this->getUser());
                 $sortie->setSite($this->getUser()->getSite());
                 $sortie->setEtat($etat);
@@ -45,7 +46,7 @@ class SortieController extends AbstractController
                 $em->flush();
             }
             elseif ($sortieForm->get('publish')->isClicked()) {
-                $etat = $em->getRepository(Etat::class)->findOneBy(['libelle' => 'open']);
+                $etat = $etatManager->getOpen();
                 $sortie->setOrganisateur($this->getUser());
                 $sortie->setSite($this->getUser()->getSite());
                 $sortie->setEtat($etat);
