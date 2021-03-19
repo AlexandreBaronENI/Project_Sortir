@@ -34,7 +34,6 @@ class MainController extends AbstractController
     }
 
     /**
-     * Home
      * @Route("/", name="home")
      */
     public function home(EntityManagerInterface $em, Request $request)

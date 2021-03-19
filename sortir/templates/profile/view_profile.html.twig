@@ -1,8 +1,67 @@
 {% extends 'base.html.twig' %}
-{% block fichier %}view_profile{% endblock %}
+{% block css %}    <link rel="stylesheet"href="{{ asset('css/profil.css')}}">
+{% endblock %}
  {% block main %}
 
-     <h1>Salut</h1>
+     <h1>{{ profil.username }}</h1>
+
+
+<div class="col-md-8 blabla">
+    <div class="card mb-3">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-3">
+                    <h6 class="mb-0">Prénom:</h6>
+                </div>
+                <div class="col-sm-9 text-secondary text-center">
+                    {{ profil.prenom}}
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-3">
+                    <h6 class="mb-0">Nom:</h6>
+                </div>
+                <div class="col-sm-9 text-secondary text-center">
+                    {{ profil.nom}}
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-3">
+                    <h6 class="mb-0">Téléphone:</h6>
+                </div>
+                <div class="col-sm-9 text-secondary text-center">
+                    {{ profil.telephone}}
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-3">
+                    <h6 class="mb-0">Email:</h6>
+                </div>
+                <div class="col-sm-9 text-secondary text-center">
+                    {{ profil.mail}}
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-3">
+                    <h6 class="mb-0">Site de rattachement:</h6>
+                </div>
+                <div class="col-sm-9 text-secondary text-center">
+                    {{ profil.site.nom}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center ">
+
+        <a href="{{ path('profile-modified') }}" class="btn btn-primary btn-lg ">
+            Modifier mon profil</a>
+        <a href="{{ path('home') }}" class="btn btn-primary btn-lg ">
+            Retour</a>
+</div></div>
 
  {% endblock %}
 
