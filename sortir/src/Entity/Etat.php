@@ -63,72 +63,72 @@ class Etat
         return $this;
     }
 
-    public static function isArchived($id): bool
+    public static function isOpen($id): bool
     {
         return $id == self::$etats[0]->getId();
     }
 
-    public function getArchived()
+    public function getOpen()
     {
         return self::$etats[0];
     }
 
-    public static function isOpen($id): bool
+    public static function isDraft($id): bool
     {
         return $id == self::$etats[1]->getId();
     }
 
-    public function getOpen()
+    public function getDraft()
     {
         return self::$etats[1];
     }
 
-    public static function isDraft($id): bool
+    public static function isClosed($id): bool
     {
         return $id == self::$etats[2]->getId();
     }
 
-    public function getDraft()
+    public function getClosed()
     {
         return self::$etats[2];
     }
 
-    public static function isClosed($id): bool
+    public static function isActive($id): bool
     {
         return $id == self::$etats[3]->getId();
     }
 
-    public function getClosed()
+    public function getActive()
     {
         return self::$etats[3];
     }
 
-    public static function isActive($id): bool
+    public static function isFinished($id): bool
     {
         return $id == self::$etats[4]->getId();
     }
 
-    public function getActive()
+    public function getFinished()
     {
         return self::$etats[4];
     }
 
-    public static function isFinished($id): bool
+    public static function isCanceled($id): bool
     {
         return $id == self::$etats[5]->getId();
     }
 
-    public function getFinished()
+    public function getCanceled()
     {
         return self::$etats[5];
     }
 
-    public static function isCanceled($id): bool
+    public static function isArchived($id): bool
     {
         return $id == self::$etats[6]->getId();
     }
 
-    public function getCanceled()
+    public function getArchived()
     {
         return self::$etats[6];
     }
