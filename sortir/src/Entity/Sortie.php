@@ -87,11 +87,11 @@ class Sortie
      */
     private $inscriptions;
 
-
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $motif;
+    
     /**
      * Sortie constructor.
      * @param $inscriptions
