@@ -91,8 +91,7 @@ class ProfileController extends AbstractController
     {
         $utilisateur = new Utilisateur();
         $utilisateur->setActif(true);
-        $utilisateur->setAdmin(false);
-
+        
         $profilForm = $this->createForm(ProfilType::class, $utilisateur);
         $profilForm->handleRequest($request);
 

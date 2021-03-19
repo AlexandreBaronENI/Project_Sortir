@@ -21,8 +21,9 @@ class SortieListener
     public function postLoad(Sortie $sortie)
     {
         $etatManager = new Etat($this->em->getRepository(Etat::class));
-        $dateFin = $sortie->getDateDebut();
-        $dateFin->add(new DateInterval('P'.$sortie->getDuree().'D'));
+        $dateFin = $sortie->getDateDebut()->add(new DateInterval('PT'.$sortie->getDuree().'H'));
+        $dateArchivage = $sortie->getDateDebut()->add(new DateInterval('P30D'));
+
         $today = new DateTime();
         if($etatManager->isActive($sortie->getEtat()->getId()) && $today >= $dateFin){
             $etat = $etatManager->getFinished();
@@ -36,8 +37,14 @@ class SortieListener
 
             $this->em->persist($sortie);
             $this->em->flush();
-        }elseif ($etatManager->isClosed($sortie->getEtat()->getId()) && $today >= $sortie->getDateDebut()){
+        }elseif ($etatManager->isClosed($sortie->getEtat()->getId()) && $today <= $sortie->getDateCloture() && $today >= $sortie->getDateDebut()){
             $etat = $etatManager->getActive();
+            $sortie->setEtat($etat);
+
+            $this->em->persist($sortie);
+            $this->em->flush();
+        }elseif ($etatManager->isFinished($sortie->getEtat()->getId()) && $today >= $dateArchivage){
+            $etat = $etatManager->getArchived();
             $sortie->setEtat($etat);
 
             $this->em->persist($sortie);

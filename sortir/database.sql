@@ -241,6 +241,7 @@ ALTER TABLE `utilisateur`
 
 
 INSERT INTO `etat` (`id`, `libelle`) VALUES
+(0, 'archived'),
 (1, 'open'),
 (2, 'draft'),
 (3, 'closed'),
