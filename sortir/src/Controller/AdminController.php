@@ -58,8 +58,8 @@ class AdminController extends AbstractController
         $lieu = $em->getRepository(Lieu::class)->find($id);
         $locationForm = $this->createForm(EditLocationType::class, $lieu);
         $locationForm->handleRequest($request);
-        if ($locationForm->isSubmitted() && $sortieForm->isValid()) {
-            $em->persist($sortie);
+        if ($locationForm->isSubmitted() && $locationForm->isValid()) {
+            $em->persist($lieu);
             $em->flush();
             return $this->redirectToRoute('admin-locations');
         }
@@ -68,6 +68,19 @@ class AdminController extends AbstractController
             "locationForm" => $locationForm->createView()
         ]);
 
+    }
+
+    /**
+     * Supprimer un site
+     * @Route("/location/delete/{id}", name="delete-location")
+     */
+    public  function delete(int $id, EntityManagerInterface $em, Request $request)
+    {
+        $lieu = $em->getRepository(Lieu::class)->find($id);
+        $em->remove($lieu);
+        $em->flush();
+
+        return $this->redirectToRoute('admin-locations');
     }
 
     /**

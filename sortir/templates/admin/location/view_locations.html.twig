@@ -17,6 +17,7 @@
             <td>{{ lieu.ville.nom}}</td>
             <td>
                  <a href="{{ path("edit-location", {id:lieu.id}) }}">Modifier le lieu</a>
+                 <a href="{{ path("delete-location", {id:lieu.id}) }}">Supprimer le lieu</a>
         </tr>
     {% endfor %}
     </tbody>
