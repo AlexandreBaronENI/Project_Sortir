@@ -5,7 +5,7 @@
             <div class="container">
                 <div class=" card item" id="sortie_name">
                     <span class="col-form-label-lg">Nom de la sortie :</span>
-                    <span class="col-form-label-lg displayed-data">{{ sortie.nom}}</span> 
+                    <span class="col-form-label-lg displayed-data">{{ sortie.nom}}</span>
                 </div>
                 <div class="card item" id="lieu">
                     <div class="card-icon">
@@ -57,14 +57,14 @@
                         <img src="../../templates/img/duration.png">
                     </div>
                     <span class="col-form-label-lg">Durée</span>
-                    <span class="col-form-label-lg displayed-data">{{sortie.duree}}</span>  
+                    <span class="col-form-label-lg displayed-data">{{sortie.duree}}</span>
                 </div>
                 <div class="card item" id="description">
                     <div class="card-icon">
                         <img src="../../templates/img/information.png">
                     </div>  
                     <span class="col-form-label-lg">Description et info</span>
-                    <span class="col-form-label-lg displayed-data">{{sortie.commentaire}}    
+                    <span class="col-form-label-lg displayed-data">{{sortie.commentaire}}
                 </div>
             </div>
             <div>
@@ -88,3 +88,9 @@
                 {% endfor %}
             </div>
 {% endblock %}
+        {%  if sortie.etat.id == 1  %}
+            <div>
+                <a class="btn btn-info" href="{{ path('sortie-register',{id:sortie.id,sortie:sortie}) }}">S'inscrire</a>
+            </div>
+        {%  endif%}
+</body>
