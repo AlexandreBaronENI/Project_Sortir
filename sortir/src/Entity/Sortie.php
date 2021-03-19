@@ -84,7 +84,7 @@ class Sortie
     private $ville;
 
     /**
-     * @ORM\OneToMany(targetEntity="Inscription", mappedBy="inscriptions")
+     * @ORM\OneToMany(targetEntity="Inscription", mappedBy="sortie", fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $inscriptions;
@@ -93,6 +93,8 @@ class Sortie
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $motif;
+
+    private $nbInscription;
     
     /**
      * Sortie constructor.
@@ -241,6 +243,12 @@ class Sortie
     {
         return $this->inscriptions;
     }
+    public function getnbInscription(): int
+    {
+        $this->nbInscription = count($this->getInscriptions());
+        return $this->nbInscription;
+    }
+
 
     public function removeInscription(Inscription $inscription): self
     {
