@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Lieu;
 use App\Entity\Sortie;
+use App\Entity\Ville;
 use App\Repository\LieuRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -77,6 +78,16 @@ class AddSortieType extends AbstractType
             ->add('lieu', EntityType::class, [
                 'label' => "Lieu",
                 'class' => Lieu::class,
+                'choice_label' => function ($lieu) {
+                    return $lieu->getNom();
+                },
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
+            ->add('ville', EntityType::class, [
+                'label' => "Ville",
+                'class' => Ville::class,
                 'choice_label' => function ($lieu) {
                     return $lieu->getNom();
                 },
