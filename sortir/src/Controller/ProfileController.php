@@ -41,7 +41,33 @@ class ProfileController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="profile-affichage-autre")
+     * @Route("/modified", name="profile-modified")
+     */
+    public function modified(EntityManagerInterface $em, Request $request,UserPasswordEncoderInterface $encoder)
+    {
+        $utilisateur = $this->getUser();
+
+        $profilForm = $this->createForm(ProfilType::class, $utilisateur);
+        $profilForm->handleRequest($request);
+
+
+        if ($profilForm->isSubmitted() && $profilForm->isValid() ) {
+            $hashed = $encoder->encodePassword($utilisateur, $utilisateur->getPassword());
+            $utilisateur->setPassword($hashed);
+            $em->persist($utilisateur);
+            $em->flush();
+
+            $this->addFlash('success', 'Votre profil a bien été sauvegardé !');
+            return $this->redirectToRoute('profile-affichage');
+        }
+
+        return $this->render('profile/add_profile.html.twig',[
+            'profilForm' => $profilForm->createView(),'profil'=>$utilisateur
+        ]);
+    }
+
+    /**
+     * @Route("/{id}", name="profile-affichage-autre", requirements={"id"="\d+"})
      */
     public function afficherautreProfil(int $id)
     {
