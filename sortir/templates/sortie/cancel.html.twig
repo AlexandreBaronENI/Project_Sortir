@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+{% block main %}
+<h1>Annuler une sortie</h1>
+    <div class="column">
+        <div class="row">
+            <p>Nom de la sortie</p>
+            <p>{{ sortie.nom }}</p>
+        </div>
+        <div class="row">
+            <p>Date de la sortie</p>
+            <p>{{ sortie.dateDebut|date("m/d/Y") }}</p>
+        </div>
+        <div class="row">
+            <p>Site de l'organisateur</p>
+            <p>{{ sortie.organisateur.site.nom }}</p>
+        </div>
+        <div class="row">
+            <p>Lieu</p>
+            <p>{{ sortie.Lieu.adresse }} {{ sortie.Lieu.ville.nom }}</p>
+        </div>
+        <form method="post">
+            {{ form_start(sortieForm) }}
+            <div class="row col-12">
+                {{ form_label(sortieForm.motif) }}
+                {{ form_widget(sortieForm.motif) }}
+            </div>
+            <input value="Annuler la sortie" class="btn btn-info" type="submit">
+            {{ form_end(sortieForm) }}
+        </form>
+    </div>
+{% endblock %}
