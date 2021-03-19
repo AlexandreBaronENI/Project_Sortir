@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+{% block fichier %}profil{% endblock %}
+
+{% block main %}
+<form method="post">
+        {{ form_start(locationForm) }}
+        <div class="form-group row">
+         <span class="col-sm-2 col-form-label">
+         {{ form_label(locationForm.nom) }}
+            </span>
+            {{ form_widget(locationForm.nom) }}
+        </div>
+        <div class="form-group row">
+         <span class="col-sm-2 col-form-label">
+         {{ form_label(locationForm.adresse) }}
+            </span>
+            {{ form_widget(locationForm.adresse) }}
+        </div>
+        <div class="form-group row">
+         <span class="col-sm-2 col-form-label">
+         {{ form_label(locationForm.ville) }}
+            </span>
+            {{ form_widget(locationForm.ville) }}
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-10">
+                <input type="submit" class="btn btn-primary" value="Enregistrer">
+
+                <a class="btn btn-danger" href="{{ path("admin-locations") }}">Annuler</a>
+            </div>
+        </div>
+{% endblock %}

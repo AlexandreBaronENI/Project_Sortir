@@ -85,13 +85,13 @@ class EditSortieType extends AbstractType
                 ->add('delete', SubmitType::class, [
                     'label' => 'Supprimer la sortie',
                     'attr' => [
-                        'class' => 'btn btn-success'
+                        'class' => 'btn btn-danger'
                     ]
                 ])
                 ->add('cancel', ResetType::class, [
                     'label' => 'Annuler',
                     'attr' => [
-                        'class' => 'btn btn-danger'
+                        'class' => 'btn btn-secondary'
                     ]
                 ]);
         }

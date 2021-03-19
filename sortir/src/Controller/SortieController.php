@@ -52,6 +52,7 @@ class SortieController extends AbstractController
                 $em->persist($sortie);
                 $em->flush();
             }
+            return $this->redirectToRoute('home');
         }
 
 
@@ -95,13 +96,15 @@ class SortieController extends AbstractController
 
                 $em->persist($sortie);
                 $em->flush();
+        
             }
             elseif (($etatManager->IsDraft($sortie->getEtat()->getId()) || $etatManager->IsOpen($sortie->getEtat()->getId())) && $sortieForm->get('delete')->isClicked()) {
                 $etat = $etatManager->getCanceled();
                 $sortie->setEtat($etat);
                 $em->persist($sortie);
-                $em->flush();
+                $em->flush(); 
             }
+            return $this->redirectToRoute('home');
         }
 
         return $this->render("sortie/edit.html.twig", [
