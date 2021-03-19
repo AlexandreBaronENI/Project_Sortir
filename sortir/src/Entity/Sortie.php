@@ -101,7 +101,7 @@ class Sortie
      */
     public function __construct()
     {
-        $this->inscriptions = new PersistentCollection();
+        $this->inscriptions = new ArrayCollection();
     }
 
     public function getId(): ?int
