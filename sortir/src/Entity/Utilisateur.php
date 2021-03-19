@@ -55,7 +55,7 @@ class Utilisateur implements UserInterface
     /**
      * @ORM\Column(type="boolean")
      */
-    private $admin;
+    private $admin = false;
 
     /**
      * @ORM\Column(type="boolean")
