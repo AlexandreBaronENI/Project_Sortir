@@ -5,7 +5,6 @@ namespace App\Controller;
 
 
 use App\Entity\Etat;
-use App\Entity\Inscription;
 use App\Entity\Sortie;
 use App\Entity\Utilisateur;
 use App\Form\AddSortieType;
