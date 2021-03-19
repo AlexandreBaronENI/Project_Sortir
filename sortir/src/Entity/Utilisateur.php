@@ -77,10 +77,6 @@ class Utilisateur implements UserInterface
         {
             return ['ROLE_USER'];
         }
-        else
-        {
-            return ['ROLE_ANON'];
-        }
     }
 
     public function getPassword()
