@@ -98,11 +98,30 @@
                         ❌
                     {% endif %}
                 </td>
-                <td>{{ sortie.organisateur.prenom }} {{ sortie.organisateur.nom|first }}.</td>
                 <td>
-                    {% if sortie.organisateur.id == 1 %}
-                        <a href="{{ path("sortie-edit", {id:sortie.id}) }}">Modifier la sortie</a>
+                    {% if sortie.organisateur.id == user.id %}
+                        <a href="{{ path('profile-affichage') }}">{{ sortie.organisateur.prenom }} {{ sortie.organisateur.nom|first }}.</a>
+                    {% else %}
+                        <a href="{{ path('profile-affichage-autre', {id:sortie.organisateur.id}) }}">{{ sortie.organisateur.prenom }} {{ sortie.organisateur.nom|first }}.</a>
                     {% endif %}
+                </td>
+                <td>
+                    {% if sortie.organisateur.id == user.id and sortie.etat.id == 2 or sortie.etat.id == 1 %}
+                        <a href="{{ path("sortie-edit", {id:sortie.id}) }}">Modifier</a>
+                    {% endif %}
+                    {% if sortie.organisateur.id == user.id and sortie.etat.id == 2 %}
+                        <a href="{{ path("sortie-publish", {id:sortie.id}) }}">Publier</a>
+                    {% endif %}
+                    {% if sortie.organisateur.id == user.id and sortie.etat.id == 1 %}
+                        <a href="{{ path("sortie-cancel", {id:sortie.id}) }}">Annuler</a>
+                    {% endif %}
+                    {% if true %}
+                        <a href="">S'inscrire</a>
+                    {% endif %}
+                    {% if true %}
+                        <a href="">Se désister</a>
+                    {% endif %}
+                    <a href="{{ path('sortie-affichage', {id:sortie.id}) }}">Afficher</a>
                 </td>
             </tr>
             {% endfor %}
