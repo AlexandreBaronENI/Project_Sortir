@@ -36,6 +36,7 @@ security:
          - { path: ^/admin, roles: ROLE_ADMIN }
          - { path: ^/profile, roles: ROLE_USER, ROLE_ADMIN }
          - { path: ^/sortie, roles: ROLE_USER, ROLE_ADMIN }
-         - { path: ^/main/login, roles: ROLE_ANON, ROLE_ADMIN }
+         - { path: ^/login, roles: ROLE_ANON, ROLE_ADMIN }
          - { path: ^/profile/add, roles: ROLE_ANON, ROLE_USER, ROLE_ADMIN }
+         - { path: ^/, roles: ROLE_USER, ROLE_ADMIN }
          
