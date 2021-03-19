@@ -129,9 +129,37 @@ class SortieController extends AbstractController
             throw $this->createNotFoundException('Cette sortie n\'existe plus !');
         }
 
-        return $this->render('sortie/affichageSortie.html.twig', [ 
+        return $this->render('sortie/affichageSortie.html.twig', [
             'sortie' => $sortie,
         ]);
+    }
+
+
+
+    /**
+     * Se desinscrire d'une sortie
+     * @Route("/publish/{id}", name="sortie-publish", requirements={"id"="\d+"})
+     */
+    public function publish($id, EntityManagerInterface $em, Request $request)
+    {
+        $sortie = $em->getRepository(Sortie::class)->find($id);
+        $etatManager = new Etat($em->getRepository(Etat::class));
+
+        if ($sortie == null) {
+            throw $this->createNotFoundException('La sortie n\'a pas été trouvée !');
+        }
+
+        if(!$etatManager->IsDraft($sortie->getEtat()->getId())){
+            throw $this->createNotFoundException('La publication de cette sortie n\'est pas possible !');
+        }
+
+        $etat = $etatManager->getOpen();
+        $sortie->setEtat($etat);
+
+        $em->persist($sortie);
+        $em->flush();
+
+        return $this->redirectToRoute('home');
     }
 
     /**
