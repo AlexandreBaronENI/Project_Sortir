@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 
+use App\Entity\Sortie;
 use App\Entity\Utilisateur;
 use App\Form\ForgotPasswordType;
 use App\Form\ProfilType;
@@ -21,18 +22,46 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
  */
 class ProfileController extends AbstractController
 {
+
     /**
      * @Route("/", name="profile-affichage")
      */
-    public function profil(int $id){
-        return $this->render('profile/view_profile.html.twig',
-            []);
+    public function afficherProfil()
+    {
+
+        $utilisateur = $this->getUser();
+        $id = $utilisateur->getId();
+        $profil = $this->getDoctrine()
+            ->getRepository(Utilisateur::class)
+            ->find($id);
+        if( $profil ==  null){
+            throw $this->createNotFoundException("Ce profil n'existe pas");
+        }
+        return $this->render('profile/view_profile.html.twig', [ 'profil' => $profil]);
+    }
+
+    /**
+     * @Route("/{id}", name="profile-affichage-autre")
+     */
+    public function afficherautreProfil(int $id)
+    {
+        if($id == null){
+            $id = $this->getId();
+                    }
+
+        $profil = $this->getDoctrine()
+            ->getRepository(Utilisateur::class)
+            ->find($id);
+        if( $profil ==  null){
+            throw $this->createNotFoundException("Ce profil n'existe pas");
+        }
+        return $this->render('profile/view_profile.html.twig', [ 'profil' => $profil]);
     }
 
     /**
      * @Route("/add", name="profile-add")
      */
-    public function add(EntityManagerInterface $em, Request $request)
+    public function add(EntityManagerInterface $em, Request $request,UserPasswordEncoderInterface $encoder)
     {
         $utilisateur = new Utilisateur();
         $utilisateur->setActif(true);
@@ -43,11 +72,13 @@ class ProfileController extends AbstractController
 
 
         if ($profilForm->isSubmitted() && $profilForm->isValid() ) {
+            $hashed = $encoder->encodePassword($utilisateur, $utilisateur->getPassword());
+            $utilisateur->setPassword($hashed);
             $em->persist($utilisateur);
             $em->flush();
 
             $this->addFlash('success', 'Votre profil a bien été sauvegardé !');
-            return $this->redirectToRoute('home',['id'=>$utilisateur->getId()]);
+            return $this->redirectToRoute('profile-affichage');
         }
 
         return $this->render('profile/add_profile.html.twig',[
