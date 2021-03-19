@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+{% block main %}
+<table class="display table table-striped table-bordered" style="width:100%">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Nom</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for site in (sites) %}
+        <tr>
+            <td>{{loop.index}}</td>
+            <td>{{site.nom}}</td>
+            <td>
+                <a href="{{ path("edit-site", {id:site.id}) }}">Modifier le site</a>
+                 <a href="{{ path("delete-site", {id:site.id}) }}">Supprimer le site</a>
+            </td>
+
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
