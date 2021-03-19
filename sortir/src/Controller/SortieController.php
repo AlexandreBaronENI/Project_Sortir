@@ -120,7 +120,9 @@ class SortieController extends AbstractController
         if( $sortie ==  null){
             throw $this->createNotFoundException("Cette sortie n'existe pas");
         }
-        return $this->render('sortie/affichageSortie.html.twig', [ 'sortie' => $sortie]);
+        return $this->render('sortie/affichageSortie.html.twig', [ 
+            'sortie' => $sortie,
+        ]);
     }
 
     /**

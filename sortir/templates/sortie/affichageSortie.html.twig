@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block css %}<link rel="stylesheet" href="{{ asset('css/affichageSortie.css') }}">{% endblock %}
 {% block main %}
-        <h2>Info sortie :  </h2>
+        <h2>Info sortie   </h2>
             <div class="container">
                 <div class=" card item" id="sortie_name">
                     <span class="col-form-label-lg">Nom de la sortie :</span>
@@ -66,5 +66,25 @@
                     <span class="col-form-label-lg">Description et info</span>
                     <span class="col-form-label-lg displayed-data">{{sortie.commentaire}}    
                 </div>
+            </div>
+            <div>
+                {% for inscrit in (sortie.inscriptions) %}
+                <table class="table table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Participants</th>
+                            <th>Pseudo</th>
+                            <th>Nom</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{loop.index}}</td>
+                            <td>{{inscrit.participant.username}}</td>
+                            <td>{{inscrit.participant.nom}} {{inscrit.participant.prenom}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                {% endfor %}
             </div>
 {% endblock %}
