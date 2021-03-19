@@ -71,7 +71,7 @@
                 <td>{{ sortie.nom }}</td>
                 <td>{{ sortie.dateDebut|date('d/m/y h:m') }}</td>
                 <td>{{ sortie.dateCloture|date('d/m/y h:m') }}</td>
-                <td>{{ sortie.inscriptions |length}}/{{ sortie.nbInscriptionMax }}</td>
+                <td>{{ sortie.nbInscription}}/{{ sortie.nbInscriptionMax }}</td>
                 <td>
                     {% if sortie.etat.id == 1 %}
                         Ouvert
