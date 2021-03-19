@@ -2,9 +2,11 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections;
 use Doctrine\ORM\Mapping as ORM;
 use PhpParser\ErrorHandler\Collecting;
+use Doctrine\ORM\PersistentCollection; 
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Sortie
@@ -88,12 +90,17 @@ class Sortie
     private $inscriptions;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $motif;
+    
+    /**
      * Sortie constructor.
      * @param $inscriptions
      */
     public function __construct()
     {
-        $this->inscriptions = new ArrayCollection();
+        $this->inscriptions = new PersistentCollection();
     }
 
     public function getId(): ?int
@@ -230,7 +237,7 @@ class Sortie
         return $this;
     }
 
-    public function getInscriptions(): ?ArrayCollection
+    public function getInscriptions(): ?PersistentCollection
     {
         return $this->inscriptions;
     }

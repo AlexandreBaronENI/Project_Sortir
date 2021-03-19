@@ -69,7 +69,14 @@ class Utilisateur implements UserInterface
 
     public function getRoles()
     {
-        return ['ROLE_USER'];
+        if($this->admin)
+        {
+            return ['ROLE_ADMIN'];
+        }
+        elseif($this->actif)
+        {
+            return ['ROLE_USER'];
+        }
     }
 
     public function getPassword()
@@ -154,18 +161,6 @@ class Utilisateur implements UserInterface
     public function setPassword(string $password): self
     {
         $this->password = $password;
-
-        return $this;
-    }
-
-    public function getAdmin(): ?bool
-    {
-        return $this->admin;
-    }
-
-    public function setAdmin(bool $admin): self
-    {
-        $this->admin = $admin;
 
         return $this;
     }
