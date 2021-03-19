@@ -8,6 +8,7 @@ use App\Entity\Etat;
 use App\Entity\Sortie;
 use App\Entity\Utilisateur;
 use App\Form\AddSortieType;
+use App\Form\CancelSortieType;
 use App\Form\EditSortieType;
 use App\Repository\LieuRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -65,7 +66,6 @@ class SortieController extends AbstractController
      */
     public function edit($id, EntityManagerInterface $em, Request $request)
     {
-        $user = $em->getRepository(Utilisateur::class)->find(1);
         $etatManager = new Etat($em->getRepository(Etat::class));
 
         $sortie = $em->getRepository(Sortie::class)->find($id);
@@ -127,12 +127,37 @@ class SortieController extends AbstractController
 
     /**
      * Se desinscrire d'une sortie
-     * @Route("/cancel/{id}", name="sortie-cancel")
+     * @Route("/cancel/{id}", name="sortie-cancel", requirements={"id"="\d+"})
      */
-    public function cancel(int $id)
+    public function cancel($id, EntityManagerInterface $em, Request $request)
     {
-        // requirements={"id"="\d+"} /!\ to add in route
-        return $this->redirectToRoute('home');
+        $etatManager = new Etat($em->getRepository(Etat::class));
+
+        $sortie = $em->getRepository(Sortie::class)->find($id);
+        $sortieForm = $this->createForm(CancelSortieType::class, $sortie);
+        $sortieForm->handleRequest($request);
+
+        if ($sortie == null) {
+            throw $this->createNotFoundException('La sortie n\'a pas été trouvée !');
+        }
+        elseif ($sortie->getOrganisateur()->getId() != $this->getUser()->getId()) {
+            throw $this->createNotFoundException('Vous n\'êtes pas l\'organisateur de cette sortie !');
+        }
+        elseif (!$etatManager->IsOpen($sortie->getEtat()->getId())) {
+            throw $this->createNotFoundException('Cette sortie ne peut être annulée !');
+        }
+
+        if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
+            $etat = $etatManager->getCanceled();
+            $sortie->setEtat($etat);
+
+            $em->persist($sortie);
+            $em->flush();
+        }
+        return $this->render('sortie/cancel.html.twig', [
+            'sortie' => $sortie,
+            'sortieForm' => $sortieForm->createView()
+        ]);
     }
 
 }

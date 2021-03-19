@@ -55,9 +55,6 @@ class EditSortieType extends AbstractType
             ->add('commentaire', TextareaType::class, [
                 'label' => "Description et infos"
             ])
-            ->add('commentaire', TextareaType::class, [
-                'label' => "Description et infos"
-            ])
             ->add('lieu', EntityType::class, [
                 'label' => "Lieu",
                 'class' => Lieu::class,

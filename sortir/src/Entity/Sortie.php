@@ -273,4 +273,16 @@ class Sortie
         return $this;
     }
 
+    public function getMotif(): ?string
+    {
+        return $this->motif;
+    }
+
+    public function setMotif(string $motif): self
+    {
+        $this->motif = $motif;
+
+        return $this;
+    }
+
 }
