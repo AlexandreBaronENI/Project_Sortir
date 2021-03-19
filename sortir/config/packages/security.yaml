@@ -19,6 +19,9 @@ security:
             form_login:
                 login_path: main-login
                 check_path: main-login
+            logout:
+                path: main-logout
+                target: main-login
 
 
 

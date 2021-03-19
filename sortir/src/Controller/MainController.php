@@ -118,6 +118,6 @@ class MainController extends AbstractController
      */
     public function logout()
     {
-        return $this->redirectToRoute('home');
+        return $this->redirectToRoute('main-login');
     }
 }
