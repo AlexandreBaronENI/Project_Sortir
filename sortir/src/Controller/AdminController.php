@@ -2,6 +2,7 @@
 
 
 namespace App\Controller;
+use App\Form\AdminAddUsersType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -229,12 +230,22 @@ class AdminController extends AbstractController
      * Gestion des users
      * @Route("/users", name="admin-users")
      */
-    public function users(EntityManagerInterface $em)
+    public function users(EntityManagerInterface $em, Request $request)
     {
-       $users = $em->getRepository(Utilisateur::class)->findAll();
-       return $this->render('admin/users/view_users.html.twig', [
-        'users' => $users
-    ]);
+        $usersForm = $this->createForm(AdminAddUsersType::class);
+        $usersForm->handleRequest($request);
+        if ($usersForm->isSubmitted() && $usersForm->isValid()) {
+            $file = $usersForm->get('file')->getData();
+            if ($file) {
+                $result = $file->file_get_contents();
+
+                dump($result);exit;
+            }
+        }
+
+        return $this->render("admin/users/add.html.twig", [
+            "usersForm" => $usersForm->createView()
+        ]);
     }
     
     /**
