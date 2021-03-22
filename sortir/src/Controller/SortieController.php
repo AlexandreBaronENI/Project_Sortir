@@ -128,7 +128,7 @@ class SortieController extends AbstractController
                 }
             }
         }
-        $sorties = array_merge($sorties, $sortiesPartipate);
+        $sorties = $sortiesPartipate;
         return $this->render('sortie/my_sortie.html.twig', [
             'sorties' => $sorties,
         ]);
