@@ -36,9 +36,15 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/admin, roles: ['ROLE_ADMIN'] }
-        - { path: ^/profile, roles: [ROLE_ADMIN, ROLE_USER] }
-        - { path: ^/sortie, roles: [ROLE_ADMIN, ROLE_USER]  }
-        - { path: ^/login, roles: [ROLE_ADMIN, IS_AUTHENTICATED_ANONYMOUSLY] }
         - { path: ^/profile/add, roles: [ROLE_ADMIN, ROLE_USER, IS_AUTHENTICATED_ANONYMOUSLY]  }
+        - { path: ^/profile/forgotpassword, roles: [ROLE_ADMIN, ROLE_USER, IS_AUTHENTICATED_ANONYMOUSLY] }
+        - { path: ^/profile/resetpassword, roles: [ROLE_ADMIN, ROLE_USER, IS_AUTHENTICATED_ANONYMOUSLY] }
+        - { path: ^/admin/locations, roles: [ROLE_ADMIN, ROLE_USER] }
+        - { path: ^/admin/location/add, roles: [ROLE_ADMIN, ROLE_USER] }
+        - { path: ^/admin/site/add, roles: [ROLE_ADMIN, ROLE_USER] }
+        - { path: ^/admin/sites, roles: [ROLE_ADMIN, ROLE_USER] }
+        - { path: ^/admin, roles: [ROLE_ADMIN] }
+        - { path: ^/sortie, roles: [ROLE_ADMIN, ROLE_USER]  }
+        - { path: ^profile, roles: [ROLE_ADMIN, ROLE_USER] }
+        - { path: ^/login, roles: [ROLE_ADMIN, IS_AUTHENTICATED_ANONYMOUSLY] }
         - { path: ^/, roles: [ROLE_ADMIN, ROLE_USER] }

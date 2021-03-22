@@ -2,6 +2,7 @@
 {% block fichier %}profil{% endblock %}
 
 {% block main %}
+<h1>Edition du site</h1>
 <form method="post">
     {{ form_start(siteForm) }}
     <div class="form-group row">
@@ -14,7 +15,7 @@
         <div class="col-sm-10">
             <input type="submit" class="btn btn-primary" value="Enregistrer">
 
-            <button type="reset" class="btn btn-primary">Annuler</button>
+            <a class="btn btn-danger" href="{{ path("admin-sites")}}">Annuler</a>
         </div>
     </div>
         {{ form_rest(siteForm) }}
