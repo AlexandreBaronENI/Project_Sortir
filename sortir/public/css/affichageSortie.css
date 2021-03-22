@@ -29,6 +29,7 @@ h3 {
 
 body {
     background-color: rgba(192, 200, 194, 1);
+    margin-bottom: 50px;
 }
 
 .card>span {

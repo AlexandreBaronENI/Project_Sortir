@@ -12,7 +12,7 @@
 
     <title>{% block title %}Sortir.com{% endblock %}</title>
 </head>
-<body class="zoom">
+<body style="margin-bottom = 50px">
 
     <header class="bg-dark">
         {% block header %}
@@ -27,7 +27,7 @@
         {% block main %} {% endblock %}
     </main>
 
-    <footer class="site-footer text-center text-white bg-dark fixed-bottom">
+    <footer class="site-footer text-center text-white bg-dark bottom">
         {% block footer %}&copy;{{ "now"|date("Y")}}&nbsp;Sortir.com{% endblock %}
     </footer>
 
