@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+{% block main %}
+    <h1>Créer un utilisateur</h1>
+
+    {% form_theme userForm 'forms/bootstrap_4_layout.html.twig' %}
+    {{ form_start(userForm) }}
+    {{ form_widget(userForm) }}
+    <button type="submit" class="btn btn-primary">Enregistrer</button>
+    <a class="btn btn-danger" href="{{ path("home") }}">Annuler</a>
+    {{ form_end(userForm) }}
+{% endblock %}

@@ -8,12 +8,14 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Lieu;
 use App\Entity\Site;
 use App\Entity\Ville;
+use App\Entity\Utilisateur;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Form\AddLocationType;
 use App\Form\EditLocationType;
 use App\Form\AddSiteType;
 use App\Form\EditSiteType;
 use App\Form\AddTownType;
+use App\Form\AddUserAdminType;
 
 /**
  * @Route("/admin")
@@ -227,8 +229,34 @@ class AdminController extends AbstractController
      * Gestion des users
      * @Route("/users", name="admin-users")
      */
-    public function users()
+    public function users(EntityManagerInterface $em)
     {
-        return $this->redirectToRoute('home');
+       $users = $em->getRepository(Utilisateur::class)->findAll();
+       return $this->render('admin/users/view_users.html.twig', [
+        'users' => $users
+    ]);
+    }
+    
+    /**
+     * Ajout de user
+     * @Route("/users/add", name="admin-user-add")
+     */
+    public function addUser(EntityManagerInterface $em, Request $request)
+    {
+        $user = new Utilisateur();
+        $userForm = $this->createForm(addUserAdminType::class, $user);
+        $userForm->handleRequest($request);
+        
+        if ($userForm->isSubmitted() && $userForm->isValid() ) {
+            $em->persist($user);
+            $em->flush();
+
+            $this->addFlash('success', 'Nouvelle ville ajoutée !');
+            return $this->redirectToRoute('admin-users');
+        }
+
+        return $this->render('admin/users/add.html.twig',[
+            'userForm' => $userForm->createView()
+        ]);
     }
 }

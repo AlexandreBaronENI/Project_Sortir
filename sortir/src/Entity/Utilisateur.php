@@ -55,7 +55,7 @@ class Utilisateur implements UserInterface
     /**
      * @ORM\Column(type="boolean")
      */
-    private $admin = false;
+    private $admin;
 
     /**
      * @ORM\Column(type="boolean")
@@ -186,6 +186,17 @@ class Utilisateur implements UserInterface
     {
         $this->site = $site;
 
+        return $this;
+    }
+
+    public function getAdmin(): ?bool
+    {
+        return $this->admin;
+    }
+
+    public function setAdmin(bool $admin): self
+    {
+        $this->admin = $admin;
         return $this;
     }
 }
