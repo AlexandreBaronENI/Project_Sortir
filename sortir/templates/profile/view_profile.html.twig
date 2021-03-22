@@ -10,46 +10,46 @@
     <div class="card mb-3">
         <div class="card-body">
             <div class="row">
-                <div class="col-sm-3">
+                <div class="col-md-3">
                     <h6 class="mb-0">Prénom:</h6>
                 </div>
-                <div class="col-sm-9 text-secondary text-center">
+                <div class="col-md-9 text-secondary text-center">
                     {{ profil.prenom}}
                 </div>
             </div>
             <hr>
             <div class="row">
-                <div class="col-sm-3">
+                <div class="col-md-3">
                     <h6 class="mb-0">Nom:</h6>
                 </div>
-                <div class="col-sm-9 text-secondary text-center">
+                <div class="col-md-9 text-secondary text-center">
                     {{ profil.nom}}
                 </div>
             </div>
             <hr>
             <div class="row">
-                <div class="col-sm-3">
+                <div class="col-md-3">
                     <h6 class="mb-0">Téléphone:</h6>
                 </div>
-                <div class="col-sm-9 text-secondary text-center">
+                <div class="col-md-9 text-secondary text-center">
                     {{ profil.telephone}}
                 </div>
             </div>
             <hr>
             <div class="row">
-                <div class="col-sm-3">
+                <div class="col-md-3">
                     <h6 class="mb-0">Email:</h6>
                 </div>
-                <div class="col-sm-9 text-secondary text-center">
+                <div class="col-md-9 text-secondary text-center">
                     {{ profil.mail}}
                 </div>
             </div>
             <hr>
             <div class="row">
-                <div class="col-sm-3">
+                <div class="col-md-3">
                     <h6 class="mb-0">Site de rattachement:</h6>
                 </div>
-                <div class="col-sm-9 text-secondary text-center">
+                <div class="col-md-9 text-secondary text-center">
                     {{ profil.site.nom}}
                 </div>
             </div>
@@ -61,6 +61,8 @@
             Modifier mon profil</a>
         <a href="{{ path('home') }}" class="btn btn-primary btn-d-lg-flex ">
             Retour</a>
+        <a class="btn btn-primary" href="{{ path('my-sortie') }}">
+        Mes sortie</a>
 </div></div>
 
  {% endblock %}
