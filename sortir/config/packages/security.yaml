@@ -37,8 +37,8 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/profile/add, roles: [ROLE_ADMIN, ROLE_USER, IS_AUTHENTICATED_ANONYMOUSLY]  }
-        - { path: ^/profile/forgotpassword, roles: [ROLE_ADMIN, ROLE_USER, IS_AYTHENTICATED_ANONYMOUSLY] }
-        - { path: ^/profile/resetpassword, roles: [ROLE_ADMIN, ROLE_USER, IS_AYTHENTICATED_ANONYMOUSLY] }
+        - { path: ^/profile/forgotpassword, roles: [ROLE_ADMIN, ROLE_USER, IS_AUTHENTICATED_ANONYMOUSLY] }
+        - { path: ^/profile/resetpassword, roles: [ROLE_ADMIN, ROLE_USER, IS_AUTHENTICATED_ANONYMOUSLY] }
         - { path: ^/admin/locations, roles: [ROLE_ADMIN, ROLE_USER] }
         - { path: ^/admin/location/add, roles: [ROLE_ADMIN, ROLE_USER] }
         - { path: ^/admin/site/add, roles: [ROLE_ADMIN, ROLE_USER] }
