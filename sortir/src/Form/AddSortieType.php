@@ -107,12 +107,6 @@ class AddSortieType extends AbstractType
                     'class' => 'btn btn-success'
                 ]
             ])
-            ->add('cancel', ResetType::class, [
-                'label' => 'Annuler',
-                'attr' => [
-                    'class' => 'btn btn-danger'
-                ]
-            ])
         ;
     }
 

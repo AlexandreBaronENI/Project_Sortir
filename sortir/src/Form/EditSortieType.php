@@ -41,10 +41,19 @@ class EditSortieType extends AbstractType
                 'label' => "Nom de la sortie"
             ])
             ->add('dateDebut', DateTimeType::class, [
-                'label' => "Date de début de la sortie"
+                'label' => "Date de début de la sortie",
+                'widget' => 'single_text',
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+
             ])
             ->add('dateCloture', DateType::class, [
-                'label' => "Date limite d'inscription"
+                'label' => "Date limite d'inscription",
+                'widget' => 'single_text',
+                'attr' => [
+                    'class' => 'form-control'
+                ]
             ])
             ->add('nbInscriptionMax', NumberType::class, [
                 'label' => "Nombre de places"
@@ -86,12 +95,6 @@ class EditSortieType extends AbstractType
                     'label' => 'Supprimer la sortie',
                     'attr' => [
                         'class' => 'btn btn-danger'
-                    ]
-                ])
-                ->add('cancel', ResetType::class, [
-                    'label' => 'Annuler',
-                    'attr' => [
-                        'class' => 'btn btn-secondary'
                     ]
                 ]);
         }

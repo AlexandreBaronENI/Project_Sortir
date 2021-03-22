@@ -112,7 +112,7 @@ class ProfileController extends AbstractController
     }
     /**
      * * Mot de passe oublié utilisateur
-     * @Route("/forgotpassword", name="profile-forgotPassword")
+     * @Route("/forgotpassword", name="profile-forgot-password")
      */
     public function forgotpassword(EntityManagerInterface $em, Request $request)
     {
@@ -132,7 +132,7 @@ class ProfileController extends AbstractController
                 $session = $request->getSession();
                 $session->set('mail', $user->getMail());
 
-                return $this->redirectToRoute('profile-resetPassword');
+                return $this->redirectToRoute('profile-reset-password');
             }
 
         }
@@ -142,7 +142,7 @@ class ProfileController extends AbstractController
     }
     /**
      * * Réinitialisation du mot de passe utilisateur
-     * @Route("/resetpassword", name="profile-resetPassword")
+     * @Route("/resetpassword", name="profile-reset-password")
      */
     public function resetpassword(EntityManagerInterface $em, Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
