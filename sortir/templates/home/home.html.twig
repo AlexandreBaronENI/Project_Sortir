@@ -119,7 +119,7 @@
                         <a href="{{ path('sortie-register',{id:sortie.id,sortie:sortie}) }}">S'inscrire</a>
                     {% endif %}
                     {% if isInscrit and sortie.etat.id == 1 %}
-                        <a href="{{ path('sortie-withdraw', {id:sortie.id,sortie:sortie,idUser:user.id}) }}">Se désister</a>
+                        <a href="{{ path('sortie-withdraw', {id:sortie.id,sortie:sortie}) }}">Se désister</a>
                     {% endif %}
                     <a href="{{ path('sortie-affichage', {id:sortie.id}) }}">Afficher</a>
                 </td>

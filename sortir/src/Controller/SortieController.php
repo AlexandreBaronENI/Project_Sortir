@@ -7,6 +7,7 @@ namespace App\Controller;
 use App\Entity\Etat;
 use App\Entity\Sortie;
 use App\Entity\Utilisateur;
+use App\Entity\Inscription;
 use App\Form\AddSortieType;
 use App\Form\CancelSortieType;
 use App\Form\EditSortieType;
