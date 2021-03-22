@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+{% block main %}
+<h1> Gestion des villes</h1>
+<table class="display table table-striped table-bordered" style="width:100%">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Code postal</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for ville in (villes) %}
+        <tr>
+            <td>{{ville.nom}}</td>
+            <td>{{ville.codePostal}}</td>
+            <td>
+                 <a href="{{ path("edit-town", {id:ville.id}) }}">Modifier la ville</a>
+                 <a href="{{ path("delete-town", {id:ville.id}) }}">Supprimer la ville</a>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<a class="btn btn-primary" href="{{ path("add-town")}}">Ajouter</a>
+{% endblock %}
