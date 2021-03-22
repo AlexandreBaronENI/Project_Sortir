@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+{% block main %}
+<div class="container-fluid">
+    <h2>Mes sortie   </h2>
+    <table class="table table-bordered" style="width:100%">
+        <thead>
+            <tr>
+                <th>Nom de la sortie</th>
+                <th>Date de la sortie</th>
+                <th>Lieu</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for sortie in sorties %}
+            <tr>
+                <td><a href="{{ path("sortie-affichage", {id:sortie.id}) }}">{{sortie.nom}}</a></td>
+                <td>{{sortie.dateDebut|date("d/m/Y H:i")}}</td>
+                <td>{{sortie.lieu.nom}}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a class="btn btn-primary" href="{{ path('home') }}">Retour</a>
+</div>
+{% endblock %}

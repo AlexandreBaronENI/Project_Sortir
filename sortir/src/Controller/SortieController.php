@@ -113,6 +113,27 @@ class SortieController extends AbstractController
             "sortieForm" => $sortieForm->createView()
         ]);
     }
+        /**
+     * Acceder à ses sorties
+     * @Route("/mine", name="my-sortie")
+     */
+    public function getSortieUser(EntityManagerInterface $em)
+    {
+        $sorties = $em->getRepository(Sortie::class)->findAll();
+        foreach ($sorties as $sortieTemp) {
+            foreach ($sortieTemp->getInscriptions() as $inscription) {
+                if($inscription->getParticipant()->getId() == $this->getUser()->getId())
+                {
+                    $sortiesPartipate[] = $sortieTemp;
+                }
+            }
+        }
+        $sorties = array_merge($sorties, $sortiesPartipate);
+        return $this->render('sortie/my_sortie.html.twig', [
+            'sorties' => $sorties,
+        ]);
+    }
+
     /**
      * Afficher une sortie
      * @Route("/{id}", name="sortie-affichage")
@@ -214,8 +235,5 @@ class SortieController extends AbstractController
 
 
             return $this->redirectToRoute('home');
-
-
     }
-
 }
