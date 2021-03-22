@@ -57,6 +57,7 @@ class ProfileController extends AbstractController
             $em->persist($utilisateur);
             $em->flush();
 
+
             $this->addFlash('success', 'Votre profil a bien été sauvegardé !');
             return $this->redirectToRoute('profile-affichage');
         }
