@@ -17,12 +17,13 @@ class Etat
     /**
      * Etats
      *
-     * 0 Open
-     * 1 Draft
-     * 2 Closed
-     * 3 Active
-     * 4 Finished
-     * 5 Canceled
+     * 0 Archived
+     * 1 Open
+     * 2 Draft
+     * 3 Closed
+     * 4 Active
+     * 5 Finished
+     * 6 Canceled
      */
     static $etats;
 
@@ -120,5 +121,15 @@ class Etat
     public function getCanceled()
     {
         return self::$etats[5];
+    }
+
+    public static function isArchived($id): bool
+    {
+        return $id == self::$etats[6]->getId();
+    }
+
+    public function getArchived()
+    {
+        return self::$etats[6];
     }
 }

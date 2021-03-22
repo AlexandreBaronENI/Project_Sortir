@@ -52,6 +52,7 @@ class SortieController extends AbstractController
                 $em->persist($sortie);
                 $em->flush();
             }
+            return $this->redirectToRoute('home');
         }
 
 
@@ -95,13 +96,15 @@ class SortieController extends AbstractController
 
                 $em->persist($sortie);
                 $em->flush();
+        
             }
             elseif (($etatManager->IsDraft($sortie->getEtat()->getId()) || $etatManager->IsOpen($sortie->getEtat()->getId())) && $sortieForm->get('delete')->isClicked()) {
                 $etat = $etatManager->getCanceled();
                 $sortie->setEtat($etat);
                 $em->persist($sortie);
-                $em->flush();
+                $em->flush(); 
             }
+            return $this->redirectToRoute('home');
         }
 
         return $this->render("sortie/edit.html.twig", [
@@ -114,15 +117,49 @@ class SortieController extends AbstractController
      */
     public function afficherSortie(int $id, EntityManagerInterface $em)
     {
+        $etatManager = new Etat($em->getRepository(Etat::class));
+
         $sortie = $this->getDoctrine()
-        ->getRepository(Sortie::class)
-        ->find($id);
+            ->getRepository(Sortie::class)
+            ->find($id);
         if( $sortie ==  null){
             throw $this->createNotFoundException("Cette sortie n'existe pas");
         }
-        return $this->render('sortie/affichageSortie.html.twig', [ 
+        if ($etatManager->IsArchived($sortie->getEtat()->getId())) {
+            throw $this->createNotFoundException('Cette sortie n\'existe plus !');
+        }
+
+        return $this->render('sortie/affichageSortie.html.twig', [
             'sortie' => $sortie,
         ]);
+    }
+
+
+
+    /**
+     * Se desinscrire d'une sortie
+     * @Route("/publish/{id}", name="sortie-publish", requirements={"id"="\d+"})
+     */
+    public function publish($id, EntityManagerInterface $em, Request $request)
+    {
+        $sortie = $em->getRepository(Sortie::class)->find($id);
+        $etatManager = new Etat($em->getRepository(Etat::class));
+
+        if ($sortie == null) {
+            throw $this->createNotFoundException('La sortie n\'a pas été trouvée !');
+        }
+
+        if(!$etatManager->IsDraft($sortie->getEtat()->getId())){
+            throw $this->createNotFoundException('La publication de cette sortie n\'est pas possible !');
+        }
+
+        $etat = $etatManager->getOpen();
+        $sortie->setEtat($etat);
+
+        $em->persist($sortie);
+        $em->flush();
+
+        return $this->redirectToRoute('home');
     }
 
     /**
