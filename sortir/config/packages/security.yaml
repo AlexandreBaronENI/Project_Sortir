@@ -42,6 +42,8 @@ security:
         - { path: ^/admin/locations, roles: [ROLE_ADMIN, ROLE_USER] }
         - { path: ^/admin/location/add, roles: [ROLE_ADMIN, ROLE_USER] }
         - { path: ^/admin/site/add, roles: [ROLE_ADMIN, ROLE_USER] }
+        - { path: ^/admin/town/add, roles: [ROLE_ADMIN, ROLE_USER] }
+        - { path: ^/admin/towns, roles: [ROLE_ADMIN, ROLE_USER] }
         - { path: ^/admin/sites, roles: [ROLE_ADMIN, ROLE_USER] }
         - { path: ^/admin, roles: [ROLE_ADMIN] }
         - { path: ^/sortie, roles: [ROLE_ADMIN, ROLE_USER]  }

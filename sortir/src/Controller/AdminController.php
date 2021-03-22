@@ -7,11 +7,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Lieu;
 use App\Entity\Site;
+use App\Entity\Ville;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Form\AddLocationType;
 use App\Form\EditLocationType;
 use App\Form\AddSiteType;
 use App\Form\EditSiteType;
+use App\Form\AddTownType;
 
 /**
  * @Route("/admin")
@@ -151,6 +153,74 @@ class AdminController extends AbstractController
         $em->flush();
 
         return $this->redirectToRoute('admin-sites');
+    }
+
+    /**
+     * Gestion des villes
+     * @Route("/towns", name="admin-towns")
+     */
+    public function towns(EntityManagerInterface $em, Request $request)
+    {
+        $villes = $em->getRepository(Ville::class)->findAll();
+        return $this->render('admin/town/view_towns.html.twig', [
+            'villes' => $villes
+        ]);
+    }
+
+    /**
+     * Ajout de ville
+     * @Route("town/add", name="add-town")
+     */
+    public function addTown(EntityManagerInterface $em, Request $request)
+    {
+        $ville = new Ville();
+        $villeForm = $this->createForm(addTownType::class, $ville);
+        $villeForm->handleRequest($request);
+        
+        if ($villeForm->isSubmitted() && $villeForm->isValid() ) {
+            $em->persist($ville);
+            $em->flush();
+
+            $this->addFlash('success', 'Nouvelle ville ajoutée !');
+            return $this->redirectToRoute('admin-towns');
+        }
+
+        return $this->render('admin/town/add.html.twig',[
+            'villeForm' => $villeForm->createView()
+        ]);
+    }
+
+    /**
+     * Modification d'une ville
+     * @Route("/town/edit/{id}", name="edit-town")
+     */
+    public function editTown(int $id, EntityManagerInterface $em, Request $request)
+    {
+        $ville = $em->getRepository(Ville::class)->find($id);
+        $villeForm = $this->createForm(addTownType::class, $ville);
+        $villeForm->handleRequest($request);
+        if ($villeForm->isSubmitted() && $villeForm->isValid()) {
+            $em->persist($ville);
+            $em->flush();
+            return $this->redirectToRoute('admin-towns');
+        }
+
+        return $this->render("admin/town/edit.html.twig", [
+            "villeForm" => $villeForm->createView()
+        ]);
+    }
+
+    /**
+     * Suppression d'une ville
+     * @Route("/town/delete/{id}", name="delete-town")
+     */
+    function deleteTown(int $id, EntityManagerInterface $em, Request $request)
+    {
+        $ville = $em->getRepository(Ville::class)->find($id);
+        $em->remove($ville);
+        $em->flush();
+
+        return $this->redirectToRoute('admin-towns');
     }
 
     /**

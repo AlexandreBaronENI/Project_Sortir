@@ -14,7 +14,10 @@ class AddSiteType extends AbstractType
     {
         $builder
             ->add('nom', TextType::class, [
-                'label'=>'Nom du site'
+                'label'=>'Nom du site',
+                'attr' => [
+                    'class' => 'form-control'
+                ]
             ])
         ;
     }
