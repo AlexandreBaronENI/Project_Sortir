@@ -1,4 +1,4 @@
-<div class="collapse navbar-collapse" id="navbarSupportedContent">
+<div class="collapse navbar-collapse .hidden-sm-down" id="navbarSupportedContent">
     <ul class="navbar-nav ml-auto">
         <li class="nav-item active">
             <a class="navbar-brand" href="{{path('home')  }}">Accueil</a>
@@ -6,16 +6,24 @@
         </li>
             <a class="navbar-brand" href="{{path('profile-affichage')  }}">Mon profil</a>
         </li>
-    {% if is_granted('ROLE_ADMIN') %}
-        <a class="navbar-brand" href="{{ path('admin-locations') }}">Gestion des lieux</a>
-        <a class="navbar-brand" href="{{ path('admin-towns')}}">Gestion des villes</a>
-    {% endif %}
-    {%  if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+        {% if is_granted('ROLE_ADMIN') %}
+        <li class="nav-item dropdown active">
+        <a class="nav-link dropdown-toggle navbar-brand" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Gestion
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="{{ path('admin-locations') }}">Lieux</a>
+          <a class="dropdown-item" href="{{ path('admin-users') }}">Utilisateur</a>
+          <a class="dropdown-item" href="{{ path('admin-towns') }}">ville</a>
+          <a class="dropdown-item" href="{{ path('admin-sites') }}">Sites</a>
+        </div>
+        {% endif %}
+        {%  if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
         <li class="nav-item active">
             <a class="navbar-brand" href="{{path('main-logout')}}">Se déconnecter</a>
         </li>
-    {%  else %}
-    <a class="navbar-brand" href="{{ path('main-login') }}">Se connecter</a>
-    {%  endif%}
+        {%  else %}
+        <a class="navbar-brand" href="{{ path('main-login') }}">Se connecter</a>
+        {%  endif %}
     </ul>
 </div>

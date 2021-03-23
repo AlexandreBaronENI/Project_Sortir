@@ -58,8 +58,8 @@ class AddSortieType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
-            ->add('duree', IntegerType::class, [
-                'label' => "Durée",
+            ->add('duree', NumberType::class, [
+                'label' => "Durée (en minutes)",
                 'attr' => [
                     'class' => 'form-control'
                 ]
