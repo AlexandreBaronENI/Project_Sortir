@@ -201,7 +201,8 @@ class SortieController extends AbstractController
     public function cancel($id, EntityManagerInterface $em, Request $request)
     {
         $etatManager = new Etat($em->getRepository(Etat::class));
-
+        $userRole = $this->getUser()->getRoles();
+        $contains = $userRole[0];
         $sortie = $em->getRepository(Sortie::class)->find($id);
         $sortieForm = $this->createForm(CancelSortieType::class, $sortie);
         $sortieForm->handleRequest($request);
@@ -209,7 +210,7 @@ class SortieController extends AbstractController
         if ($sortie == null) {
             throw $this->createNotFoundException('La sortie n\'a pas été trouvée !');
         }
-        elseif ($sortie->getOrganisateur()->getId() != $this->getUser()->getId()) {
+        elseif ($sortie->getOrganisateur()->getId() != $this->getUser()->getId() && $contains !== 'ROLE_ADMIN' ) {
             throw $this->createNotFoundException('Vous n\'êtes pas l\'organisateur de cette sortie !');
         }
         elseif (!$etatManager->IsOpen($sortie->getEtat()->getId())) {
@@ -222,6 +223,7 @@ class SortieController extends AbstractController
 
             $em->persist($sortie);
             $em->flush();
+            return $this->redirectToRoute('home');
         }
         return $this->render('sortie/cancel.html.twig', [
             'sortie' => $sortie,
