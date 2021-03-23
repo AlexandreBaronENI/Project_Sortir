@@ -21,7 +21,8 @@ class SortieRepository extends ServiceEntityRepository
     public function findAll()
     {
         return $this->createQueryBuilder('s')
-            ->where('s.etat != 0')
+            ->where('s.etat != 2')
+            ->andWhere('s.etat != 7')
             ->getQuery()
             ->execute();
     }

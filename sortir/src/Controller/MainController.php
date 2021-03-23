@@ -38,6 +38,8 @@ class MainController extends AbstractController
      */
     public function home(EntityManagerInterface $em, Request $request)
     {
+        $etatManager = new Etat($em->getRepository(Etat::class));
+
         // Gestion du mobile
         $sortiesParticipate = [];
         $sorties_mobile = $em->getRepository(Sortie::class)->findAll();
@@ -53,6 +55,12 @@ class MainController extends AbstractController
 
         // Gestion du desktop
         $sorties = $em->getRepository(Sortie::class)->findAll();
+        $sortiesDraft = $em->getRepository(Sortie::class)->findBy(
+            array('organisateur'=> $this->getUser()->getId(),
+                'etat' => $etatManager->getDraft()->getId())
+        );
+        $sorties = array_merge($sorties, $sortiesDraft);
+        $sorties = array_unique($sorties, SORT_REGULAR);
 
         $searchForm = $this->createForm(SearchSortieType::class);
         $searchForm->handleRequest($request);
@@ -103,8 +111,6 @@ class MainController extends AbstractController
                     }
                 }
                 if(in_array(4, $choices)){
-                    $etatManager = new Etat($em->getRepository(Etat::class));
-
                     foreach ($sortiesFiltered as $sortieTemp) {
                         if($etatManager->IsFinished($sortieTemp->getEtat()->getId())){
                             $sorties[] = $sortieTemp;
