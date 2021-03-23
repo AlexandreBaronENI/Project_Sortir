@@ -4,7 +4,7 @@
 {% block main %}
 
     <h1>Mon profil</h1>
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         {{ form_start(profilForm) }}
         <div class="form-group row">
          <span class="col-md-2 col-form-label">
@@ -62,17 +62,25 @@
 
         </div>
 
-        {{ form_rest(profilForm) }}
+
         <div class="form-group row">
-            <label for="Telecharger">Télécharger vers le serveur</label>
-            <input type="file" class="form-control-file" id="Telecharger">
+ <span class="col-sm-2 col-form-label">
+         {{ form_label(profilForm.image) }}
+            </span>
+            {{ form_widget(profilForm.image) }}
+
+
         </div>
+
+        {{ form_rest(profilForm) }}
+
 
         <div class="form-group row">
             <div class="col-md-10">
                 <input type="submit" class="btn btn-primary" value="Enregistrer">
 
                 <a class="btn btn-danger" href="{{ path("profile-affichage") }}">Annuler</a>
+
             </div>
         </div>
 

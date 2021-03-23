@@ -12,10 +12,12 @@ use App\Form\ResetPasswordType;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Form\LoginFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 /**
  * @Route("/profile")
@@ -57,6 +59,21 @@ class ProfileController extends AbstractController
             $em->persist($utilisateur);
             $em->flush();
 
+            $imageFile = $profilForm->get('image')->getData();
+
+            if ($imageFile) {
+                $newFilename = $utilisateur->getId().'.png';
+
+                try {
+                    $imageFile->move(
+                        $this->getParameter('image_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+            }
             $this->addFlash('success', 'Votre profil a bien été sauvegardé !');
             return $this->redirectToRoute('profile-affichage');
         }
@@ -101,6 +118,20 @@ class ProfileController extends AbstractController
             $utilisateur->setPassword($hashed);
             $em->persist($utilisateur);
             $em->flush();
+
+            $imageFile = $profilForm->get('image')->getData();
+
+            if ($imageFile) {
+                $newFilename = $utilisateur->getId() .'.png';
+
+                try {
+                    $imageFile->move(
+                        $this->getParameter('image_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    dump($e);
+                }}
 
             $this->addFlash('success', 'Votre profil a bien été sauvegardé !');
             return $this->redirectToRoute('profile-affichage');
