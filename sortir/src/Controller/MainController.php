@@ -40,6 +40,7 @@ class MainController extends AbstractController
     {
         // Gestion du mobile
         $sorties_mobile = $em->getRepository(Sortie::class)->findAll();
+        $sortiesPartipate=[];
         foreach ($sorties_mobile as $sortieTemp) {
             foreach ($sortieTemp->getInscriptions() as $inscription) {
                 if($inscription->getParticipant()->getId() == $this->getUser()->getId()){

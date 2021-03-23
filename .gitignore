@@ -59,4 +59,6 @@
 /web/css/
 /web/js/
 
+#nouveau
+/public/img/profile_pic/
 # End of https://www.toptal.com/developers/gitignore/api/symfony

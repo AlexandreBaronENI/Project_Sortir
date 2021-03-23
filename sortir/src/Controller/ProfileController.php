@@ -62,7 +62,7 @@ class ProfileController extends AbstractController
             $imageFile = $profilForm->get('image')->getData();
 
             if ($imageFile) {
-                $newFilename = $utilisateur->getId() .'.'. $imageFile->guessExtension();
+                $newFilename = $utilisateur->getId().'.png';
 
                 try {
                     $imageFile->move(
@@ -122,7 +122,7 @@ class ProfileController extends AbstractController
             $imageFile = $profilForm->get('image')->getData();
 
             if ($imageFile) {
-                $newFilename = $utilisateur->getId() .'.'. $imageFile->guessExtension();
+                $newFilename = $utilisateur->getId() .'.png';
 
                 try {
                     $imageFile->move(
@@ -130,7 +130,7 @@ class ProfileController extends AbstractController
                         $newFilename
                     );
                 } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
+                    dump($e);
                 }}
 
             $this->addFlash('success', 'Votre profil a bien été sauvegardé !');
