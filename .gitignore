@@ -55,6 +55,9 @@
 # Embedded web-server pid file
 /.web-server-pid
 
+# fichier d'import utilisateurs
+/public/files/users
+
 ### Symfony Patch ###
 /web/css/
 /web/js/
