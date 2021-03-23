@@ -44,7 +44,7 @@ class MainController extends AbstractController
         foreach ($sorties_mobile as $sortieTemp) {
             foreach ($sortieTemp->getInscriptions() as $inscription) {
                 if($inscription->getParticipant()->getId() == $this->getUser()->getId()){
-                    $sortiesPartipate = $sortieTemp;
+                    $sortiesPartipate[] = $sortieTemp;
                 }
             }
         }
