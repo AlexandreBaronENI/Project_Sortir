@@ -88,8 +88,8 @@
                 </td>
                 <td>
                     {% set isInscrit = false %}
-                    {% for inscrit in (sortie.inscriptions) %}
-                        {% if inscrit.id == user.id %}
+                    {% for inscrit in sortie.inscriptions %}
+                        {% if inscrit.participant.id == user.id %}
                             {% set isInscrit = true %}
                         {% endif %}
                     {% endfor %}
@@ -116,11 +116,11 @@
                     {% if sortie.organisateur.id == user.id and sortie.etat.id == 1 %}
                         <a href="{{ path("sortie-cancel", {id:sortie.id}) }}">Annuler</a>
                     {% endif %}
-                    {% if true %}
-                        <a href="">S'inscrire</a>
+                    {% if not isInscrit and sortie.etat.id == 1%}
+                        <a href="{{ path('sortie-register',{id:sortie.id,sortie:sortie}) }}">S'inscrire</a>
                     {% endif %}
-                    {% if true %}
-                        <a href="">Se désister</a>
+                    {% if isInscrit and sortie.etat.id == 1 %}
+                        <a href="{{ path('sortie-withdraw', {id:sortie.id,sortie:sortie}) }}">Se désister</a>
                     {% endif %}
                     <a href="{{ path('sortie-affichage', {id:sortie.id}) }}">Afficher</a>
                 </td>

@@ -5,12 +5,13 @@ namespace App\Controller;
 
 
 use App\Entity\Etat;
-use App\Entity\Inscription;
 use App\Entity\Sortie;
 use App\Entity\Utilisateur;
+use App\Entity\Inscription;
 use App\Form\AddSortieType;
 use App\Form\CancelSortieType;
 use App\Form\EditSortieType;
+use App\Repository\InscriptionRepository;
 use App\Repository\LieuRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -221,7 +222,7 @@ class SortieController extends AbstractController
     }
 
     /**
-     * Se desinscrire d'une sortie
+     * S'sinscrire à une sortie
      * @Route("/register/{id}", name="sortie-register")
      */
     public function register(int $id,EntityManagerInterface $em,Sortie $sortie){
@@ -235,5 +236,23 @@ class SortieController extends AbstractController
 
 
             return $this->redirectToRoute('home');
+
+
     }
+
+    /**
+     * Désinscrire à une sortie
+     * @Route("/withdraw/{id}", name="sortie-withdraw")
+     */
+    public function withdraw (EntityManagerInterface $em,InscriptionRepository $inscriptionRepository,Sortie $sortie){
+
+
+        $inscription = $inscriptionRepository->findOneBy(['sortie'=>$sortie, 'participant'=>$this->getUser()]);
+
+        $em->remove($inscription);
+        $em->flush();
+        return $this->redirectToRoute('home');
+    }
+
+
 }
