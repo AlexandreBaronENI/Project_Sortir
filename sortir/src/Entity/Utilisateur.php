@@ -79,11 +79,6 @@ class Utilisateur implements UserInterface
         }
     }
 
-    public function setAdmin()
-    {
-        $this->admin = true;
-    }
-
     public function getPassword()
     {
         return $this->password;
