@@ -22,6 +22,10 @@ security:
             logout:
                 path: main-logout
                 target: main-login
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 604800
+                path: /
 
 
 
