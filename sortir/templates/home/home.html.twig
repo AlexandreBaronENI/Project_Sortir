@@ -113,7 +113,7 @@
                     {% if sortie.organisateur.id == user.id and sortie.etat.id == 2 %}
                         <a href="{{ path("sortie-publish", {id:sortie.id}) }}">Publier</a>
                     {% endif %}
-                    {% if sortie.organisateur.id == user.id and sortie.etat.id == 1 %}
+                    {% if sortie.organisateur.id == user.id and sortie.etat.id == 1 or is_granted('ROLE_ADMIN') %}
                         <a href="{{ path("sortie-cancel", {id:sortie.id}) }}">Annuler</a>
                     {% endif %}
                     {% if not isInscrit and sortie.etat.id == 1%}
