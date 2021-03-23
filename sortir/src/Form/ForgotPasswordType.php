@@ -23,7 +23,7 @@ class ForgotPasswordType extends AbstractType
             ->add('reset', SubmitType::class, [
                 'label' => 'Retrouvez le mot de passe',
                 'attr' => [
-                    'class' => 'btn btn-primary'
+                    'class' => 'btn btn-primary form-control'
                 ]
             ])
         ;

@@ -31,6 +31,9 @@ class LoginFormType extends AbstractType
             ])
             ->add('check', CheckboxType::class,[
                 'label'=> 'Se souvenir de moi ',
+                'attr' => [
+                    'class' => 'form-control'
+                ]
             ])
             ->add('submit', SubmitType::class, [
                 'label'=>'Connexion',

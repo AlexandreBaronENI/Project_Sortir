@@ -69,12 +69,6 @@ class AddSortieType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
-            ->add('commentaire', TextareaType::class, [
-                'label' => "Description et infos",
-                'attr' => [
-                    'class' => 'form-control'
-                ]
-            ])
             ->add('lieu', EntityType::class, [
                 'label' => "Lieu",
                 'class' => Lieu::class,
@@ -96,15 +90,15 @@ class AddSortieType extends AbstractType
                 ]
             ])
             ->add('save', SubmitType::class, [
-                'label' => 'Enregistrer le brouillon',
+                'label' => 'Enregistrer',
                 'attr' => [
-                    'class' => 'btn btn-info'
+                    'class' => 'btn btn-warning'
                 ]
             ])
             ->add('publish', SubmitType::class, [
-                'label' => 'Publier la sortie',
+                'label' => 'Publier',
                 'attr' => [
-                    'class' => 'btn btn-success'
+                    'class' => 'btn btn-success mx-3'
                 ]
             ])
         ;

@@ -1,10 +1,76 @@
 {% extends 'base.html.twig' %}
 {% block main %}
-<h1>Modifier une sortie</h1>
+    <h1>Modifier une sortie</h1>
 
-    {% form_theme sortieForm 'forms/bootstrap_4_layout.html.twig' %}
-{{ form_start(sortieForm) }}
-{{ form_widget(sortieForm) }}
-    <a class="btn btn-danger" href="{{ path("home") }}">Annuler</a>
-{{ form_end(sortieForm) }}
+    <form method="post">
+        {{ form_start(sortieForm) }}
+
+        <div class="form-group row">
+            <span class="col-sm-2 col-form-label">
+                {{ form_label(sortieForm.nom) }}
+            </span>
+            {{ form_widget(sortieForm.nom) }}
+        </div>
+
+        <div class="form-group row">
+            <span class="col-sm-2 col-form-label">
+                {{ form_label(sortieForm.dateDebut) }}
+            </span>
+            {{ form_widget(sortieForm.dateDebut) }}
+        </div>
+
+        <div class="form-group row">
+            <span class="col-sm-2 col-form-label">
+                {{ form_label(sortieForm.dateCloture) }}
+            </span>
+            {{ form_widget(sortieForm.dateCloture) }}
+        </div>
+
+        <div class="form-group row">
+            <span class="col-sm-2 col-form-label">
+                {{ form_label(sortieForm.nbInscriptionMax) }}
+            </span>
+            {{ form_widget(sortieForm.nbInscriptionMax) }}
+        </div>
+
+        <div class="form-group row">
+            <span class="col-sm-2 col-form-label">
+                {{ form_label(sortieForm.duree) }}
+            </span>
+            {{ form_widget(sortieForm.duree) }}
+        </div>
+
+        <div class="form-group row">
+            <span class="col-sm-2 col-form-label">
+                {{ form_label(sortieForm.commentaire) }}
+            </span>
+            {{ form_widget(sortieForm.commentaire) }}
+        </div>
+
+        <div class="form-group row">
+            <span class="col-sm-2 col-form-label">
+                {{ form_label(sortieForm.lieu) }}
+            </span>
+            {{ form_widget(sortieForm.lieu) }}
+        </div>
+
+        <div class="form-group row">
+            <span class="col-sm-2 col-form-label">
+                {{ form_label(sortieForm.ville) }}
+            </span>
+            {{ form_widget(sortieForm.ville) }}
+        </div>
+
+        <div class="form-group row">
+            {% if sortieForm.publish is defined %}
+                {{ form_widget(sortieForm.publish) }}
+                {{ form_widget(sortieForm.save) }}
+                {{ form_widget(sortieForm.delete) }}
+            {% else %}
+                <a class="btn btn-danger text-white" href="{{ path('sortie-cancel', {id: sortieForm.vars.data.id}) }}">Annuler la sortie</a>
+            {% endif %}
+            <a class="ml-auto btn btn-danger mx-3 text-white" href="{{ path('home') }}">Annuler</a>
+        </div>
+    </form>
+    {{ form_end(sortieForm) }}
 {% endblock %}

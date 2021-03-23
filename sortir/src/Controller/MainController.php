@@ -39,16 +39,16 @@ class MainController extends AbstractController
     public function home(EntityManagerInterface $em, Request $request)
     {
         // Gestion du mobile
-        $sortiesPartipate = [];
+        $sortiesParticipate = [];
         $sorties_mobile = $em->getRepository(Sortie::class)->findAll();
         foreach ($sorties_mobile as $sortieTemp) {
             foreach ($sortieTemp->getInscriptions() as $inscription) {
                 if($inscription->getParticipant()->getId() == $this->getUser()->getId()){
-                    $sortiesPartipate[] = $sortieTemp;
+                    $sortiesParticipate[] = $sortieTemp;
                 }
             }
         }
-        $sorties_mobile = $sortiesPartipate;
+        $sorties_mobile = $sortiesParticipate;
 
         // Gestion du desktop
         $sorties = $em->getRepository(Sortie::class)->findAll();
@@ -82,19 +82,18 @@ class MainController extends AbstractController
                     }
                 }
                 if(in_array(2, $choices) || in_array(3, $choices)){
-                    $sortiesPartipate = [];
                     foreach ($sortiesFiltered as $sortieTemp) {
                         foreach ($sortieTemp->getInscriptions() as $inscription) {
                             if($inscription->getParticipant()->getId() == $this->getUser()->getId()){
-                                $sortiesPartipate[] = $sortieTemp;
+                                $sortiesParticipate[] = $sortieTemp;
                             }
                         }
                     }
                     if(in_array(2, $choices)){
-                        $sorties = array_merge($sorties, $sortiesPartipate);
+                        $sorties = array_merge($sorties, $sortiesParticipate);
                     }
                     if(in_array(3, $choices)){
-                        $sortiesNotPartipate = array_udiff($sortiesFiltered, $sortiesPartipate,
+                        $sortiesNotPartipate = array_udiff($sortiesFiltered, $sortiesParticipate,
                             function ($obj_a, $obj_b) {
                                 return strcmp($obj_a->id, $obj_b->id);
                             }

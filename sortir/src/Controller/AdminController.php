@@ -2,7 +2,11 @@
 
 
 namespace App\Controller;
+use App\Entity\Utilisateur;
+use App\Form\AdminAddUsersType;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Lieu;
@@ -15,7 +19,8 @@ use App\Form\EditLocationType;
 use App\Form\AddSiteType;
 use App\Form\EditSiteType;
 use App\Form\AddTownType;
-use App\Form\AddUserAdminType;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\User\User;
 
 /**
  * @Route("/admin")
@@ -229,12 +234,54 @@ class AdminController extends AbstractController
      * Gestion des users
      * @Route("/users", name="admin-users")
      */
-    public function users(EntityManagerInterface $em)
+    public function users(EntityManagerInterface $em, Request $request, UserPasswordEncoderInterface $encoder)
     {
-       $users = $em->getRepository(Utilisateur::class)->findAll();
-       return $this->render('admin/users/view_users.html.twig', [
-        'users' => $users
-    ]);
+        $usersForm = $this->createForm(AdminAddUsersType::class);
+        $usersForm->handleRequest($request);
+        if ($usersForm->isSubmitted() && $usersForm->isValid()) {
+            $file = $usersForm->get('file')->getData();
+            if ($file) {
+                $datetime = new DateTime();
+                $datetime = $datetime->format('s-i-H-d-m-Y');
+                $newFilename = 'import'.$datetime.'.csv';
+                try {
+                    $file->move(
+                        $this->getParameter('import_users_directory'),
+                        $newFilename
+                    );
+                    $readFile = fopen($this->getParameter('import_users_directory').'/'.$newFilename, 'r');
+                    $row = 0;
+                    while (($line = fgetcsv($readFile)) !== FALSE) {
+                        if($row > 0){
+                            $user = explode(";", $line[0]);
+                            $site = $this->getDoctrine()->getRepository(Site::class)->findOneBy(['nom' => $user[0]]);
+                            if($site){
+                                $userToInsert = new Utilisateur();
+                                $hashed = $encoder->encodePassword($userToInsert, $user[6]);
+                                $userToInsert->setUsername($user[1]);
+                                $userToInsert->setPassword($hashed);
+                                $userToInsert->setSite($site);
+                                $userToInsert->setMail($user[5]);
+                                $userToInsert->setNom($user[2]);
+                                $userToInsert->setPrenom($user[3]);
+                                $userToInsert->setTelephone($user[4]);
+                                $userToInsert->setAdmin($user[7]);
+                                $userToInsert->setActif(false);
+                                $em->persist($userToInsert);
+                                $em->flush();
+                            }
+                        }
+                        $row++;
+                    }
+                    fclose($readFile);
+                } catch (FileException $e) {
+                }
+            }
+        }
+
+        return $this->render("admin/users/add.html.twig", [
+            "usersForm" => $usersForm->createView()
+        ]);
     }
     
     /**

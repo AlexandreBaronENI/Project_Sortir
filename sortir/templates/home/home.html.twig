@@ -9,7 +9,7 @@
 
         <form method="post" class="row">
             {{ form_start(searchForm) }}
-            <div class="col-6">
+            <div class="col-sm-12 col-xs-12 col-md-12 col-lg-6 col-xl-6">
                 <div class="row">
                     <div class="col-6 col-form-label">
                         {{ form_label(searchForm.site) }}
@@ -34,7 +34,7 @@
                     {{ form_widget(searchForm.dateCloture) }}
                 </div>
             </div>
-            <div class="col-5">
+            <div class="col-sm-12 col-xs-12 col-md-12 col-lg-5 col-xl-5">
                 {% for choice in searchForm.choices %}
                     <div class="col-12">
                         {{ form_widget(choice) }}
@@ -42,7 +42,7 @@
                     </div>
                 {% endfor %}
             </div>
-            <div class="col-1 d-flex align-items-end flex-column">
+            <div class="col-sm-12 col-xs-12 d-flex align-items-end flex-column col-md-12 col-lg-1 col-xl-1">
                 <input value="Rechercher" class="btn btn-info" type="submit">
                 <input value="Supprimer les filtres" class="btn btn-info mt-3" type="reset">
             </div>
@@ -50,8 +50,8 @@
         </form>
     </div>
     <hr>
-    <div class="mt-3">
-        <table id="maintable" class="display table table-striped table-bordered" style="width:100%">
+    <div class="mt-3 table-responsive">
+        <table id="maintable" class="display table table-striped table-bordered">
             <thead>
             <tr>
                 <th>Nom de la sortie</th>

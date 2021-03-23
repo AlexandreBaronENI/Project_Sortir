@@ -87,7 +87,7 @@ class ProfileController extends AbstractController
     /**
      * @Route("/add", name="profile-add")
      */
-    public function add(EntityManagerInterface $em, Request $request,UserPasswordEncoderInterface $encoder)
+    public function add(EntityManagerInterface $em, Request $request, UserPasswordEncoderInterface $encoder)
     {
         $utilisateur = new Utilisateur();
         $utilisateur->setActif(true);

@@ -32,20 +32,32 @@ class SearchSortieType extends AbstractType
                 'choice_label' => function ($site) {
                     return $site->getNom();
                 },
+                'attr' => [
+                    'class' => 'form-control'
+                ]
             ])
             ->add('nom', TextType::class, [
                 'label' => "Le nom de la sortie contient",
                 'required' => false,
+                'attr' => [
+                    'class' => 'form-control'
+                ]
             ])
             ->add('dateDebut', DateTimeType::class, [
                 'label' => "Entre",
                 'widget' => 'single_text',
                 'required' => false,
+                'attr' => [
+                    'class' => 'form-control'
+                ]
             ])
             ->add('dateCloture', DateType::class, [
                 'label' => "et",
                 'widget' => 'single_text',
                 'required' => false,
+                'attr' => [
+                    'class' => 'form-control'
+                ]
             ])
             ->add('choices', ChoiceType::class, [
                 'label' => false,
@@ -58,6 +70,9 @@ class SearchSortieType extends AbstractType
                 'expanded' => true,
                 'multiple' => true,
                 'required' => false,
+                'attr' => [
+                    'class' => 'form-control'
+                ]
             ])
         ;
     }

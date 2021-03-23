@@ -1,11 +1,16 @@
 {% extends 'base.html.twig' %}
-{% block main %}
-    <h1>Créer un utilisateur</h1>
+{% block fichier %}profil{% endblock %}
 
-    {% form_theme userForm 'forms/bootstrap_4_layout.html.twig' %}
-    {{ form_start(userForm) }}
-    {{ form_widget(userForm) }}
-    <button type="submit" class="btn btn-primary">Enregistrer</button>
-    <a class="btn btn-danger" href="{{ path("home") }}">Annuler</a>
-    {{ form_end(userForm) }}
+{% block main %}
+    <h1>Importer des utilisateurs</h1>
+    <p>Afin d'importer des utilisateurs, veuillez respecter le csv fourni, merci.</p>
+
+    <a class="btn btn-success" href="{{ asset('files/participants.csv') }}" download>
+        Télécharger
+    </a>
+    <form method="post" enctype="multipart/form-data">
+    {{ form_start(usersForm) }}
+    {{ form_widget(usersForm.file) }}
+    <input type="submit" value="Importer" class="btn btn-success">
+    {{ form_rest(usersForm) }}
 {% endblock %}

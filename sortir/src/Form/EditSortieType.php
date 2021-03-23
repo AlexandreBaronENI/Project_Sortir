@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Etat;
 use App\Entity\Lieu;
 use App\Entity\Sortie;
+use App\Entity\Ville;
 use App\Repository\EtatRepository;
 use App\Repository\LieuRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -38,31 +39,42 @@ class EditSortieType extends AbstractType
 
         $builder
             ->add('nom', TextType::class, [
-                'label' => "Nom de la sortie"
+                'label' => "Nom de la sortie",
+                'attr' => [
+                    'class'=>'form-control'
+                ]
             ])
             ->add('dateDebut', DateTimeType::class, [
                 'label' => "Date de début de la sortie",
                 'widget' => 'single_text',
                 'attr' => [
-                    'class' => 'form-control'
+                    'class'=>'form-control'
                 ]
-
             ])
             ->add('dateCloture', DateType::class, [
                 'label' => "Date limite d'inscription",
                 'widget' => 'single_text',
                 'attr' => [
-                    'class' => 'form-control'
+                    'class'=>'form-control'
                 ]
             ])
             ->add('nbInscriptionMax', NumberType::class, [
-                'label' => "Nombre de places"
+                'label' => "Nombre de places",
+                'attr' => [
+                    'class'=>'form-control'
+                ]
             ])
             ->add('duree', NumberType::class, [
-                'label' => "Durée"
+                'label' => "Durée",
+                'attr' => [
+                    'class'=>'form-control'
+                ]
             ])
             ->add('commentaire', TextareaType::class, [
-                'label' => "Description et infos"
+                'label' => "Description et infos",
+                'attr' => [
+                    'class'=>'form-control'
+                ]
             ])
             ->add('lieu', EntityType::class, [
                 'label' => "Lieu",
@@ -70,6 +82,19 @@ class EditSortieType extends AbstractType
                 'choice_label' => function ($lieu) {
                     return $lieu->getNom();
                 },
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
+            ->add('ville', EntityType::class, [
+                'label' => "Ville",
+                'class' => Ville::class,
+                'choice_label' => function ($lieu) {
+                    return $lieu->getNom();
+                },
+                'attr' => [
+                    'class' => 'form-control'
+                ]
             ])
         ;
 
@@ -78,21 +103,17 @@ class EditSortieType extends AbstractType
                 ->add('save', SubmitType::class, [
                     'label' => 'Enregistrer',
                     'attr' => [
-                        'class' => 'btn btn-light'
+                        'class' => 'btn btn-warning mx-3'
                     ]
                 ])
                 ->add('publish', SubmitType::class, [
-                    'label' => 'Publier la sortie',
+                    'label' => 'Publier',
                     'attr' => [
                         'class' => 'btn btn-success'
                     ]
-                ]);
-        }
-
-        if($etatManager->IsOpen($etat->getId()) || $etatManager->IsDraft($etat->getId())){
-            $builder
+                ])
                 ->add('delete', SubmitType::class, [
-                    'label' => 'Supprimer la sortie',
+                    'label' => 'Supprimer',
                     'attr' => [
                         'class' => 'btn btn-danger'
                     ]
