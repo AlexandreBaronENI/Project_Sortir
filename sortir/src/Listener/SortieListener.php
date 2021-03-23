@@ -21,7 +21,8 @@ class SortieListener
     public function postLoad(Sortie $sortie)
     {
         $etatManager = new Etat($this->em->getRepository(Etat::class));
-        $dateFin = $sortie->getDateDebut()->add(new DateInterval('PT'.$sortie->getDuree().'H'));
+
+        $dateFin = $sortie->getDateDebut()->add(new DateInterval('PT'.$sortie->getDuree().'M'));
         $dateArchivage = $sortie->getDateDebut()->add(new DateInterval('P30D'));
 
         $today = new DateTime();
