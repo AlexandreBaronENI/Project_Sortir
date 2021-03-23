@@ -31,7 +31,7 @@ class SortieRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('s');
         if($site != null && $site->getId() != null){
             //print_r("j'ai un site");
-            $query->andWhere('s.id = :id')
+            $query->andWhere('s.site = :id')
                 ->setParameter(':id', $site->getId());
         }
         if($nom != null){
