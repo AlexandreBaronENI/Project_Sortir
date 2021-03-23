@@ -96,7 +96,7 @@ class MainController extends AbstractController
                     if(in_array(3, $choices)){
                         $sortiesNotPartipate = array_udiff($sortiesFiltered, $sortiesParticipate,
                             function ($obj_a, $obj_b) {
-                                return strcmp($obj_a->id, $obj_b->id);
+                                return strcmp($obj_a->getId(), $obj_b->getId());
                             }
                         );
                         $sorties = array_merge($sorties, $sortiesNotPartipate);
