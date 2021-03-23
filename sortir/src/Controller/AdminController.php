@@ -18,6 +18,8 @@ use App\Form\EditLocationType;
 use App\Form\AddSiteType;
 use App\Form\EditSiteType;
 use App\Form\AddTownType;
+use App\Form\AddUserAdminType;
+
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\User;
 
@@ -230,10 +232,10 @@ class AdminController extends AbstractController
     }
 
     /**
-     * Gestion des users
-     * @Route("/users", name="admin-users")
+     * Import d'utilisateur par fichier .csv
+     * @Route("/users/import", name="admin-import-users")
      */
-    public function users(EntityManagerInterface $em, Request $request, UserPasswordEncoderInterface $encoder)
+    public function importUsers(EntityManagerInterface $em, Request $request, UserPasswordEncoderInterface $encoder)
     {
         $usersForm = $this->createForm(AdminAddUsersType::class);
         $usersForm->handleRequest($request);
@@ -284,16 +286,28 @@ class AdminController extends AbstractController
     }
     
     /**
+     * Gestion des utilisateurs
+     * @Route("/users", name="admin-users")
+     */
+    function users(EntityManagerInterface $em)
+    {
+        $users = $em->getRepository(Utilisateur::class)->findAll();
+        return $this->render("/admin/users/view_users.html.twig", [
+            "users"=>$users
+        ]);
+    }
+
+    /**
      * Ajout de user
      * @Route("/users/add", name="admin-user-add")
      */
     public function addUser(EntityManagerInterface $em, Request $request)
     {
         $user = new Utilisateur();
-        $userForm = $this->createForm(addUserAdminType::class, $user);
-        $userForm->handleRequest($request);
+        $usersForm = $this->createForm(AddUserAdminType::class, $user);
+        $usersForm->handleRequest($request);
         
-        if ($userForm->isSubmitted() && $userForm->isValid() ) {
+        if ($usersForm->isSubmitted() && $usersForm->isValid() ) {
             $em->persist($user);
             $em->flush();
 
@@ -301,8 +315,8 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('admin-users');
         }
 
-        return $this->render('admin/users/add.html.twig',[
-            'userForm' => $userForm->createView()
+        return $this->render('admin/users/add_user.html.twig',[
+            'usersForm' => $usersForm->createView()
         ]);
     }
 
