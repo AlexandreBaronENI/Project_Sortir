@@ -68,7 +68,7 @@
         <div class="form-group row">
             {{ form_widget(sortieForm.publish) }}
             {{ form_widget(sortieForm.save) }}
-            <a class="ml-auto btn btn-danger mx-3 text-white">Annuler</a>
+            <a class="ml-auto btn btn-danger mx-3 text-white" href="{{ path('home') }}">Annuler</a>
         </div>
         {{ form_rest(sortieForm) }}
     </form>
