@@ -2,6 +2,10 @@
 
     <a class="navbar-brand" href="{{path('home')  }}">Accueil</a>
     <a class="navbar-brand" href="{{ path('profile-affichage') }}">Mon profil</a>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a class="navbar-brand" href="{{ path('admin-locations') }}">Gestion des lieux</a>
+        <a class="navbar-brand" href="{{ path('admin-towns')}}">Gestion des villes</a>
+    {% endif %}
     {%  if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
         <a class="navbar-brand" href="{{ path('main-logout') }}">Se déconnecter</a>
     {%  else %}
