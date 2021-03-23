@@ -88,6 +88,7 @@ class AddUserAdminType extends AbstractType
     ])
     ->add('admin', CheckboxType::class,[
         'label'=> 'Est admin',
+        'required' => false,
         'attr' => [
             'class' => 'col-sm-6 form-control'
         ]

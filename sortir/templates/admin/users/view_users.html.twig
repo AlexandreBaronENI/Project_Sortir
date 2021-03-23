@@ -11,6 +11,7 @@
             <th>Prenom</th>
             <th>Téléphone</th>
             <th>mail</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
@@ -23,6 +24,10 @@
             <td>{{user.prenom}}</td>
             <td>{{user.telephone}}</td>
             <td>{{user.mail}}</td>
+            <td>
+                <a href="{{ path('admin-user-inactive', {id:user.id})}}">Rendre inactif</a>
+                <a href="{{ path('admin-user-delete', {id:user.id}) }}">Supprimer</a>
+            </td>
         </tr>
     {% endfor %}
     </tbody>

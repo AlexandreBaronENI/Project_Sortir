@@ -251,12 +251,39 @@ class AdminController extends AbstractController
             $em->persist($user);
             $em->flush();
 
-            $this->addFlash('success', 'Nouvelle ville ajoutée !');
+            $this->addFlash('success', 'Nouvel utilisateur ajouté !');
             return $this->redirectToRoute('admin-users');
         }
 
         return $this->render('admin/users/add.html.twig',[
             'userForm' => $userForm->createView()
         ]);
+    }
+
+    /**
+     * Methode pour desactiver un utilisateur
+     * @Route("/user/inactive/{id}", name="admin-user-inactive")
+     */
+    public function setInactiveUser(int $id, EntityManagerInterface $em, Request $request)
+    {
+        $user = $em->getRepository(Utilisateur::class)->find($id);
+        $user->setActif(false);
+        $em->persist($user);
+        $em->flush();
+        return $this->redirectToRoute('admin-users');
+        
+    }
+
+    /**
+     * Suppression d'un utilisateur
+     * @Route("/user/delete/{id}", name="admin-user-delete")
+     */
+    function deleteUser(int $id, EntityManagerInterface $em, Request $request)
+    {
+        $user = $em->getRepository(Utilisateur::class)->find($id);
+        $em->remove($user);
+        $em->flush();
+
+        return $this->redirectToRoute('admin-users');
     }
 }
