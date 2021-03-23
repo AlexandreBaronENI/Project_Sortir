@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+{% block fichier %}profil{% endblock %}
+
+{% block main %}
+<form method="post">
+        {{ form_start(villeForm) }}
+        <div class="form-group row">
+         <span class="col-sm-2 col-form-label">
+         {{ form_label(villeForm.nom) }}
+            </span>
+            {{ form_widget(villeForm.nom) }}
+        </div>
+        <div class="form-group row">
+         <span class="col-sm-2 col-form-label">
+         {{ form_label(villeForm.codePostal) }}
+            </span>
+            {{ form_widget(villeForm.codePostal) }}
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-10">
+                <input type="submit" class="btn btn-primary" value="Enregistrer">
+
+                <a class="btn btn-danger" href="{{ path('admin-towns')}}">Annuler</a>
+            </div>
+        </div>
+        {{ form_rest(villeForm) }}
+{% endblock %}

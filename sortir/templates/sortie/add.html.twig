@@ -5,5 +5,6 @@
     {% form_theme sortieForm 'forms/bootstrap_4_layout.html.twig' %}
     {{ form_start(sortieForm) }}
     {{ form_widget(sortieForm) }}
+    <a class="btn btn-danger" href="{{ path("home") }}">Annuler</a>
     {{ form_end(sortieForm) }}
 {% endblock %}

@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block main %}
+<h1>Gestion des sites</h1>
 <table class="display table table-striped table-bordered" style="width:100%">
     <thead>
         <tr>
@@ -22,4 +23,5 @@
     {% endfor %}
     </tbody>
 </table>
+<a class="btn btn-primary" href="{{ path("add-site")}}">Ajouter un site</a>
 {% endblock %}

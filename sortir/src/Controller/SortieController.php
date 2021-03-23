@@ -7,9 +7,11 @@ namespace App\Controller;
 use App\Entity\Etat;
 use App\Entity\Sortie;
 use App\Entity\Utilisateur;
+use App\Entity\Inscription;
 use App\Form\AddSortieType;
 use App\Form\CancelSortieType;
 use App\Form\EditSortieType;
+use App\Repository\InscriptionRepository;
 use App\Repository\LieuRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -28,6 +30,7 @@ class SortieController extends AbstractController
      */
     public function add(EntityManagerInterface $em, Request $request)
     {
+        $etatManager = new Etat($em->getRepository(Etat::class));
         $sortie = new Sortie();
         $sortieForm = $this->createForm(AddSortieType::class, $sortie);
         $sortieForm->handleRequest($request);
@@ -35,7 +38,7 @@ class SortieController extends AbstractController
 
         if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
             if ($sortieForm->get('save')->isClicked()) {
-                $etat = $em->getRepository(Etat::class)->findOneBy(['libelle' => 'draft']);
+                $etat = $etatManager->getDraft();
                 $sortie->setOrganisateur($this->getUser());
                 $sortie->setSite($this->getUser()->getSite());
                 $sortie->setEtat($etat);
@@ -44,7 +47,7 @@ class SortieController extends AbstractController
                 $em->flush();
             }
             elseif ($sortieForm->get('publish')->isClicked()) {
-                $etat = $em->getRepository(Etat::class)->findOneBy(['libelle' => 'open']);
+                $etat = $etatManager->getOpen();
                 $sortie->setOrganisateur($this->getUser());
                 $sortie->setSite($this->getUser()->getSite());
                 $sortie->setEtat($etat);
@@ -111,6 +114,27 @@ class SortieController extends AbstractController
             "sortieForm" => $sortieForm->createView()
         ]);
     }
+        /**
+     * Acceder à ses sorties
+     * @Route("/mine", name="my-sortie")
+     */
+    public function getSortieUser(EntityManagerInterface $em)
+    {
+        $sorties = $em->getRepository(Sortie::class)->findAll();
+        foreach ($sorties as $sortieTemp) {
+            foreach ($sortieTemp->getInscriptions() as $inscription) {
+                if($inscription->getParticipant()->getId() == $this->getUser()->getId())
+                {
+                    $sortiesPartipate[] = $sortieTemp;
+                }
+            }
+        }
+        $sorties = $sortiesPartipate;
+        return $this->render('sortie/my_sortie.html.twig', [
+            'sorties' => $sorties,
+        ]);
+    }
+
     /**
      * Afficher une sortie
      * @Route("/{id}", name="sortie-affichage")
@@ -196,5 +220,39 @@ class SortieController extends AbstractController
             'sortieForm' => $sortieForm->createView()
         ]);
     }
+
+    /**
+     * S'sinscrire à une sortie
+     * @Route("/register/{id}", name="sortie-register")
+     */
+    public function register(int $id,EntityManagerInterface $em,Sortie $sortie){
+
+        $inscription = new Inscription($em->getRepository(Inscription::class));
+        $inscription-> setSortie($sortie);
+        $inscription->setParticipant($this->getUser());
+        $inscription->setDateInscription(new \DateTime());
+        $em->persist($inscription);
+        $em->flush();
+
+
+            return $this->redirectToRoute('home');
+
+
+    }
+
+    /**
+     * Désinscrire à une sortie
+     * @Route("/withdraw/{id}", name="sortie-withdraw")
+     */
+    public function withdraw (EntityManagerInterface $em,InscriptionRepository $inscriptionRepository,Sortie $sortie){
+
+
+        $inscription = $inscriptionRepository->findOneBy(['sortie'=>$sortie, 'participant'=>$this->getUser()]);
+
+        $em->remove($inscription);
+        $em->flush();
+        return $this->redirectToRoute('home');
+    }
+
 
 }

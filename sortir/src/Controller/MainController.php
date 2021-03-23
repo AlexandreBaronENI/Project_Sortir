@@ -38,6 +38,18 @@ class MainController extends AbstractController
      */
     public function home(EntityManagerInterface $em, Request $request)
     {
+        // Gestion du mobile
+        $sorties_mobile = $em->getRepository(Sortie::class)->findAll();
+        foreach ($sorties_mobile as $sortieTemp) {
+            foreach ($sortieTemp->getInscriptions() as $inscription) {
+                if($inscription->getParticipant()->getId() == $this->getUser()->getId()){
+                    $sortiesPartipate[] = $sortieTemp;
+                }
+            }
+        }
+        $sorties_mobile = $sortiesPartipate;
+
+        // Gestion du desktop
         $sorties = $em->getRepository(Sortie::class)->findAll();
 
         $searchForm = $this->createForm(SearchSortieType::class);
@@ -108,6 +120,7 @@ class MainController extends AbstractController
         return $this->render('home/home.html.twig', [
             'sorties' => $sorties,
             'user' => $this->getUser(),
+            'sortiesMobile' => $sorties_mobile,
             'searchForm' => $searchForm->createView()
         ]);
     }
@@ -120,4 +133,6 @@ class MainController extends AbstractController
     {
         return $this->redirectToRoute('main-login');
     }
+
+
 }

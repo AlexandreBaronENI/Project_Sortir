@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block css %}<link rel="stylesheet" href="{{ asset('css/home.css') }}">{% endblock %}
 {% block main %}
+<div class="d-none d-md-block">
     <div class="d-flex align-items-end flex-column">
     </div>
     <div>
@@ -87,8 +88,8 @@
                 </td>
                 <td>
                     {% set isInscrit = false %}
-                    {% for inscrit in (sortie.inscriptions) %}
-                        {% if inscrit.id == user.id %}
+                    {% for inscrit in sortie.inscriptions %}
+                        {% if inscrit.participant.id == user.id %}
                             {% set isInscrit = true %}
                         {% endif %}
                     {% endfor %}
@@ -115,11 +116,11 @@
                     {% if sortie.organisateur.id == user.id and sortie.etat.id == 1 %}
                         <a href="{{ path("sortie-cancel", {id:sortie.id}) }}">Annuler</a>
                     {% endif %}
-                    {% if true %}
-                        <a href="">S'inscrire</a>
+                    {% if not isInscrit and sortie.etat.id == 1%}
+                        <a href="{{ path('sortie-register',{id:sortie.id,sortie:sortie}) }}">S'inscrire</a>
                     {% endif %}
-                    {% if true %}
-                        <a href="">Se désister</a>
+                    {% if isInscrit and sortie.etat.id == 1 %}
+                        <a href="{{ path('sortie-withdraw', {id:sortie.id,sortie:sortie}) }}">Se désister</a>
                     {% endif %}
                     <a href="{{ path('sortie-affichage', {id:sortie.id}) }}">Afficher</a>
                 </td>
@@ -131,4 +132,29 @@
     <div>
         <a class="btn btn-info" href="{{ path('sortie-add') }}">Créer une sortie</a>
     </div>
+</div>
+<div class="d-md-none">
+    <div class="container-fluid">
+    <h2>Mes sortie   </h2>
+    <table class="table table-bordered" style="width:100%">
+        <thead>
+            <tr>
+                <th>Nom de la sortie</th>
+                <th>Date de la sortie</th>
+                <th>Lieu</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for sortie in sortiesMobile %}
+            <tr>
+                <td><a href="{{ path("sortie-affichage", {id:sortie.id}) }}">{{sortie.nom}}</a></td>
+                <td>{{sortie.dateDebut|date("d/m/Y H:i")}}</td>
+                <td>{{sortie.lieu.nom}}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a class="btn btn-primary" href="{{ path('home') }}">Retour</a>
+</div>
+</div>
 {% endblock %}
