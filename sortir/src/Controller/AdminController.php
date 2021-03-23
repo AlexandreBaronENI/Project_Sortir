@@ -12,7 +12,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Lieu;
 use App\Entity\Site;
 use App\Entity\Ville;
-use App\Entity\Utilisateur;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Form\AddLocationType;
 use App\Form\EditLocationType;
