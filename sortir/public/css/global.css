@@ -452,3 +452,14 @@ header {
     width: 25%;
     transform: scaleX(-1);
 }
+
+body {
+    background-image: url("../img/background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+main > * {
+    padding: 1rem;
+    background-color: white;
+}

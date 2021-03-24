@@ -35,8 +35,10 @@
                 {{ message }}
             </div>
             {% endfor %}
-        <main class="container-lg container-xl py-3">
-            {% block main %} {% endblock %}
+        <main class="container-lg container-xl my-3">
+            <div>
+                {% block main %} {% endblock %}
+            </div>
         </main>
         <footer class="site-footer text-center text-white bg-dark bottom">
             {% block footer %}&copy;{{ "now"|date("Y")}}&nbsp;Sortir.com{% endblock %}
