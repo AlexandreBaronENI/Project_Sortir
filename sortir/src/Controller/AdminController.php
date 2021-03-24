@@ -268,7 +268,7 @@ class AdminController extends AbstractController
                                 $userToInsert->setPrenom($user[3]);
                                 $userToInsert->setTelephone($user[4]);
                                 $userToInsert->setAdmin($user[7]);
-                                $userToInsert->setActif(false);
+                                $userToInsert->setActif(true);
                                 $em->persist($userToInsert);
                                 $em->flush();
                             }
