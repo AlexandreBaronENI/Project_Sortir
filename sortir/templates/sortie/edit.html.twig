@@ -58,7 +58,8 @@
                 {{ form_widget(sortieForm.save) }}
                 {{ form_widget(sortieForm.delete) }}
             {% else %}
-                <a class="btn btn-danger text-white" href="{{ path('sortie-cancel', {id: sortieForm.vars.data.id}) }}">Annuler la sortie</a>
+                <a class="btn btn-danger text-white" href="{{ path('sortie-cancel', {id: sortieForm.vars.data.id}) }}">Annuler
+                    la sortie</a>
             {% endif %}
             <a class="ml-auto btn btn-danger mx-3 text-white" href="{{ path('home') }}">Annuler</a>
         </div>

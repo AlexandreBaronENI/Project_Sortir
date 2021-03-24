@@ -1,38 +1,38 @@
 {% extends 'base.html.twig' %}
 {% block main %}
-<h1> Gestion des utilisateurs</h1>
-<div class="container-fluid">
-<table class="display table table-striped table-responsive" style="width:100%">
-    <thead>
-        <tr>
-            <th></th>
-            <th>Pseudo</th>
-            <th>Site</th>
-            <th>Nom</th>
-            <th>Prenom</th>
-            <th>Téléphone</th>
-            <th>mail</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for user in (users) %}
-        <tr>
-            <td>{{loop.index}}</td>
-            <td>{{user.username}}</td>
-            <td>{{user.site.nom}}</td>
-            <td>{{user.nom}}</td>
-            <td>{{user.prenom}}</td>
-            <td>{{user.telephone}}</td>
-            <td>{{user.mail}}</td>
-            <td>
-                <a href="{{ path('admin-user-inactive', {id:user.id})}}">Rendre inactif</a>
-                <a href="{{ path('admin-user-delete', {id:user.id}) }}">Supprimer</a>
-            </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
-<a class="btn btn-primary" href="{{ path('admin-import-users')}}">Importer des utilisateurs</a>
-</div>
+    <h1> Gestion des utilisateurs</h1>
+    <div class="container-fluid">
+        <table class="display table table-striped table-responsive" style="width:100%">
+            <thead>
+            <tr>
+                <th></th>
+                <th>Pseudo</th>
+                <th>Site</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Téléphone</th>
+                <th>mail</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in (users) %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.site.nom }}</td>
+                    <td>{{ user.nom }}</td>
+                    <td>{{ user.prenom }}</td>
+                    <td>{{ user.telephone }}</td>
+                    <td>{{ user.mail }}</td>
+                    <td>
+                        <a href="{{ path('admin-user-inactive', {id:user.id}) }}">Rendre inactif</a>
+                        <a href="{{ path('admin-user-delete', {id:user.id}) }}">Supprimer</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <a class="btn btn-primary" href="{{ path('admin-import-users') }}">Importer des utilisateurs</a>
+    </div>
 {% endblock %}
