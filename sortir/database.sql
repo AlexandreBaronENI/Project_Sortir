@@ -1,3 +1,4 @@
+
 --
 -- Structure de la table `etat`
 --
@@ -37,14 +38,99 @@ CREATE TABLE IF NOT EXISTS `inscription` (
     PRIMARY KEY (`id`),
     KEY `IDX_5E90F6D6CC72D953` (`sortie_id`),
     KEY `IDX_5E90F6D69D1C3019` (`participant_id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+    ) ENGINE=InnoDB AUTO_INCREMENT=88 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `inscription`
 --
 
 INSERT INTO `inscription` (`id`, `sortie_id`, `participant_id`, `date_inscription`) VALUES
-(1, 28, 9, '2021-03-24 12:03:13');
+(1, 28, 9, '2021-03-24 12:03:13'),
+(2, 1, 1, '2021-04-02 16:29:00'),
+(3, 1, 2, '2021-04-02 16:29:00'),
+(4, 1, 4, '2021-04-02 16:29:00'),
+(5, 1, 7, '2021-04-02 16:29:00'),
+(6, 1, 3, '2021-04-02 16:29:00'),
+(7, 1, 8, '2021-04-02 16:29:00'),
+(8, 1, 11, '2021-04-02 16:29:00'),
+(9, 2, 10, '2021-04-02 16:29:00'),
+(10, 2, 11, '2021-04-02 16:29:00'),
+(11, 2, 1, '2021-04-02 16:29:00'),
+(12, 2, 2, '2021-04-02 16:29:00'),
+(13, 2, 3, '2021-04-02 16:29:00'),
+(14, 2, 4, '2021-04-02 16:29:00'),
+(15, 2, 5, '2021-04-02 16:29:00'),
+(16, 3, 6, '2021-04-02 16:29:00'),
+(17, 3, 7, '2021-04-02 16:29:00'),
+(18, 3, 8, '2021-04-02 16:29:00'),
+(19, 4, 9, '2021-04-02 16:29:00'),
+(20, 4, 10, '2021-04-02 16:29:00'),
+(21, 4, 11, '2021-04-02 16:29:00'),
+(22, 5, 1, '2021-04-02 16:29:00'),
+(23, 5, 2, '2021-04-02 16:29:00'),
+(24, 5, 3, '2021-04-02 16:29:00'),
+(25, 5, 4, '2021-04-02 16:29:00'),
+(26, 5, 5, '2021-04-02 16:29:00'),
+(27, 5, 6, '2021-04-02 16:29:00'),
+(28, 6, 7, '2021-04-02 16:29:00'),
+(29, 7, 8, '2021-04-02 16:29:00'),
+(30, 7, 9, '2021-04-02 16:29:00'),
+(31, 7, 10, '2021-04-02 16:29:00'),
+(32, 7, 11, '2021-04-02 16:29:00'),
+(33, 8, 1, '2021-04-02 16:29:00'),
+(34, 8, 2, '2021-04-02 16:29:00'),
+(35, 8, 3, '2021-04-02 16:29:00'),
+(36, 8, 4, '2021-04-02 16:29:00'),
+(37, 8, 5, '2021-04-02 16:29:00'),
+(38, 8, 6, '2021-04-02 16:29:00'),
+(39, 9, 7, '2021-04-02 16:29:00'),
+(40, 9, 8, '2021-04-02 16:29:00'),
+(41, 9, 9, '2021-04-02 16:29:00'),
+(42, 9, 10, '2021-04-02 16:29:00'),
+(43, 10, 11, '2021-04-02 16:29:00'),
+(44, 10, 1, '2021-04-02 16:29:00'),
+(45, 10, 2, '2021-04-02 16:29:00'),
+(46, 10, 3, '2021-04-02 16:29:00'),
+(47, 10, 4, '2021-04-02 16:29:00'),
+(48, 11, 5, '2021-04-02 16:29:00'),
+(49, 11, 6, '2021-04-02 16:29:00'),
+(50, 11, 7, '2021-04-02 16:29:00'),
+(51, 11, 8, '2021-04-02 16:29:00'),
+(52, 11, 9, '2021-04-02 16:29:00'),
+(53, 12, 10, '2021-04-02 16:29:00'),
+(54, 12, 11, '2021-04-02 16:29:00'),
+(55, 12, 1, '2021-04-02 16:29:00'),
+(56, 12, 2, '2021-04-02 16:29:00'),
+(57, 12, 3, '2021-04-02 16:29:00'),
+(58, 12, 4, '2021-04-02 16:29:00'),
+(59, 12, 5, '2021-04-02 16:29:00'),
+(60, 12, 6, '2021-04-02 16:29:00'),
+(61, 12, 7, '2021-04-02 16:29:00'),
+(62, 13, 8, '2021-04-02 16:29:00'),
+(63, 13, 9, '2021-04-02 16:29:00'),
+(64, 13, 10, '2021-04-02 16:29:00'),
+(65, 13, 11, '2021-04-02 16:29:00'),
+(66, 13, 1, '2021-04-02 16:29:00'),
+(67, 14, 2, '2021-04-02 16:29:00'),
+(68, 14, 3, '2021-04-02 16:29:00'),
+(69, 14, 4, '2021-04-02 16:29:00'),
+(70, 14, 5, '2021-04-02 16:29:00'),
+(71, 14, 6, '2021-04-02 16:29:00'),
+(72, 15, 7, '2021-04-02 16:29:00'),
+(73, 15, 8, '2021-04-02 16:29:00'),
+(74, 15, 9, '2021-04-02 16:29:00'),
+(75, 15, 10, '2021-04-02 16:29:00'),
+(76, 16, 11, '2021-04-02 16:29:00'),
+(77, 16, 1, '2021-04-02 16:29:00'),
+(78, 16, 10, '2021-04-02 16:29:00'),
+(79, 16, 2, '2021-04-02 16:29:00'),
+(80, 16, 3, '2021-04-02 16:29:00'),
+(81, 16, 5, '2021-04-02 16:29:00'),
+(82, 16, 7, '2021-04-02 16:29:00'),
+(83, 16, 8, '2021-04-02 16:29:00'),
+(84, 16, 9, '2021-04-02 16:29:00'),
+(85, 16, 4, '2021-04-02 16:29:00'),
+(87, 12, 12, '2021-03-24 13:58:54');
 
 -- --------------------------------------------------------
 
@@ -171,22 +257,22 @@ CREATE TABLE IF NOT EXISTS `sortie` (
 --
 
 INSERT INTO `sortie` (`id`, `etat_id`, `organisateur_id`, `lieu_id`, `site_id`, `ville_id`, `nom`, `date_debut`, `duree`, `date_cloture`, `nb_inscription_max`, `commentaire`, `motif`) VALUES
-(49, 6, 1, 1, 1, 1, 'balade', '2021-04-02 16:29:00', 120, '2021-03-25 00:00:00', 14, 'balade pour se rencontrer au square', NULL),
-(50, 2, 2, 2, 1, 2, 'sortie patinoire', '2021-04-02 16:29:00', 90, '2021-03-25 00:00:00', 10, 'sortie pour patiner tranquillement', NULL),
-(51, 6, 3, 3, 1, 3, 'sortie bowilng', '2021-04-02 16:29:00', 90, '2021-03-25 00:00:00', 8, 'sortie pour lancer quelques boules', NULL),
-(52, 1, 11, 4, 1, 4, 'Promenade', '2021-04-02 16:29:00', 120, '2021-03-25 00:00:00', 14, 'petite promenade OKLM', NULL),
-(53, 2, 4, 5, 1, 5, 'Petit film', '2021-04-02 16:29:00', 100, '2021-03-25 00:00:00', 50, 'pour ceux qui veulent voir les tuchs 6', NULL),
-(54, 2, 5, 6, 1, 6, 'Sortie mondaine', '2021-05-02 18:29:00', 180, '2021-04-25 00:00:00', 2, 'petite pièce de théatre (bien habillé s il vous plait)', NULL),
-(55, 1, 6, 7, 1, 7, 'Pic-nique', '2021-04-28 11:45:00', 180, '2021-04-26 00:00:00', 12, 'Venez manger dans l herbe', NULL),
-(56, 1, 7, 8, 1, 8, 'Promenade', '2021-04-26 09:50:00', 400, '2021-04-23 00:00:00', 12, 'Grosse balade', NULL),
-(57, 6, 8, 9, 1, 19, 'Petit foot', '2021-04-02 14:29:00', 200, '2021-03-25 00:00:00', 20, 'On va taper la balle', NULL),
-(58, 2, 9, 10, 1, 2, 'Découverte de la ville', '2021-04-02 16:29:00', 200, '2021-03-25 00:00:00', 20, 'Pour ceux qui ne connaissent pas encore la ville', NULL),
-(59, 6, 10, 11, 1, 10, 'Soirée jeu de société', '2021-04-02 16:29:00', 180, '2021-03-25 00:00:00', 8, 'Pour ceux qui veulent passer 5h sur un risk', NULL),
-(60, 1, 1, 12, 1, 11, 'Concert ce soir', '2021-04-02 16:29:00', 140, '2021-03-25 00:00:00', 25, 'Concert super sympa !', NULL),
-(61, 1, 2, 13, 1, 12, 'Escape game', '2021-04-17 16:29:00', 90, '2021-04-15 00:00:00', 5, 'Venez utiliser vos petites cellules grises ;)', NULL),
-(62, 1, 3, 14, 1, 13, 'Pour les sportifs', '2021-04-02 16:29:00', 60, '2021-03-25 00:00:00', 10, 'Une heure de tour de piste', NULL),
-(63, 5, 4, 15, 1, 14, 'Sortie shopping', '2021-03-23 09:49:00', 80, '2021-03-20 00:00:00', 6, 'On refait le diable d habille en prada ', NULL),
-(64, 1, 5, 16, 1, 21, 'Barbecue', '2021-04-26 09:50:00', 150, '2021-04-24 00:00:00', 20, 'Ramenez vos saucisses', NULL);
+(1, 6, 1, 1, 1, 1, 'balade', '2021-04-02 16:29:00', 120, '2021-03-25 00:00:00', 14, 'balade pour se rencontrer au square', NULL),
+(2, 1, 2, 2, 1, 2, 'sortie patinoire', '2021-04-02 16:29:00', 90, '2021-03-25 00:00:00', 10, 'sortie pour patiner tranquillement', NULL),
+(3, 6, 3, 3, 1, 3, 'sortie bowilng', '2021-04-02 16:29:00', 90, '2021-03-25 00:00:00', 8, 'sortie pour lancer quelques boules', NULL),
+(4, 1, 11, 4, 1, 4, 'Promenade', '2021-04-02 16:29:00', 120, '2021-03-25 00:00:00', 14, 'petite promenade OKLM', NULL),
+(5, 1, 4, 5, 1, 5, 'Petit film', '2021-04-02 16:29:00', 100, '2021-03-25 00:00:00', 50, 'pour ceux qui veulent voir les tuchs 6', NULL),
+(6, 1, 5, 6, 1, 6, 'Sortie mondaine', '2021-05-02 18:29:00', 180, '2021-04-25 00:00:00', 2, 'petite pièce de théatre (bien habillé s il vous plait)', NULL),
+(7, 1, 6, 7, 1, 7, 'Pic-nique', '2021-04-28 11:45:00', 180, '2021-04-26 00:00:00', 12, 'Venez manger dans l herbe', NULL),
+(8, 1, 7, 8, 1, 8, 'Promenade', '2021-04-26 09:50:00', 400, '2021-04-23 00:00:00', 12, 'Grosse balade', NULL),
+(9, 6, 8, 9, 1, 19, 'Petit foot', '2021-04-02 14:29:00', 200, '2021-03-25 00:00:00', 20, 'On va taper la balle', NULL),
+(10, 1, 9, 10, 1, 2, 'Découverte de la ville', '2021-04-02 16:29:00', 200, '2021-03-25 00:00:00', 20, 'Pour ceux qui ne connaissent pas encore la ville', NULL),
+(11, 6, 10, 11, 1, 10, 'Soirée jeu de société', '2021-04-02 16:29:00', 180, '2021-03-25 00:00:00', 8, 'Pour ceux qui veulent passer 5h sur un risk', NULL),
+(12, 1, 1, 12, 1, 11, 'Concert ce soir', '2021-04-02 16:29:00', 140, '2021-03-25 00:00:00', 25, 'Concert super sympa !', NULL),
+(13, 1, 2, 13, 1, 12, 'Escape game', '2021-04-17 16:29:00', 90, '2021-04-15 00:00:00', 5, 'Venez utiliser vos petites cellules grises ;)', NULL),
+(14, 1, 3, 14, 1, 13, 'Pour les sportifs', '2021-04-02 16:29:00', 60, '2021-03-25 00:00:00', 10, 'Une heure de tour de piste', NULL),
+(15, 5, 4, 15, 1, 14, 'Sortie shopping', '2021-03-23 09:49:00', 80, '2021-03-20 00:00:00', 6, 'On refait le diable d habille en prada ', NULL),
+(16, 1, 5, 16, 1, 21, 'Barbecue', '2021-04-26 09:50:00', 150, '2021-04-24 00:00:00', 20, 'Ramenez vos saucisses', NULL);
 
 -- --------------------------------------------------------
 
@@ -295,39 +381,6 @@ INSERT INTO `ville` (`id`, `nom`, `code_postal`) VALUES
 (44, 'Rouen', '76000'),
 (45, 'Montpellier', '34000'),
 (46, 'Chartres-de-Bretagne', '35131');
-
---
--- Contraintes pour les tables déchargées
---
-
---
--- Contraintes pour la table `inscription`
---
-ALTER TABLE `inscription`
-    ADD CONSTRAINT `FK_5E90F6D69D1C3019` FOREIGN KEY (`participant_id`) REFERENCES `utilisateur` (`id`),
-  ADD CONSTRAINT `FK_5E90F6D6CC72D953` FOREIGN KEY (`sortie_id`) REFERENCES `sortie` (`id`);
-
---
--- Contraintes pour la table `lieu`
---
-ALTER TABLE `lieu`
-    ADD CONSTRAINT `FK_2F577D59A73F0036` FOREIGN KEY (`ville_id`) REFERENCES `ville` (`id`);
-
---
--- Contraintes pour la table `sortie`
---
-ALTER TABLE `sortie`
-    ADD CONSTRAINT `FK_3C3FD3F26AB213CC` FOREIGN KEY (`lieu_id`) REFERENCES `lieu` (`id`),
-  ADD CONSTRAINT `FK_3C3FD3F2A73F0036` FOREIGN KEY (`ville_id`) REFERENCES `ville` (`id`),
-  ADD CONSTRAINT `FK_3C3FD3F2D5E86FF` FOREIGN KEY (`etat_id`) REFERENCES `etat` (`id`),
-  ADD CONSTRAINT `FK_3C3FD3F2D936B2FA` FOREIGN KEY (`organisateur_id`) REFERENCES `utilisateur` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `FK_3C3FD3F2F6BD1646` FOREIGN KEY (`site_id`) REFERENCES `site` (`id`);
-
---
--- Contraintes pour la table `utilisateur`
---
-ALTER TABLE `utilisateur`
-    ADD CONSTRAINT `FK_1D1C63B3F6BD1646` FOREIGN KEY (`site_id`) REFERENCES `site` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
