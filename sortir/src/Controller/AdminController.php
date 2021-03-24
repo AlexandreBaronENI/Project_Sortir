@@ -355,6 +355,20 @@ class AdminController extends AbstractController
     }
 
     /**
+     * Vue des groupes
+     * @Route("/groups", name="admin-groups")
+     */
+    function groups(EntityManagerInterface $em)
+    {
+        $groups = $em->getRepository(Group::class)->findAll();
+        $createur = $this->getUser();
+        return $this->render("/admin/group/view_group.html.twig", [
+            "groups" => $groups,
+            "user" => $createur
+        ]);
+    }
+
+    /**
      * Ajout d'un groupe
      * @Route("/groups/add", name="admin-add-group")
      */
@@ -375,5 +389,39 @@ class AdminController extends AbstractController
         return $this->render('admin/group/add.html.twig', [
             'groupForm' => $groupForm->createView()
         ]);
+    }
+
+    /**
+     * Modification d'un groupe (disponible juste pour le créateur du groupe)
+     * @Route("/group/update/{id}", name="group-edit")
+     */
+    function updateGroup(int $id, EntityManagerInterface $em, Request $request)
+    {
+        $group = $em->getRepository(Group::class)->find($id);
+        $groupForm = $this->createForm(AddGroupType::class, $group);
+        $groupForm->handleRequest($request);
+        if ($groupForm->isSubmitted() && $groupForm->isValid()) {
+            $em->persist($group);
+            $em->flush();
+            $this->addFlash('success', 'Le groupe a bien été modifié !');
+            return $this->redirectToRoute('admin-groups');
+        }
+
+        return $this->render("admin/group/add.html.twig", [
+            "groupForm" => $groupForm->createView()
+        ]);
+    }
+    /**
+     * Suppression d'un groupe (disponible juste pour le créateur du groupe)
+     * @Route("/group/delete/{id}", name="group-delete")
+     */
+    function deleteGroup(int $id, EntityManagerInterface $em, Request $request)
+    {
+        $group = $em->getRepository(Group::class)->find($id);
+        $em->remove($group);
+        $em->flush();
+        $this->addFlash('success', 'Groupe supprimé !');
+
+        return $this->redirectToRoute('admin-groups');
     }
 }

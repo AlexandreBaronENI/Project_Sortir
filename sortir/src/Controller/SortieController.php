@@ -48,7 +48,7 @@ class SortieController extends AbstractController
                     $em->persist($sortie);
                     $em->flush();
 
-                    $this->addGroup($sortie, $em);
+                    
                 } elseif ($sortieForm->get('publish')->isClicked()) {
                     $etat = $etatManager->getOpen();
                     $sortie->setOrganisateur($this->getUser());
@@ -57,6 +57,7 @@ class SortieController extends AbstractController
 
                     $em->persist($sortie);
                     $em->flush();
+                    $this->addGroup($sortie, $em);
                 }
                 return $this->redirectToRoute('home');
             } else {

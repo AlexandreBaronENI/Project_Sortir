@@ -82,7 +82,7 @@
             {% endif %}
         </div>
     <div>
-        {% for inscrit in (sortie.inscriptions) %}
+        
             <table class="table table-bordered table-responsive" style="width:100%">
                 <thead>
                 <tr>
@@ -92,14 +92,15 @@
                 </tr>
                 </thead>
                 <tbody>
+                {% for inscrit in (sortie.inscriptions) %}
                 <tr>
                     <td>{{loop.index}}</td>
                     <td>{{inscrit.participant.username}}</td>
                     <td>{{inscrit.participant.nom}} {{inscrit.participant.prenom}}</td>
                 </tr>
+                {% endfor %}
                 </tbody>
             </table>
-        {% endfor %}
     </div>
     {%  if sortie.etat.id == 1  %}
         {% set dejaInscrit = false %}

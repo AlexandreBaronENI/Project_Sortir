@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+{% block main %}
+    <div class="container-fluid">
+        <h2>Mes groupes</h2>
+        <table class="table table-responsive" style="width:100%">
+            <thead>
+            <tr>
+                <th>Nom du groupe</th>
+                <th> Membres</th>
+                <th>Action
+            </tr>
+            </thead>
+            <tbody>
+            {% for group in groups %}
+                <tr>
+                    <td>{{ group.nom }}</td>
+                    <td><ul>{% for participant in group.utilisateurs %}
+                            <li><a href="{{ path('profile-affichage-autre', {id:participant.id}) }}"> {{participant.nom}} {{participant.prenom}}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td>{% if group.createur.id == user.id %}
+                        <a href="{{ path('group-edit', {id:group.id}) }}">Modifier</a>
+                        <a href="{{ path('group-delete', {id:group.id}) }}">Supprimer</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <a class="btn btn-danger" href="{{ path('home') }}">Retour</a>
+    </div>
+{% endblock %}
