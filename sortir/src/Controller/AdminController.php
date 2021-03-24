@@ -143,6 +143,7 @@ class AdminController extends AbstractController
         if ($siteForm->isSubmitted() && $siteForm->isValid()) {
             $em->persist($site);
             $em->flush();
+            $this->addFlash('success', 'Site modifié !');
             return $this->redirectToRoute('admin-sites');
         }
 
@@ -160,7 +161,7 @@ class AdminController extends AbstractController
         $site = $em->getRepository(Site::class)->find($id);
         $em->remove($site);
         $em->flush();
-
+        $this->addFlash('success', 'Site supprimé !');
         return $this->redirectToRoute('admin-sites');
     }
 
@@ -211,6 +212,7 @@ class AdminController extends AbstractController
         if ($villeForm->isSubmitted() && $villeForm->isValid()) {
             $em->persist($ville);
             $em->flush();
+            $this->addFlash('success', 'La ville a bien été modifiée !');
             return $this->redirectToRoute('admin-towns');
         }
 
@@ -228,7 +230,7 @@ class AdminController extends AbstractController
         $ville = $em->getRepository(Ville::class)->find($id);
         $em->remove($ville);
         $em->flush();
-
+        $this->addFlash('success', 'Ville supprimée !');
         return $this->redirectToRoute('admin-towns');
     }
 
@@ -331,6 +333,7 @@ class AdminController extends AbstractController
         $user->setActif(false);
         $em->persist($user);
         $em->flush();
+        $this->addFlash('success', 'Utilisateur rendu inactif !');
         return $this->redirectToRoute('admin-users');
 
     }
@@ -344,6 +347,7 @@ class AdminController extends AbstractController
         $user = $em->getRepository(Utilisateur::class)->find($id);
         $em->remove($user);
         $em->flush();
+        $this->addFlash('success', 'Utilisateur supprimé !');
 
         return $this->redirectToRoute('admin-users');
     }

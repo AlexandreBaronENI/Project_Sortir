@@ -70,7 +70,7 @@ class ProfileController extends AbstractController
                 }
 
             }
-            $this->addFlash('success', 'Votre profil a bien été sauvegardé !');
+            $this->addFlash('success', 'Votre profil a bien été modifié !');
             return $this->redirectToRoute('profile-affichage');
         }
 
@@ -200,6 +200,7 @@ class ProfileController extends AbstractController
                 );
                 $em->persist($user);
                 $em->flush();
+                $this->addFlash('success', 'Mot de passe modifié !');
             }
 
         }
