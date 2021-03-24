@@ -64,4 +64,5 @@
 
 #nouveau
 /public/img/profile_pic/
+/public/files/users/
 # End of https://www.toptal.com/developers/gitignore/api/symfony
