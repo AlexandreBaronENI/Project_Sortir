@@ -436,15 +436,16 @@ footer {
     right: 0;
 }
 
-html, body {
+html,
+body {
     height: 100%;
 }
 
-header{
+header {
     min-height: 10%;
 }
 
-#glados{
+#glados {
     position: absolute;
     right: 0;
     z-index: 1;

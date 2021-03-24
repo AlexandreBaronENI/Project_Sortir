@@ -2,7 +2,7 @@
 {% block main %}
 <h1> Gestion des utilisateurs</h1>
 <div class="container-fluid">
-<table class="display table table-striped table-bordered table-responsive" style="width:100%">
+<table class="display table table-striped table-responsive" style="width:100%">
     <thead>
         <tr>
             <th></th>
@@ -33,5 +33,6 @@
     {% endfor %}
     </tbody>
 </table>
+<a class="btn btn-primary" href="{{ path('admin-import-users')}}">Importer des utilisateurs</a>
 </div>
 {% endblock %}
