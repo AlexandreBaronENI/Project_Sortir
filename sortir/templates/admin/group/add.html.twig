@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+{% block fichier %}profil{% endblock %}
+
+{% block main %}
+    <form method="post" class="col">
+    {{ form_start(groupForm) }}
+    <div class="form-group row">
+        <span class="col-md-2 col-form-label">
+            {{ form_label(groupForm.nom) }}
+        </span>
+        {{ form_widget(groupForm.nom) }}
+    </div>
+    <div class="form-group row">
+        <span class="col-md-2 col-form-label">
+            {{ form_label(groupForm.utilisateurs) }}
+        </span>
+        {{ form_widget(groupForm.utilisateurs) }}
+    </div>
+    <div class="form-group row">
+        <div class="col-md-10">
+            <input type="submit" class="btn btn-primary" value="Enregistrer">
+
+        </div>
+    </div>
+    {{ form_rest(groupForm) }}
+{% endblock %}

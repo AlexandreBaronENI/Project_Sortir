@@ -7,9 +7,11 @@ use App\Entity\Lieu;
 use App\Entity\Site;
 use App\Entity\Utilisateur;
 use App\Entity\Ville;
+use App\Entity\Group;
 use App\Form\AddLocationType;
 use App\Form\AddSiteType;
 use App\Form\AddTownType;
+use App\Form\AddGroupType;
 use App\Form\AddUserAdminType;
 use App\Form\AdminAddUsersType;
 use App\Form\EditLocationType;
@@ -369,5 +371,76 @@ class AdminController extends AbstractController
         $this->addFlash('success', 'Utilisateur supprimé !');
 
         return $this->redirectToRoute('admin-users');
+    }
+
+    /**
+     * Vue des groupes
+     * @Route("/groups", name="admin-groups")
+     */
+    function groups(EntityManagerInterface $em)
+    {
+        $groups = $em->getRepository(Group::class)->findAll();
+        $createur = $this->getUser();
+        return $this->render("/admin/group/view_group.html.twig", [
+            "groups" => $groups,
+            "user" => $createur
+        ]);
+    }
+
+    /**
+     * Ajout d'un groupe
+     * @Route("/groups/add", name="admin-add-group")
+     */
+    function addGroup(EntityManagerInterface $em, Request $request)
+    {
+        $group = new Group();
+        $groupForm = $this->createForm(AddGroupType::class, $group);
+        $groupForm->handleRequest($request);
+
+        if ($groupForm->isSubmitted() && $groupForm->isValid()) {
+            $group->setCreateur($this->getUser());
+            $em->persist($group);
+            $em->flush();
+
+            $this->addFlash('success', 'Nouveau groupe ajouté !');
+        }
+
+        return $this->render('admin/group/add.html.twig', [
+            'groupForm' => $groupForm->createView()
+        ]);
+    }
+
+    /**
+     * Modification d'un groupe (disponible juste pour le créateur du groupe)
+     * @Route("/group/update/{id}", name="group-edit")
+     */
+    function updateGroup(int $id, EntityManagerInterface $em, Request $request)
+    {
+        $group = $em->getRepository(Group::class)->find($id);
+        $groupForm = $this->createForm(AddGroupType::class, $group);
+        $groupForm->handleRequest($request);
+        if ($groupForm->isSubmitted() && $groupForm->isValid()) {
+            $em->persist($group);
+            $em->flush();
+            $this->addFlash('success', 'Le groupe a bien été modifié !');
+            return $this->redirectToRoute('admin-groups');
+        }
+
+        return $this->render("admin/group/add.html.twig", [
+            "groupForm" => $groupForm->createView()
+        ]);
+    }
+    /**
+     * Suppression d'un groupe (disponible juste pour le créateur du groupe)
+     * @Route("/group/delete/{id}", name="group-delete")
+     */
+    function deleteGroup(int $id, EntityManagerInterface $em, Request $request)
+    {
+        $group = $em->getRepository(Group::class)->find($id);
+        $em->remove($group);
+        $em->flush();
+        $this->addFlash('success', 'Groupe supprimé !');
+
+        return $this->redirectToRoute('admin-groups');
     }
 }

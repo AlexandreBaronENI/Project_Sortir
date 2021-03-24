@@ -47,6 +47,8 @@ class SortieController extends AbstractController
 
                     $em->persist($sortie);
                     $em->flush();
+
+                    
                 } elseif ($sortieForm->get('publish')->isClicked()) {
                     $etat = $etatManager->getOpen();
                     $sortie->setOrganisateur($this->getUser());
@@ -55,6 +57,7 @@ class SortieController extends AbstractController
 
                     $em->persist($sortie);
                     $em->flush();
+                    $this->addGroup($sortie, $em);
                 }
                 return $this->redirectToRoute('home');
             } else {
@@ -104,6 +107,8 @@ class SortieController extends AbstractController
 
                     $em->persist($sortie);
                     $em->flush();
+
+                    $this->addGroup($sortie, $em);
 
                 } elseif ($etatManager->IsDraft($sortie->getEtat()->getId()) && $sortieForm->get('delete')->isClicked()) {
                     $em->remove($sortie);
@@ -182,12 +187,14 @@ class SortieController extends AbstractController
         if (!$etatManager->IsDraft($sortie->getEtat()->getId())) {
             throw $this->createNotFoundException('La publication de cette sortie n\'est pas possible !');
         }
-
         $etat = $etatManager->getOpen();
         $sortie->setEtat($etat);
 
         $em->persist($sortie);
         $em->flush();
+
+        $this->addGroup($sortie, $em);
+
         $this->addFlash('success', 'La sortie à bien été publiée !');
         return $this->redirectToRoute('home');
     }
@@ -229,7 +236,7 @@ class SortieController extends AbstractController
     }
 
     /**
-     * S'sinscrire à une sortie
+     * S'inscrire à une sortie
      * @Route("/register/{id}", name="sortie-register")
      */
     public function register(int $id, EntityManagerInterface $em, Sortie $sortie)
@@ -254,8 +261,6 @@ class SortieController extends AbstractController
      */
     public function withdraw(EntityManagerInterface $em, InscriptionRepository $inscriptionRepository, Sortie $sortie)
     {
-
-
         $inscription = $inscriptionRepository->findOneBy(['sortie' => $sortie, 'participant' => $this->getUser()]);
 
         $em->remove($inscription);
@@ -264,5 +269,22 @@ class SortieController extends AbstractController
         return $this->redirectToRoute('home');
     }
 
+    private function addGroup($sortie, $em){
+        $userRole = $this->getUser()->getRoles();
+        $contains = $userRole[0];
+        if($contains === 'ROLE_ADMIN'){
+            foreach ($this->getUser()->getGroups() as $group){
+                foreach ($group->getUtilisateurs() as $utilisateur){
+                    $inscription = new Inscription();
+                    $inscription->setSortie($sortie);
+                    $inscription->setDateInscription(new DateTime());
+                    $inscription->setParticipant($utilisateur);
+
+                    $em->persist($inscription);
+                    $em->flush();
+                }
+            }
+        }
+    }
 
 }

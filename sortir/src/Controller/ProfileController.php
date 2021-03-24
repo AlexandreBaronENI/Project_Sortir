@@ -5,6 +5,7 @@ namespace App\Controller;
 
 
 use App\Entity\Utilisateur;
+use App\Entity\Group;
 use App\Form\ForgotPasswordType;
 use App\Form\ProfilType;
 use App\Form\ResetPasswordType;
@@ -35,7 +36,9 @@ class ProfileController extends AbstractController
         if ($profil == null) {
             throw $this->createNotFoundException("Ce profil n'existe pas");
         }
-        return $this->render('profile/view_profile.html.twig', ['profil' => $profil]);
+        $groups = $profil->getGroups();
+        $user = $this->getUser();
+        return $this->render('profile/view_profile.html.twig', ['profil' => $profil, 'groups' => $groups, 'user' => $user]);
     }
 
     /**
@@ -94,7 +97,9 @@ class ProfileController extends AbstractController
         if ($profil == null) {
             throw $this->createNotFoundException("Ce profil n'existe pas");
         }
-        return $this->render('profile/view_profile.html.twig', ['profil' => $profil]);
+        $groups = $profil->getGroups();
+        $user = $this->getUser();
+        return $this->render('profile/view_profile.html.twig', ['profil' => $profil, 'groups' => $groups, 'user' => $user]);
     }
 
     /**

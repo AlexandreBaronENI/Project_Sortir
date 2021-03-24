@@ -44,8 +44,8 @@
                     {% endfor %}
                 </div>
                 <div class="col-sm-12 col-xs-12 d-flex align-items-end flex-column col-md-12 col-lg-1 col-xl-1">
-                    <input value="Rechercher" class="btn btn-info" type="submit">
-                    <input value="Supprimer les filtres" class="btn btn-info mt-3" type="reset">
+                    <input value="Rechercher" class="btn btn-primary" type="submit">
+                    <input value="Supprimer les filtres" class="btn btn-primary mt-3" type="reset">
                 </div>
                 {{ form_end(searchForm) }}
             </form>
@@ -133,7 +133,7 @@
             </table>
         </div>
         <div>
-            <a class="btn btn-info" href="{{ path('sortie-add') }}">Créer une sortie</a>
+            <a class="btn btn-primary" href="{{ path('sortie-add') }}">Créer une sortie</a>
         </div>
     </div>
     <div class="d-md-none">
@@ -157,7 +157,6 @@
                 {% endfor %}
                 </tbody>
             </table>
-            <a class="btn btn-primary" href="{{ path('home') }}">Retour</a>
         </div>
     </div>
 {% endblock %}

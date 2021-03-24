@@ -21,12 +21,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class EditSortieType extends AbstractType
 {
-    private $lieuRepository;
     private $etatRepository;
 
-    public function __construct(LieuRepository $lieuRepository, EtatRepository $etatRepository)
+    public function __construct(EtatRepository $etatRepository)
     {
-        $this->lieuRepository = $lieuRepository;
         $this->etatRepository = $etatRepository;
     }
 
