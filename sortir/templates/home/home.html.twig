@@ -1,158 +1,163 @@
 {% extends 'base.html.twig' %}
-{% block css %}<link rel="stylesheet" href="{{ asset('css/home.css') }}">{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{{ asset('css/home.css') }}">{% endblock %}
 {% block main %}
-<div class="d-none d-md-block">
-    <div class="d-flex align-items-end flex-column">
-    </div>
-    <div>
-        <h2>Filtrer les sorties</h2>
-        <form method="post" class="row">
-            {{ form_start(searchForm) }}
-            <div class="col-sm-12 col-xs-12 col-md-12 col-lg-6 col-xl-6">
-                <div class="row">
-                    <div class="col-6 col-form-label">
-                        {{ form_label(searchForm.site) }}
+    <div class="d-none d-md-block">
+        <div class="d-flex align-items-end flex-column">
+        </div>
+        <div>
+            <h2>Filtrer les sorties</h2>
+
+            <form method="post" class="row">
+                {{ form_start(searchForm) }}
+                <div class="col-sm-12 col-xs-12 col-md-12 col-lg-6 col-xl-6">
+                    <div class="row">
+                        <div class="col-6 col-form-label">
+                            {{ form_label(searchForm.site) }}
+                        </div>
+                        <div class="col-6">
+                            {{ form_widget(searchForm.site) }}
+                        </div>
+
                     </div>
-                    <div class="col-6">
-                        {{ form_widget(searchForm.site) }}
+                    <div class="row">
+                        <div class="col-6 col-form-label">
+                            {{ form_label(searchForm.nom) }}
+                        </div>
+                        <div class="col-6">
+                            {{ form_widget(searchForm.nom) }}
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        {{ form_label(searchForm.dateDebut) }}
+                        {{ form_widget(searchForm.dateDebut) }}
+                        {{ form_label(searchForm.dateCloture) }}
+                        {{ form_widget(searchForm.dateCloture) }}
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-6 col-form-label">
-                        {{ form_label(searchForm.nom) }}
-                    </div>
-                    <div class="col-6">
-                        {{ form_widget(searchForm.nom) }}
-                    </div>
-                </div>
-                <div class="d-flex justify-content-between">
-                    {{ form_label(searchForm.dateDebut) }}
-                    {{ form_widget(searchForm.dateDebut) }}
-                    {{ form_label(searchForm.dateCloture) }}
-                    {{ form_widget(searchForm.dateCloture) }}
-                </div>
-            </div>
-            <div class="col-sm-12 col-xs-12 col-md-12 col-lg-5 col-xl-5">
-                {% for choice in searchForm.choices %}
-                    <div class="col-12">
-                        {{ form_widget(choice) }}
-                        {{ form_label(choice) }}
-                    </div>
-                {% endfor %}
-            </div>
-            <div class="col-sm-12 col-xs-12 d-flex align-items-end flex-column col-md-12 col-lg-1 col-xl-1">
-                <input value="Rechercher" class="btn btn-info" type="submit">
-                <input value="Supprimer les filtres" class="btn btn-info mt-3" type="reset">
-            </div>
-            {{ form_end(searchForm) }}
-        </form>
-    </div>
-    <hr>
-    <div class="mt-3 table-responsive">
-        <table id="maintable" class="display table table-striped table-bordered">
-            <thead>
-            <tr>
-                <th>Nom de la sortie</th>
-                <th>Date de la sortie</th>
-                <th>Date de clôture</th>
-                <th>Inscrits/places</th>
-                <th>Etat</th>
-                <th>Inscrit</th>
-                <th>Organisateur</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for sortie in sorties %}
-            <tr>
-                <td>{{ sortie.nom }}</td>
-                <td>{{ sortie.dateDebut|date('d/m/y h:m') }}</td>
-                <td>{{ sortie.dateCloture|date('d/m/y h:m') }}</td>
-                <td>{{ sortie.nbInscription}}/{{ sortie.nbInscriptionMax }}</td>
-                <td>
-                    {% if sortie.etat.id == 1 %}
-                        Ouvert
-                    {% elseif sortie.etat.id == 2 %}
-                        Brouillon
-                    {% elseif sortie.etat.id == 3 %}
-                        Fermé
-                    {% elseif sortie.etat.id == 4 %}
-                        En cours
-                    {% elseif sortie.etat.id == 5 %}
-                        Terminé
-                    {% elseif sortie.etat.id == 6 %}
-                        Annulé
-                    {% endif %}
-                </td>
-                <td>
-                    {% set isInscrit = false %}
-                    {% for inscrit in sortie.inscriptions %}
-                        {% if inscrit.participant.id == user.id %}
-                            {% set isInscrit = true %}
-                        {% endif %}
+                <div class="col-sm-12 col-xs-12 col-md-12 col-lg-5 col-xl-5">
+                    {% for choice in searchForm.choices %}
+                        <div class="col-12">
+                            {{ form_widget(choice) }}
+                            {{ form_label(choice) }}
+                        </div>
                     {% endfor %}
-                    {% if isInscrit %}
-                        <i class="fas fa-check-circle text-success"></i>
-                    {% else %}
-                        <i class="fas fa-times-circle text-danger"></i>
-                    {% endif %}
-                </td>
-                <td>
-                    {% if sortie.organisateur.id == user.id %}
-                        <a href="{{ path('profile-affichage') }}">{{ sortie.organisateur.prenom }} {{ sortie.organisateur.nom|first }}.</a>
-                    {% else %}
-                        <a href="{{ path('profile-affichage-autre', {id:sortie.organisateur.id}) }}">{{ sortie.organisateur.prenom }} {{ sortie.organisateur.nom|first }}.</a>
-                    {% endif %}
-                </td>
-                <td>
-                    {% if sortie.organisateur.id == user.id and sortie.etat.id == 2 or sortie.etat.id == 1 %}
-                        <a href="{{ path("sortie-edit", {id:sortie.id}) }}">Modifier</a>
-                    {% endif %}
-                    {% if sortie.organisateur.id == user.id and sortie.etat.id == 2 %}
-                        <a href="{{ path("sortie-publish", {id:sortie.id}) }}">Publier</a>
-                    {% endif %}
-                    {% if sortie.organisateur.id == user.id and sortie.etat.id == 1 or is_granted('ROLE_ADMIN') %}
-                        <a href="{{ path("sortie-cancel", {id:sortie.id}) }}">Annuler</a>
-                    {% endif %}
-                    {% if not isInscrit and sortie.etat.id == 1%}
-                        <a href="{{ path('sortie-register',{id:sortie.id,sortie:sortie}) }}">S'inscrire</a>
-                    {% endif %}
-                    {% if isInscrit and sortie.etat.id == 1 %}
-                        <a href="{{ path('sortie-withdraw', {id:sortie.id,sortie:sortie}) }}">Se désister</a>
-                    {% endif %}
-                    <a href="{{ path('sortie-affichage', {id:sortie.id}) }}">Afficher</a>
-                </td>
-            </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                </div>
+                <div class="col-sm-12 col-xs-12 d-flex align-items-end flex-column col-md-12 col-lg-1 col-xl-1">
+                    <input value="Rechercher" class="btn btn-info" type="submit">
+                    <input value="Supprimer les filtres" class="btn btn-info mt-3" type="reset">
+                </div>
+                {{ form_end(searchForm) }}
+            </form>
+        </div>
+        <hr>
+        <div class="mt-3 table-responsive">
+            <table id="maintable" class="display table table-striped table-bordered">
+                <thead>
+                <tr>
+                    <th>Nom de la sortie</th>
+                    <th>Date de la sortie</th>
+                    <th>Date de clôture</th>
+                    <th>Inscrits/places</th>
+                    <th>Etat</th>
+                    <th>Inscrit</th>
+                    <th>Organisateur</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for sortie in sorties %}
+                    <tr>
+                        <td>{{ sortie.nom }}</td>
+                        <td>{{ sortie.dateDebut|date('d/m/y h:m') }}</td>
+                        <td>{{ sortie.dateCloture|date('d/m/y h:m') }}</td>
+                        <td>{{ sortie.nbInscription }}/{{ sortie.nbInscriptionMax }}</td>
+                        <td>
+                            {% if sortie.etat.id == 1 %}
+                                Ouvert
+                            {% elseif sortie.etat.id == 2 %}
+                                Brouillon
+                            {% elseif sortie.etat.id == 3 %}
+                                Fermé
+                            {% elseif sortie.etat.id == 4 %}
+                                En cours
+                            {% elseif sortie.etat.id == 5 %}
+                                Terminé
+                            {% elseif sortie.etat.id == 6 %}
+                                Annulé
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% set isInscrit = false %}
+                            {% for inscrit in sortie.inscriptions %}
+                                {% if inscrit.participant.id == user.id %}
+                                    {% set isInscrit = true %}
+                                {% endif %}
+                            {% endfor %}
+                            {% if isInscrit %}
+                                <i class="fas fa-check-circle text-success"></i>
+                            {% else %}
+                                <i class="fas fa-times-circle text-danger"></i>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if sortie.organisateur.id == user.id %}
+                                <a href="{{ path('profile-affichage') }}">{{ sortie.organisateur.prenom }} {{ sortie.organisateur.nom|first }}
+                                    .</a>
+                            {% else %}
+                                <a href="{{ path('profile-affichage-autre', {id:sortie.organisateur.id}) }}">{{ sortie.organisateur.prenom }} {{ sortie.organisateur.nom|first }}
+                                    .</a>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if sortie.organisateur.id == user.id and sortie.etat.id == 2 or sortie.etat.id == 1 %}
+                                <a href="{{ path("sortie-edit", {id:sortie.id}) }}">Modifier</a>
+                            {% endif %}
+                            {% if sortie.organisateur.id == user.id and sortie.etat.id == 2 %}
+                                <a href="{{ path("sortie-publish", {id:sortie.id}) }}">Publier</a>
+                            {% endif %}
+                            {% if sortie.organisateur.id == user.id and sortie.etat.id == 1 or is_granted('ROLE_ADMIN') %}
+                                <a href="{{ path("sortie-cancel", {id:sortie.id}) }}">Annuler</a>
+                            {% endif %}
+                            {% if not isInscrit and sortie.etat.id == 1 %}
+                                <a href="{{ path('sortie-register',{id:sortie.id,sortie:sortie}) }}">S'inscrire</a>
+                            {% endif %}
+                            {% if isInscrit and sortie.etat.id == 1 %}
+                                <a href="{{ path('sortie-withdraw', {id:sortie.id,sortie:sortie}) }}">Se désister</a>
+                            {% endif %}
+                            <a href="{{ path('sortie-affichage', {id:sortie.id}) }}">Afficher</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <a class="btn btn-info" href="{{ path('sortie-add') }}">Créer une sortie</a>
+        </div>
     </div>
-    <div>
-        <a class="btn btn-info" href="{{ path('sortie-add') }}">Créer une sortie</a>
+    <div class="d-md-none">
+        <div class="container-fluid">
+            <h2>Mes sortie </h2>
+            <table class="table table-bordered table-responsive" style="width:100%">
+                <thead>
+                <tr>
+                    <th>Nom de la sortie</th>
+                    <th>Date de la sortie</th>
+                    <th>Lieu</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for sortie in sortiesMobile %}
+                    <tr>
+                        <td><a href="{{ path("sortie-affichage", {id:sortie.id}) }}">{{ sortie.nom }}</a></td>
+                        <td>{{ sortie.dateDebut|date("d/m/Y H:i") }}</td>
+                        <td>{{ sortie.lieu.nom }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <a class="btn btn-primary" href="{{ path('home') }}">Retour</a>
+        </div>
     </div>
-</div>
-<div class="d-md-none">
-    <div class="container-fluid">
-    <h2>Mes sortie   </h2>
-    <table class="table table-bordered table-responsive" style="width:100%">
-        <thead>
-            <tr>
-                <th>Nom de la sortie</th>
-                <th>Date de la sortie</th>
-                <th>Lieu</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for sortie in sortiesMobile %}
-            <tr>
-                <td><a href="{{ path("sortie-affichage", {id:sortie.id}) }}">{{sortie.nom}}</a></td>
-                <td>{{sortie.dateDebut|date("d/m/Y H:i")}}</td>
-                <td>{{sortie.lieu.nom}}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    <a class="btn btn-primary" href="{{ path('home') }}">Retour</a>
-</div>
-</div>
 {% endblock %}
