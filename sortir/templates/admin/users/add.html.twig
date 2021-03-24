@@ -9,8 +9,9 @@
         Télécharger
     </a>
     <form method="post" enctype="multipart/form-data">
-    {{ form_start(usersForm) }}
-    {{ form_widget(usersForm.file) }}
-    <input type="submit" value="Importer" class="btn btn-success">
-    {{ form_rest(usersForm) }}
+        {{ form_start(usersForm) }}
+        {{ form_widget(usersForm.file) }}
+        <input type="submit" value="Importer" class="btn btn-success">
+        {{ form_rest(usersForm) }}
+    </form>
 {% endblock %}

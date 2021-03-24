@@ -7,88 +7,64 @@
     <form method="post" enctype="multipart/form-data">
         {{ form_start(usersForm) }}
         <div class="form-group row">
-         <span class="col-md-2 col-form-label">
-         {{ form_label(usersForm.username) }}
+            <span class="col-md-2 col-form-label">
+                {{ form_label(usersForm.username) }}
             </span>
-
-
             {{ form_widget(usersForm.username) }}
-
-
         </div>
         <div class="form-group row">
- <span class="col-md-2 col-form-label">
-         {{ form_label(usersForm.nom) }}
+            <span class="col-md-2 col-form-label">
+                {{ form_label(usersForm.nom) }}
             </span>
             {{ form_widget(usersForm.nom) }}
-
         </div>
         <div class="form-group row">
- <span class="col-md-2 col-form-label">
-         {{ form_label(usersForm.prenom) }}
+            <span class="col-md-2 col-form-label">
+                {{ form_label(usersForm.prenom) }}
             </span>
             {{ form_widget(usersForm.prenom) }}
-
         </div>
-
         <div class="form-group row">
- <span class="col-md-2 col-form-label">
-         {{ form_label(usersForm.telephone) }}
+            <span class="col-md-2 col-form-label">
+                {{ form_label(usersForm.telephone) }}
             </span>
             {{ form_widget(usersForm.telephone) }}
-
         </div>
-
         <div class="form-group row">
- <span class="col-md-2 col-form-label">
-         {{ form_label(usersForm.mail) }}
+            <span class="col-md-2 col-form-label">
+                {{ form_label(usersForm.mail) }}
             </span>
             {{ form_widget(usersForm.mail) }}
-
         </div>
-
         <div class="form-group row">
             <div class="col-md-10">
                 {{ form_widget(usersForm.password) }}
             </div>
         </div>
-
-
         <div class="form-group row">
- <span class="col-md-2 col-form-label">
-         {{ form_label(usersForm.site) }}
+            <span class="col-md-2 col-form-label">
+                {{ form_label(usersForm.site) }}
             </span>
             {{ form_widget(usersForm.site) }}
-
         </div>
-
-
         <div class="form-group row">
-        <span class="col-sm-2 col-form-label">
-         {{ form_label(usersForm.admin) }}
+            <span class="col-md-2 col-form-label">
+                {{ form_label(usersForm.admin) }}
             </span>
             {{ form_widget(usersForm.admin) }}
         </div>
         <div class="form-group row">
-        <span class="col-sm-2 col-form-label">
-         {{ form_label(usersForm.actif) }}
+            <span class="col-md-2 col-form-label">
+                {{ form_label(usersForm.actif) }}
             </span>
             {{ form_widget(usersForm.actif) }}
         </div>
-
         {{ form_rest(usersForm) }}
-
-
         <div class="form-group row">
             <div class="col-md-10">
                 <input type="submit" class="btn btn-primary" value="Enregistrer">
-
                 <a class="btn btn-danger" href="{{ path("admin-users") }}">Annuler</a>
-
             </div>
         </div>
-
-
     </form>
-
 {% endblock %}

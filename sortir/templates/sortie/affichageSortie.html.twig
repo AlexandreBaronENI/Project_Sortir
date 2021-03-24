@@ -105,7 +105,6 @@
         {% for inscrit in (sortie.inscriptions) %}
             {% if inscrit.participant.id == app.user.getId() %}
             {% set dejaInscrit = true %}
-
             {% endif %}
         {% endfor %}
         {% if not dejaInscrit %}
