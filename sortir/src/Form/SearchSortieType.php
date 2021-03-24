@@ -61,7 +61,7 @@ class SearchSortieType extends AbstractType
             ])
             ->add('choices', ChoiceType::class, [
                 'label' => false,
-                'choices' =>[
+                'choices' => [
                     'Sorties dont je suis l\'organisateur' => 1,
                     'Sorties auxquelles je suis inscrit/e' => 2,
                     'Sorties auxquelles je ne suis pas inscrit/e' => 3,
@@ -73,8 +73,7 @@ class SearchSortieType extends AbstractType
                 'attr' => [
                     'class' => 'form-control'
                 ]
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -5,14 +5,13 @@ namespace App\Controller;
 
 
 use App\Entity\Etat;
-use App\Entity\Sortie;
-use App\Entity\Utilisateur;
 use App\Entity\Inscription;
+use App\Entity\Sortie;
 use App\Form\AddSortieType;
 use App\Form\CancelSortieType;
 use App\Form\EditSortieType;
 use App\Repository\InscriptionRepository;
-use App\Repository\LieuRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,7 +36,7 @@ class SortieController extends AbstractController
 
         if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
 
-            if($sortie->getDateCloture() >= new \DateTime() && $sortie->getDateDebut() > $sortie->getDateCloture()) {
+            if ($sortie->getDateCloture() >= new DateTime() && $sortie->getDateDebut() > $sortie->getDateCloture()) {
                 $etatManager = new Etat($em->getRepository(Etat::class));
 
                 if ($sortieForm->get('save')->isClicked()) {
@@ -48,8 +47,7 @@ class SortieController extends AbstractController
 
                     $em->persist($sortie);
                     $em->flush();
-                }
-                elseif ($sortieForm->get('publish')->isClicked()) {
+                } elseif ($sortieForm->get('publish')->isClicked()) {
                     $etat = $etatManager->getOpen();
                     $sortie->setOrganisateur($this->getUser());
                     $sortie->setSite($this->getUser()->getSite());
@@ -59,7 +57,7 @@ class SortieController extends AbstractController
                     $em->flush();
                 }
                 return $this->redirectToRoute('home');
-            }else{
+            } else {
                 $this->addFlash('error', 'La date de clôture des inscriptions doit être avant la date de début et après aujourd\'hui !');
             }
         }
@@ -83,11 +81,11 @@ class SortieController extends AbstractController
             throw $this->createNotFoundException('La sortie n\'a pas été trouvée !');
         }
 
-        if($etatManager->IsClosed($sortie->getEtat()->getId()) || $etatManager->IsFinished($sortie->getEtat()->getId()) || $etatManager->IsCanceled($sortie->getEtat()->getId())){
+        if ($etatManager->IsClosed($sortie->getEtat()->getId()) || $etatManager->IsFinished($sortie->getEtat()->getId()) || $etatManager->IsCanceled($sortie->getEtat()->getId())) {
             throw $this->createNotFoundException('La sortie est terminée !');
         }
 
-        if($sortie->getEtat() == $etatManager->IsActive($sortie->getEtat()->getId())){
+        if ($sortie->getEtat() == $etatManager->IsActive($sortie->getEtat()->getId())) {
             throw $this->createNotFoundException('La sortie est en cours !');
         }
 
@@ -95,7 +93,7 @@ class SortieController extends AbstractController
         $sortieForm->handleRequest($request);
 
         if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
-            if ($sortie->getDateCloture() >= new \DateTime() && $sortie->getDateDebut() > $sortie->getDateCloture()) {
+            if ($sortie->getDateCloture() >= new DateTime() && $sortie->getDateDebut() > $sortie->getDateCloture()) {
 
                 if ($etatManager->IsDraft($sortie->getEtat()->getId()) && $sortieForm->get('save')->isClicked()) {
                     $em->persist($sortie);
@@ -114,7 +112,7 @@ class SortieController extends AbstractController
                 }
                 $this->addFlash('success', 'La sortie à bien été modifiée !');
             }
-        }else{
+        } else {
             $this->addFlash('error', 'La date de clôture des inscriptions doit être avant la date de début !');
         }
 
@@ -122,7 +120,8 @@ class SortieController extends AbstractController
             "sortieForm" => $sortieForm->createView()
         ]);
     }
-        /**
+
+    /**
      * Acceder à ses sorties
      * @Route("/mine", name="my-sortie")
      */
@@ -132,8 +131,7 @@ class SortieController extends AbstractController
         $sorties = $em->getRepository(Sortie::class)->findAll();
         foreach ($sorties as $sortieTemp) {
             foreach ($sortieTemp->getInscriptions() as $inscription) {
-                if($inscription->getParticipant()->getId() == $this->getUser()->getId())
-                {
+                if ($inscription->getParticipant()->getId() == $this->getUser()->getId()) {
                     $sortiesPartipate[] = $sortieTemp;
                 }
             }
@@ -155,7 +153,7 @@ class SortieController extends AbstractController
         $sortie = $this->getDoctrine()
             ->getRepository(Sortie::class)
             ->find($id);
-        if( $sortie ==  null){
+        if ($sortie == null) {
             throw $this->createNotFoundException("Cette sortie n'existe pas");
         }
         if ($etatManager->IsArchived($sortie->getEtat()->getId())) {
@@ -166,7 +164,6 @@ class SortieController extends AbstractController
             'sortie' => $sortie,
         ]);
     }
-
 
 
     /**
@@ -182,7 +179,7 @@ class SortieController extends AbstractController
             throw $this->createNotFoundException('La sortie n\'a pas été trouvée !');
         }
 
-        if(!$etatManager->IsDraft($sortie->getEtat()->getId())){
+        if (!$etatManager->IsDraft($sortie->getEtat()->getId())) {
             throw $this->createNotFoundException('La publication de cette sortie n\'est pas possible !');
         }
 
@@ -210,11 +207,9 @@ class SortieController extends AbstractController
 
         if ($sortie == null) {
             throw $this->createNotFoundException('La sortie n\'a pas été trouvée !');
-        }
-        elseif ($sortie->getOrganisateur()->getId() != $this->getUser()->getId() && $contains !== 'ROLE_ADMIN' ) {
+        } elseif ($sortie->getOrganisateur()->getId() != $this->getUser()->getId() && $contains !== 'ROLE_ADMIN') {
             throw $this->createNotFoundException('Vous n\'êtes pas l\'organisateur de cette sortie !');
-        }
-        elseif (!$etatManager->IsOpen($sortie->getEtat()->getId())) {
+        } elseif (!$etatManager->IsOpen($sortie->getEtat()->getId())) {
             throw $this->createNotFoundException('Cette sortie ne peut être annulée !');
         }
 
@@ -236,17 +231,18 @@ class SortieController extends AbstractController
      * S'sinscrire à une sortie
      * @Route("/register/{id}", name="sortie-register")
      */
-    public function register(int $id,EntityManagerInterface $em,Sortie $sortie){
+    public function register(int $id, EntityManagerInterface $em, Sortie $sortie)
+    {
 
         $inscription = new Inscription($em->getRepository(Inscription::class));
-        $inscription-> setSortie($sortie);
+        $inscription->setSortie($sortie);
         $inscription->setParticipant($this->getUser());
-        $inscription->setDateInscription(new \DateTime());
+        $inscription->setDateInscription(new DateTime());
         $em->persist($inscription);
         $em->flush();
 
 
-            return $this->redirectToRoute('home');
+        return $this->redirectToRoute('home');
 
 
     }
@@ -255,10 +251,11 @@ class SortieController extends AbstractController
      * Désinscrire à une sortie
      * @Route("/withdraw/{id}", name="sortie-withdraw")
      */
-    public function withdraw (EntityManagerInterface $em,InscriptionRepository $inscriptionRepository,Sortie $sortie){
+    public function withdraw(EntityManagerInterface $em, InscriptionRepository $inscriptionRepository, Sortie $sortie)
+    {
 
 
-        $inscription = $inscriptionRepository->findOneBy(['sortie'=>$sortie, 'participant'=>$this->getUser()]);
+        $inscription = $inscriptionRepository->findOneBy(['sortie' => $sortie, 'participant' => $this->getUser()]);
 
         $em->remove($inscription);
         $em->flush();

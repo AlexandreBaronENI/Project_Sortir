@@ -3,9 +3,9 @@
 namespace App\Entity;
 
 use App\Listener\SortieListener;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\PersistentCollection;
 
 /**
  * Sortie
@@ -95,7 +95,7 @@ class Sortie
     private $motif;
 
     private $nbInscription;
-    
+
     /**
      * Sortie constructor.
      * @param $inscriptions
@@ -122,12 +122,12 @@ class Sortie
         return $this;
     }
 
-    public function getDateDebut(): ?\DateTimeInterface
+    public function getDateDebut(): ?DateTimeInterface
     {
         return $this->dateDebut;
     }
 
-    public function setDateDebut(?\DateTimeInterface $dateDebut): self
+    public function setDateDebut(?DateTimeInterface $dateDebut): self
     {
         $this->dateDebut = $dateDebut;
 
@@ -146,12 +146,12 @@ class Sortie
         return $this;
     }
 
-    public function getDateCloture(): ?\DateTimeInterface
+    public function getDateCloture(): ?DateTimeInterface
     {
         return $this->dateCloture;
     }
 
-    public function setDateCloture(?\DateTimeInterface $dateCloture): self
+    public function setDateCloture(?DateTimeInterface $dateCloture): self
     {
         $this->dateCloture = $dateCloture;
 
@@ -239,20 +239,20 @@ class Sortie
         return $this;
     }
 
-    public function getInscriptions(): ?ArrayCollection
-    {
-        $inscriptions = new ArrayCollection();
-        foreach ($this->inscriptions as $inscription){
-            $inscriptions[] = $inscription;
-        }
-        return $inscriptions;
-    }
     public function getnbInscription(): int
     {
         $this->nbInscription = count($this->getInscriptions());
         return $this->nbInscription;
     }
 
+    public function getInscriptions(): ?ArrayCollection
+    {
+        $inscriptions = new ArrayCollection();
+        foreach ($this->inscriptions as $inscription) {
+            $inscriptions[] = $inscription;
+        }
+        return $inscriptions;
+    }
 
     public function removeInscription(Inscription $inscription): self
     {

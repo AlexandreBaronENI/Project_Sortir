@@ -16,10 +16,9 @@ class CancelSortieType extends AbstractType
             ->add('motif', TextareaType::class, [
                 'label' => "Motif d'annulation",
                 'attr' => [
-                    'class'=>'form-control'
+                    'class' => 'form-control'
                 ]
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
