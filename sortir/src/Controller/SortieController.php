@@ -188,7 +188,7 @@ class SortieController extends AbstractController
 
         $em->persist($sortie);
         $em->flush();
-
+        $this->addFlash('success', 'La sortie à bien été publiée !');
         return $this->redirectToRoute('home');
     }
 
@@ -219,6 +219,7 @@ class SortieController extends AbstractController
 
             $em->persist($sortie);
             $em->flush();
+            $this->addFlash('success', 'Sortie annulée !');
             return $this->redirectToRoute('home');
         }
         return $this->render('sortie/cancel.html.twig', [
@@ -241,7 +242,7 @@ class SortieController extends AbstractController
         $em->persist($inscription);
         $em->flush();
 
-
+        $this->addFlash('success', 'Inscription à la sortie réussie !');
         return $this->redirectToRoute('home');
 
 
@@ -259,6 +260,7 @@ class SortieController extends AbstractController
 
         $em->remove($inscription);
         $em->flush();
+        $this->addFlash('success', 'Desinscription à la sortie réussie !');
         return $this->redirectToRoute('home');
     }
 
