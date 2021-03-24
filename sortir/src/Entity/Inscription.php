@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -90,7 +91,7 @@ class Inscription
     /**
      * @return mixed
      */
-    public function getDateInscription(): ?\DateTime
+    public function getDateInscription(): ?DateTime
     {
         return $this->dateInscription;
     }

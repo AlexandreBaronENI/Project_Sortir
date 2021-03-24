@@ -10,12 +10,9 @@ use App\Repository\EtatRepository;
 use App\Repository\LieuRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -42,39 +39,39 @@ class EditSortieType extends AbstractType
             ->add('nom', TextType::class, [
                 'label' => "Nom de la sortie",
                 'attr' => [
-                    'class'=>'form-control'
+                    'class' => 'form-control'
                 ]
             ])
             ->add('dateDebut', DateTimeType::class, [
                 'label' => "Date de début de la sortie",
                 'widget' => 'single_text',
                 'attr' => [
-                    'class'=>'form-control'
+                    'class' => 'form-control'
                 ]
             ])
             ->add('dateCloture', DateType::class, [
                 'label' => "Date limite d'inscription",
                 'widget' => 'single_text',
                 'attr' => [
-                    'class'=>'form-control'
+                    'class' => 'form-control'
                 ]
             ])
             ->add('nbInscriptionMax', IntegerType::class, [
                 'label' => "Nombre de places",
                 'attr' => [
-                    'class'=>'form-control'
+                    'class' => 'form-control'
                 ]
             ])
             ->add('duree', IntegerType::class, [
                 'label' => "Durée",
                 'attr' => [
-                    'class'=>'form-control'
+                    'class' => 'form-control'
                 ]
             ])
             ->add('commentaire', TextareaType::class, [
                 'label' => "Description et infos",
                 'attr' => [
-                    'class'=>'form-control'
+                    'class' => 'form-control'
                 ]
             ])
             ->add('lieu', EntityType::class, [
@@ -96,10 +93,9 @@ class EditSortieType extends AbstractType
                 'attr' => [
                     'class' => 'form-control'
                 ]
-            ])
-        ;
+            ]);
 
-        if($etatManager->IsDraft($etat->getId())){
+        if ($etatManager->IsDraft($etat->getId())) {
             $builder
                 ->add('save', SubmitType::class, [
                     'label' => 'Enregistrer',

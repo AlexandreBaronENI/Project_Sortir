@@ -2,10 +2,8 @@
 
 namespace App\Form;
 
-use App\Entity\Lieu;
 use App\Entity\Site;
 use App\Entity\Utilisateur;
-use App\Repository\LieuRepository;
 use App\Repository\SiteRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -32,40 +30,40 @@ class ProfilType extends AbstractType
 
         $builder
             ->add('username', TextType::class,
-                [ 'label' => 'Pseudo: ',
+                ['label' => 'Pseudo: ',
                     'invalid_message' => 'Le pseudo est obligatoire',
                     'required' => true,
                     'attr' => [
                         'class' => "col-sm-10 form-control"
-                    ]         ])
+                    ]])
             ->add('nom', TextType::class,
-                [ 'label' => 'Nom: ',
+                ['label' => 'Nom: ',
                     'invalid_message' => 'Le nom est obligatoire',
                     'required' => true,
                     'attr' => [
                         'class' => "col-sm-10 form-control"
-                    ]         ])
+                    ]])
             ->add('prenom', TextType::class,
-                [ 'label' => 'Prenom:',
+                ['label' => 'Prenom:',
                     'invalid_message' => 'Le prénom est obligatoire',
                     'required' => true,
                     'attr' => [
                         'class' => "col-sm-10 form-control"
-                    ]         ])
+                    ]])
             ->add('telephone', TextType::class,
-                [ 'label' => 'Téléphone: ',
+                ['label' => 'Téléphone: ',
                     'invalid_message' => 'Le numéro de téléphone est obligatoire',
                     'required' => true,
                     'attr' => [
                         'class' => "col-sm-10 form-control"
-                    ]         ])
+                    ]])
             ->add('mail', EmailType::class,
-                [ 'label' => 'Email: ',
+                ['label' => 'Email: ',
                     'invalid_message' => 'Le courriel est obligatoire',
                     'required' => true,
                     'attr' => [
                         'class' => "col-sm-10 form-control"
-                    ]         ])
+                    ]])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'first_options' => [
@@ -75,7 +73,7 @@ class ProfilType extends AbstractType
                     ],
                     'attr' => [
                         'class' => 'col-sm-8 form-control'
-                    ]               ],
+                    ]],
                 'second_options' => [
                     'label' => 'Confirmation:',
                     'attr' => [
@@ -85,7 +83,6 @@ class ProfilType extends AbstractType
                         'class' => 'col-sm-8 form-control'
                     ]]
             ])
-
             ->add('site', EntityType::class, [
                 'label' => "Site de rattachement",
                 'class' => Site::class,
@@ -96,7 +93,6 @@ class ProfilType extends AbstractType
                     'class' => 'col-sm-10 form-control'
                 ]
             ])
-
             ->add('image', FileType::class, [
                 'label' => 'Ma photo',
 
@@ -111,15 +107,13 @@ class ProfilType extends AbstractType
                 // in the associated entity, so you can use the PHP constraint classes
                 'constraints' => [
                     new File([
-                            'mimeTypes' => [
+                        'mimeTypes' => [
                             'image/jpeg', 'image/png',
                         ],
                         'mimeTypesMessage' => 'Please upload a jpeg or a png image',
                     ])
                 ],
-            ])
-
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

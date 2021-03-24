@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -69,12 +67,9 @@ class Utilisateur implements UserInterface
 
     public function getRoles()
     {
-        if($this->admin)
-        {
+        if ($this->admin) {
             return ['ROLE_ADMIN'];
-        }
-        elseif($this->actif)
-        {
+        } elseif ($this->actif) {
             return ['ROLE_USER'];
         }
     }
@@ -82,6 +77,13 @@ class Utilisateur implements UserInterface
     public function getPassword()
     {
         return $this->password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
     }
 
     public function getSalt()
@@ -94,6 +96,13 @@ class Utilisateur implements UserInterface
         return $this->username;
     }
 
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
     public function eraseCredentials()
     {
     }
@@ -101,13 +110,6 @@ class Utilisateur implements UserInterface
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function setUsername(string $username): self
-    {
-        $this->username = $username;
-
-        return $this;
     }
 
     public function getNom(): ?string
@@ -154,13 +156,6 @@ class Utilisateur implements UserInterface
     public function setMail(string $mail): self
     {
         $this->mail = $mail;
-
-        return $this;
-    }
-
-    public function setPassword(string $password): self
-    {
-        $this->password = $password;
 
         return $this;
     }

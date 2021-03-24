@@ -4,20 +4,16 @@
 namespace App\Controller;
 
 
-use App\Entity\Sortie;
 use App\Entity\Utilisateur;
 use App\Form\ForgotPasswordType;
 use App\Form\ProfilType;
 use App\Form\ResetPasswordType;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Form\LoginFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use Symfony\Component\String\Slugger\SluggerInterface;
 
 /**
  * @Route("/profile")
@@ -36,16 +32,16 @@ class ProfileController extends AbstractController
         $profil = $this->getDoctrine()
             ->getRepository(Utilisateur::class)
             ->find($id);
-        if( $profil ==  null){
+        if ($profil == null) {
             throw $this->createNotFoundException("Ce profil n'existe pas");
         }
-        return $this->render('profile/view_profile.html.twig', [ 'profil' => $profil]);
+        return $this->render('profile/view_profile.html.twig', ['profil' => $profil]);
     }
 
     /**
      * @Route("/modified", name="profile-modified")
      */
-    public function modified(EntityManagerInterface $em, Request $request,UserPasswordEncoderInterface $encoder)
+    public function modified(EntityManagerInterface $em, Request $request, UserPasswordEncoderInterface $encoder)
     {
         $utilisateur = $this->getUser();
 
@@ -53,7 +49,7 @@ class ProfileController extends AbstractController
         $profilForm->handleRequest($request);
 
 
-        if ($profilForm->isSubmitted() && $profilForm->isValid() ) {
+        if ($profilForm->isSubmitted() && $profilForm->isValid()) {
             $hashed = $encoder->encodePassword($utilisateur, $utilisateur->getPassword());
             $utilisateur->setPassword($hashed);
             $em->persist($utilisateur);
@@ -62,7 +58,7 @@ class ProfileController extends AbstractController
             $imageFile = $profilForm->get('image')->getData();
 
             if ($imageFile) {
-                $newFilename = $utilisateur->getId().'.png';
+                $newFilename = $utilisateur->getId() . '.png';
 
                 try {
                     $imageFile->move(
@@ -78,8 +74,8 @@ class ProfileController extends AbstractController
             return $this->redirectToRoute('profile-affichage');
         }
 
-        return $this->render('profile/add_profile.html.twig',[
-            'profilForm' => $profilForm->createView(),'profil'=>$utilisateur
+        return $this->render('profile/add_profile.html.twig', [
+            'profilForm' => $profilForm->createView(), 'profil' => $utilisateur
         ]);
     }
 
@@ -88,17 +84,17 @@ class ProfileController extends AbstractController
      */
     public function afficherautreProfil(int $id)
     {
-        if($id == null){
+        if ($id == null) {
             $id = $this->getId();
-                    }
+        }
 
         $profil = $this->getDoctrine()
             ->getRepository(Utilisateur::class)
             ->find($id);
-        if( $profil ==  null){
+        if ($profil == null) {
             throw $this->createNotFoundException("Ce profil n'existe pas");
         }
-        return $this->render('profile/view_profile.html.twig', [ 'profil' => $profil]);
+        return $this->render('profile/view_profile.html.twig', ['profil' => $profil]);
     }
 
     /**
@@ -109,12 +105,12 @@ class ProfileController extends AbstractController
         $utilisateur = new Utilisateur();
         $utilisateur->setActif(true);
         $utilisateur->setAdmin(false);
-        
+
         $profilForm = $this->createForm(ProfilType::class, $utilisateur);
         $profilForm->handleRequest($request);
 
 
-        if ($profilForm->isSubmitted() && $profilForm->isValid() ) {
+        if ($profilForm->isSubmitted() && $profilForm->isValid()) {
             $hashed = $encoder->encodePassword($utilisateur, $utilisateur->getPassword());
             $utilisateur->setPassword($hashed);
             $em->persist($utilisateur);
@@ -123,7 +119,7 @@ class ProfileController extends AbstractController
             $imageFile = $profilForm->get('image')->getData();
 
             if ($imageFile) {
-                $newFilename = $utilisateur->getId() .'.png';
+                $newFilename = $utilisateur->getId() . '.png';
 
                 try {
                     $imageFile->move(
@@ -132,16 +128,18 @@ class ProfileController extends AbstractController
                     );
                 } catch (FileException $e) {
                     dump($e);
-                }}
+                }
+            }
 
             $this->addFlash('success', 'Votre profil a bien été sauvegardé !');
             return $this->redirectToRoute('profile-affichage');
         }
 
-        return $this->render('profile/add_profile.html.twig',[
+        return $this->render('profile/add_profile.html.twig', [
             'profilForm' => $profilForm->createView()
         ]);
     }
+
     /**
      * * Mot de passe oublié utilisateur
      * @Route("/forgotpassword", name="profile-forgot-password")
@@ -152,9 +150,9 @@ class ProfileController extends AbstractController
         $forgotPasswordForm = $this->createForm(ForgotPasswordType::class, $userForm);
         $forgotPasswordForm->handleRequest($request);
 
-        if($forgotPasswordForm->isSubmitted() && $forgotPasswordForm->isValid()){
+        if ($forgotPasswordForm->isSubmitted() && $forgotPasswordForm->isValid()) {
 
-            if($userForm->getMail() !== null){
+            if ($userForm->getMail() !== null) {
                 $user = $this->getDoctrine()->getRepository(Utilisateur::class)->findOneBy(['mail' => $userForm->getMail()]);
 
                 if ($user == null) {
@@ -168,10 +166,11 @@ class ProfileController extends AbstractController
             }
 
         }
-        return $this->render('profile/forgot_password.html.twig',[
+        return $this->render('profile/forgot_password.html.twig', [
             'forgotPasswordForm' => $forgotPasswordForm->createView()
         ]);
     }
+
     /**
      * * Réinitialisation du mot de passe utilisateur
      * @Route("/resetpassword", name="profile-reset-password")
@@ -190,9 +189,9 @@ class ProfileController extends AbstractController
             throw $this->createNotFoundException('Utilisateur n a pas été trouvé !');
         }
 
-        if($resetPasswordForm->isSubmitted() && $resetPasswordForm->isValid()){
+        if ($resetPasswordForm->isSubmitted() && $resetPasswordForm->isValid()) {
 
-            if($user->getMail() !== null && $userForm->getPassword() != null){
+            if ($user->getMail() !== null && $userForm->getPassword() != null) {
                 $user->setPassword(
                     $passwordEncoder->encodePassword(
                         $user,
@@ -205,7 +204,7 @@ class ProfileController extends AbstractController
 
         }
 
-        return $this->render('profile/reset_password.html.twig',[
+        return $this->render('profile/reset_password.html.twig', [
             'resetPasswordForm' => $resetPasswordForm->createView()
         ]);
     }

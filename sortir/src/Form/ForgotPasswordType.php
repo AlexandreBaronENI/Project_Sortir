@@ -25,8 +25,7 @@ class ForgotPasswordType extends AbstractType
                 'attr' => [
                     'class' => 'btn btn-primary form-control'
                 ]
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

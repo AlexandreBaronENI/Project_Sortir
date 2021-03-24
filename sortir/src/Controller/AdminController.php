@@ -2,31 +2,30 @@
 
 
 namespace App\Controller;
+
+use App\Entity\Lieu;
+use App\Entity\Site;
 use App\Entity\Utilisateur;
+use App\Entity\Ville;
+use App\Form\AddLocationType;
+use App\Form\AddSiteType;
+use App\Form\AddTownType;
+use App\Form\AddUserAdminType;
 use App\Form\AdminAddUsersType;
+use App\Form\EditLocationType;
+use App\Form\EditSiteType;
 use DateTime;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Entity\Lieu;
-use App\Entity\Site;
-use App\Entity\Ville;
-use Doctrine\ORM\EntityManagerInterface;
-use App\Form\AddLocationType;
-use App\Form\EditLocationType;
-use App\Form\AddSiteType;
-use App\Form\EditSiteType;
-use App\Form\AddTownType;
-use App\Form\AddUserAdminType;
-
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Core\User\User;
 
 /**
  * @Route("/admin")
  */
-class AdminController extends AbstractController 
+class AdminController extends AbstractController
 {
     /**
      * Gestion lieux
@@ -49,8 +48,8 @@ class AdminController extends AbstractController
         $lieu = new Lieu();
         $locationForm = $this->createForm(AddLocationType::class, $lieu);
         $locationForm->handleRequest($request);
-        
-        if ($locationForm->isSubmitted() && $locationForm->isValid() ) {
+
+        if ($locationForm->isSubmitted() && $locationForm->isValid()) {
             $em->persist($lieu);
             $em->flush();
 
@@ -58,7 +57,7 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('admin-locations');
         }
 
-        return $this->render('admin/location/add.html.twig',[
+        return $this->render('admin/location/add.html.twig', [
             'locationForm' => $locationForm->createView()
         ]);
     }
@@ -88,7 +87,7 @@ class AdminController extends AbstractController
      * Supprimer un site
      * @Route("/location/delete/{id}", name="delete-location")
      */
-    public  function deleteLocation(int $id, EntityManagerInterface $em, Request $request)
+    public function deleteLocation(int $id, EntityManagerInterface $em, Request $request)
     {
         $lieu = $em->getRepository(Lieu::class)->find($id);
         $em->remove($lieu);
@@ -118,8 +117,8 @@ class AdminController extends AbstractController
         $site = new Site();
         $siteForm = $this->createForm(AddSiteType::class, $site);
         $siteForm->handleRequest($request);
-        
-        if ($siteForm->isSubmitted() && $siteForm->isValid() ) {
+
+        if ($siteForm->isSubmitted() && $siteForm->isValid()) {
             $em->persist($site);
             $em->flush();
 
@@ -127,10 +126,11 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('admin-sites');
         }
 
-        return $this->render('admin/site/add.html.twig',[
+        return $this->render('admin/site/add.html.twig', [
             'siteForm' => $siteForm->createView()
         ]);
     }
+
     /**
      * Modification d'un site
      * @Route("/site/edit/{id}", name="edit-site")
@@ -150,6 +150,7 @@ class AdminController extends AbstractController
             "siteForm" => $siteForm->createView()
         ]);
     }
+
     /**
      * Suppression d'un site
      * @Route("/site/delete/{id}", name="delete-site")
@@ -184,8 +185,8 @@ class AdminController extends AbstractController
         $ville = new Ville();
         $villeForm = $this->createForm(AddTownType::class, $ville);
         $villeForm->handleRequest($request);
-        
-        if ($villeForm->isSubmitted() && $villeForm->isValid() ) {
+
+        if ($villeForm->isSubmitted() && $villeForm->isValid()) {
             $em->persist($ville);
             $em->flush();
 
@@ -193,7 +194,7 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('admin-towns');
         }
 
-        return $this->render('admin/town/add.html.twig',[
+        return $this->render('admin/town/add.html.twig', [
             'villeForm' => $villeForm->createView()
         ]);
     }
@@ -244,19 +245,19 @@ class AdminController extends AbstractController
             if ($file) {
                 $datetime = new DateTime();
                 $datetime = $datetime->format('s-i-H-d-m-Y');
-                $newFilename = 'import'.$datetime.'.csv';
+                $newFilename = 'import' . $datetime . '.csv';
                 try {
                     $file->move(
                         $this->getParameter('import_users_directory'),
                         $newFilename
                     );
-                    $readFile = fopen($this->getParameter('import_users_directory').'/'.$newFilename, 'r');
+                    $readFile = fopen($this->getParameter('import_users_directory') . '/' . $newFilename, 'r');
                     $row = 0;
                     while (($line = fgetcsv($readFile)) !== FALSE) {
-                        if($row > 0){
+                        if ($row > 0) {
                             $user = explode(";", $line[0]);
                             $site = $this->getDoctrine()->getRepository(Site::class)->findOneBy(['nom' => $user[0]]);
-                            if($site){
+                            if ($site) {
                                 $userToInsert = new Utilisateur();
                                 $hashed = $encoder->encodePassword($userToInsert, $user[6]);
                                 $userToInsert->setUsername($user[1]);
@@ -284,7 +285,7 @@ class AdminController extends AbstractController
             "usersForm" => $usersForm->createView()
         ]);
     }
-    
+
     /**
      * Gestion des utilisateurs
      * @Route("/users", name="admin-users")
@@ -293,7 +294,7 @@ class AdminController extends AbstractController
     {
         $users = $em->getRepository(Utilisateur::class)->findAll();
         return $this->render("/admin/users/view_users.html.twig", [
-            "users"=>$users
+            "users" => $users
         ]);
     }
 
@@ -306,8 +307,8 @@ class AdminController extends AbstractController
         $user = new Utilisateur();
         $usersForm = $this->createForm(AddUserAdminType::class, $user);
         $usersForm->handleRequest($request);
-        
-        if ($usersForm->isSubmitted() && $usersForm->isValid() ) {
+
+        if ($usersForm->isSubmitted() && $usersForm->isValid()) {
             $em->persist($user);
             $em->flush();
 
@@ -315,7 +316,7 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('admin-users');
         }
 
-        return $this->render('admin/users/add_user.html.twig',[
+        return $this->render('admin/users/add_user.html.twig', [
             'usersForm' => $usersForm->createView()
         ]);
     }
@@ -331,7 +332,7 @@ class AdminController extends AbstractController
         $em->persist($user);
         $em->flush();
         return $this->redirectToRoute('admin-users');
-        
+
     }
 
     /**

@@ -30,57 +30,24 @@ class SortieRepository extends ServiceEntityRepository
     public function findSorties($site, $nom, $dateDebut, $dateCloture)
     {
         $query = $this->createQueryBuilder('s');
-        if($site != null && $site->getId() != null){
-            //print_r("j'ai un site");
+        if ($site != null && $site->getId() != null) {
             $query->andWhere('s.site = :id')
                 ->setParameter(':id', $site->getId());
         }
-        if($nom != null){
-            //print_r("j'ai un nom");
+        if ($nom != null) {
             $query->andWhere('s.nom like :nom')
-                ->setParameter(':nom', '%'.$nom.'%');
+                ->setParameter(':nom', '%' . $nom . '%');
         }
-        if($dateDebut != null){
-            //print_r("j'ai une date de debut");
+        if ($dateDebut != null) {
             $query->andWhere('s.dateDebut >= :dateDebut')
                 ->setParameter(':dateDebut', $dateDebut);
         }
-        if($dateCloture != null){
-            //print_r("j'ai une date de cloture");
+        if ($dateCloture != null) {
             $query->andWhere('s.dateCloture <= :dateCloture')
                 ->setParameter(':dateCloture', $dateCloture);
         }
-        $result =  $query->getQuery()
+        $result = $query->getQuery()
             ->getResult();
         return $result;
     }
-
-    // /**
-    //  * @return Sortie[] Returns an array of Sortie objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Sortie
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
