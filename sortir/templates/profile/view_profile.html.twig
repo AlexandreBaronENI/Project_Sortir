@@ -78,7 +78,7 @@
                             {% endfor %}
                         </ul>
                     </td>
-                    <td>{% if group.createur.id == profil.id %}
+                    <td>{% if group.createur.id == user.id %}
                         <a href="{{ path('group-edit', {id:group.id}) }}">Modifier</a>
                         <a href="{{ path('group-delete', {id:group.id}) }}">Supprimer</a>
                         {% endif %}

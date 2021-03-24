@@ -37,7 +37,8 @@ class ProfileController extends AbstractController
             throw $this->createNotFoundException("Ce profil n'existe pas");
         }
         $groups = $profil->getGroups();
-        return $this->render('profile/view_profile.html.twig', ['profil' => $profil, 'groups' => $groups]);
+        $user = $this->getUser();
+        return $this->render('profile/view_profile.html.twig', ['profil' => $profil, 'groups' => $groups, 'user' => $user]);
     }
 
     /**
@@ -96,8 +97,9 @@ class ProfileController extends AbstractController
         if ($profil == null) {
             throw $this->createNotFoundException("Ce profil n'existe pas");
         }
-        $groups = profil->getGroups();
-        return $this->render('profile/view_profile.html.twig', ['profil' => $profil, 'groups' => $groups]);
+        $groups = $profil->getGroups();
+        $user = $this->getUser();
+        return $this->render('profile/view_profile.html.twig', ['profil' => $profil, 'groups' => $groups, 'user' => $user]);
     }
 
     /**
