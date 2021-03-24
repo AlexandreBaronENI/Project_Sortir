@@ -110,11 +110,11 @@
         {% endfor %}
         {% if not dejaInscrit %}
             <div>
-                <a class="btn btn-info" href="{{ path('sortie-register',{id:sortie.id,sortie:sortie}) }}">S'inscrire</a>
+                <a class="btn btn-primary" href="{{ path('sortie-register',{id:sortie.id,sortie:sortie}) }}">S'inscrire</a>
             </div>
         {% else%}
             <div>
-                <a class="btn btn-info" href="{{ path('sortie-withdraw', {id:sortie.id,sortie:sortie}) }}">Se désister</a>
+                <a class="btn btn-danger" href="{{ path('sortie-withdraw', {id:sortie.id,sortie:sortie}) }}">Se désister</a>
             </div>
             {% endif %}
     {%  endif%}

@@ -97,7 +97,7 @@ class AddSortieType extends AbstractType
             ->add('publish', SubmitType::class, [
                 'label' => 'Publier',
                 'attr' => [
-                    'class' => 'btn btn-success mx-3'
+                    'class' => 'btn btn-primary mx-3'
                 ]
             ]);
     }
