@@ -47,7 +47,7 @@ class AdminController extends AbstractController
     public function addLocation(EntityManagerInterface $em, Request $request)
     {
         $lieu = new Lieu();
-        $locationForm = $this->createForm(addLocationType::class, $lieu);
+        $locationForm = $this->createForm(AddLocationType::class, $lieu);
         $locationForm->handleRequest($request);
         
         if ($locationForm->isSubmitted() && $locationForm->isValid() ) {
@@ -116,7 +116,7 @@ class AdminController extends AbstractController
     function addSite(EntityManagerInterface $em, Request $request)
     {
         $site = new Site();
-        $siteForm = $this->createForm(addSiteType::class, $site);
+        $siteForm = $this->createForm(AddSiteType::class, $site);
         $siteForm->handleRequest($request);
         
         if ($siteForm->isSubmitted() && $siteForm->isValid() ) {
@@ -182,7 +182,7 @@ class AdminController extends AbstractController
     public function addTown(EntityManagerInterface $em, Request $request)
     {
         $ville = new Ville();
-        $villeForm = $this->createForm(addTownType::class, $ville);
+        $villeForm = $this->createForm(AddTownType::class, $ville);
         $villeForm->handleRequest($request);
         
         if ($villeForm->isSubmitted() && $villeForm->isValid() ) {
@@ -205,7 +205,7 @@ class AdminController extends AbstractController
     public function editTown(int $id, EntityManagerInterface $em, Request $request)
     {
         $ville = $em->getRepository(Ville::class)->find($id);
-        $villeForm = $this->createForm(addTownType::class, $ville);
+        $villeForm = $this->createForm(AddTownType::class, $ville);
         $villeForm->handleRequest($request);
         if ($villeForm->isSubmitted() && $villeForm->isValid()) {
             $em->persist($ville);

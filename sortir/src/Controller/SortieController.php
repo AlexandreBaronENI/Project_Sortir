@@ -128,6 +128,7 @@ class SortieController extends AbstractController
      */
     public function getSortieUser(EntityManagerInterface $em)
     {
+        $sortiesPartipate = [];
         $sorties = $em->getRepository(Sortie::class)->findAll();
         foreach ($sorties as $sortieTemp) {
             foreach ($sortieTemp->getInscriptions() as $inscription) {

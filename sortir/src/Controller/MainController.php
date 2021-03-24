@@ -41,10 +41,9 @@ class MainController extends AbstractController
         $etatManager = new Etat($em->getRepository(Etat::class));
 
         // Gestion du mobile
-        $sortiesParticipate = [];
-        $sorties_mobile = $em->getRepository(Sortie::class)->findAll();
-        $sortiesPartipate=[];
-        foreach ($sorties_mobile as $sortieTemp) {
+        $all_sorties = $em->getRepository(Sortie::class)->findAll();
+        $sortiesParticipate=[];
+        foreach ($all_sorties as $sortieTemp) {
             foreach ($sortieTemp->getInscriptions() as $inscription) {
                 if($inscription->getParticipant()->getId() == $this->getUser()->getId()){
                     $sortiesParticipate[] = $sortieTemp;
@@ -54,7 +53,7 @@ class MainController extends AbstractController
         $sorties_mobile = $sortiesParticipate;
 
         // Gestion du desktop
-        $sorties = $em->getRepository(Sortie::class)->findAll();
+        $sorties = $all_sorties;
         $sortiesDraft = $em->getRepository(Sortie::class)->findBy(
             array('organisateur'=> $this->getUser()->getId(),
                 'etat' => $etatManager->getDraft()->getId())
