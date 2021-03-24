@@ -122,21 +122,42 @@
                 </table>
 
         </div>
-        {%  if sortie.etat.id == 1  %}
-            {% set dejaInscrit = false %}
-            {% for inscrit in (sortie.inscriptions) %}
-                {% if inscrit.participant.id == app.user.getId() %}
-                    {% set dejaInscrit = true %}
-                {% endif %}
-            {% endfor %}
-            {% if not dejaInscrit %}
-                <div>
-                    <a class="btn btn-primary" href="{{ path('sortie-register',{id:sortie.id,sortie:sortie}) }}">S'inscrire</a>
-                </div>
-            {% else%}
-                <div>
-                    <a class="btn btn-danger" href="{{ path('sortie-withdraw', {id:sortie.id,sortie:sortie}) }}">Se désister</a>
-                </div>
+    <div>
+        
+            <table class="table table-bordered table-responsive" style="width:100%">
+                <thead>
+                <tr>
+                    <th>Participants</th>
+                    <th>Pseudo</th>
+                    <th>Nom</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for inscrit in (sortie.inscriptions) %}
+                <tr>
+                    <td>{{loop.index}}</td>
+                    <td>{{inscrit.participant.username}}</td>
+                    <td>{{inscrit.participant.nom}} {{inscrit.participant.prenom}}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+    </div>
+    {%  if sortie.etat.id == 1  %}
+        {% set dejaInscrit = false %}
+        {% for inscrit in (sortie.inscriptions) %}
+            {% if inscrit.participant.id == app.user.getId() %}
+            {% set dejaInscrit = true %}
+            {% endif %}
+        {% endfor %}
+        {% if not dejaInscrit %}
+            <div>
+                <a class="btn btn-primary" href="{{ path('sortie-register',{id:sortie.id,sortie:sortie}) }}">S'inscrire</a>
+            </div>
+        {% else%}
+            <div>
+                <a class="btn btn-danger" href="{{ path('sortie-withdraw', {id:sortie.id,sortie:sortie}) }}">Se désister</a>
+            </div>
             {% endif %}
         {%  endif%}
     </div>

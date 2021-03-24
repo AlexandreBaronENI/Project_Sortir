@@ -61,6 +61,32 @@
                  </div>
              </div>
          </div>
+          <table class="table table-responsive" style="width:100%">
+            <thead>
+            <tr>
+                <th>Nom du groupe</th>
+                <th> Membres</th>
+                <th>Action
+            </tr>
+            </thead>
+            <tbody>
+            {% for group in groups %}
+                <tr>
+                    <td>{{ group.nom }}</td>
+                    <td><ul>{% for participant in group.utilisateurs %}
+                            <li><a href="{{ path('profile-affichage-autre', {id:participant.id}) }}"> {{participant.nom}} {{participant.prenom}}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td>{% if group.createur.id == user.id %}
+                        <a href="{{ path('group-edit', {id:group.id}) }}">Modifier</a>
+                        <a href="{{ path('group-delete', {id:group.id}) }}">Supprimer</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
          <div class="row justify-content-center ">
 
              <a href="{{ path('profile-modified') }}" class="btn btn-primary btn-d-lg-flex mr-3 ">
