@@ -1,14 +1,13 @@
+START TRANSACTION;
 
 --
 -- Structure de la table `etat`
 --
 
-DROP TABLE IF EXISTS `etat`;
-CREATE TABLE IF NOT EXISTS `etat` (
-    `id` int(11) NOT NULL AUTO_INCREMENT,
-    `libelle` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
-    PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+CREATE TABLE `etat` (
+                        `id` int(11) NOT NULL,
+                        `libelle` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `etat`
@@ -26,26 +25,44 @@ INSERT INTO `etat` (`id`, `libelle`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `group`
+--
+
+CREATE TABLE `group` (
+                         `id` int(11) NOT NULL,
+                         `createur_id` int(11) NOT NULL,
+                         `nom` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `group_utilisateur`
+--
+
+CREATE TABLE `group_utilisateur` (
+                                     `group_id` int(11) NOT NULL,
+                                     `utilisateur_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `inscription`
 --
 
-DROP TABLE IF EXISTS `inscription`;
-CREATE TABLE IF NOT EXISTS `inscription` (
-    `id` int(11) NOT NULL AUTO_INCREMENT,
-    `sortie_id` int(11) NOT NULL,
-    `participant_id` int(11) NOT NULL,
-    `date_inscription` datetime NOT NULL,
-    PRIMARY KEY (`id`),
-    KEY `IDX_5E90F6D6CC72D953` (`sortie_id`),
-    KEY `IDX_5E90F6D69D1C3019` (`participant_id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=88 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+CREATE TABLE `inscription` (
+                               `id` int(11) NOT NULL,
+                               `sortie_id` int(11) NOT NULL,
+                               `participant_id` int(11) NOT NULL,
+                               `date_inscription` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `inscription`
 --
 
 INSERT INTO `inscription` (`id`, `sortie_id`, `participant_id`, `date_inscription`) VALUES
-(1, 28, 9, '2021-03-24 12:03:13'),
 (2, 1, 1, '2021-04-02 16:29:00'),
 (3, 1, 2, '2021-04-02 16:29:00'),
 (4, 1, 4, '2021-04-02 16:29:00'),
@@ -138,15 +155,12 @@ INSERT INTO `inscription` (`id`, `sortie_id`, `participant_id`, `date_inscriptio
 -- Structure de la table `lieu`
 --
 
-DROP TABLE IF EXISTS `lieu`;
-CREATE TABLE IF NOT EXISTS `lieu` (
-    `id` int(11) NOT NULL AUTO_INCREMENT,
-    `ville_id` int(11) NOT NULL,
-    `nom` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-    `adresse` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
-    PRIMARY KEY (`id`),
-    KEY `IDX_2F577D59A73F0036` (`ville_id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+CREATE TABLE `lieu` (
+                        `id` int(11) NOT NULL,
+                        `ville_id` int(11) NOT NULL,
+                        `nom` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+                        `adresse` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `lieu`
@@ -196,12 +210,10 @@ INSERT INTO `lieu` (`id`, `ville_id`, `nom`, `adresse`) VALUES
 -- Structure de la table `site`
 --
 
-DROP TABLE IF EXISTS `site`;
-CREATE TABLE IF NOT EXISTS `site` (
-    `id` int(11) NOT NULL AUTO_INCREMENT,
-    `nom` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-    PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+CREATE TABLE `site` (
+                        `id` int(11) NOT NULL,
+                        `nom` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `site`
@@ -229,28 +241,21 @@ INSERT INTO `site` (`id`, `nom`) VALUES
 -- Structure de la table `sortie`
 --
 
-DROP TABLE IF EXISTS `sortie`;
-CREATE TABLE IF NOT EXISTS `sortie` (
-    `id` int(11) NOT NULL AUTO_INCREMENT,
-    `etat_id` int(11) NOT NULL,
-    `organisateur_id` int(11) NOT NULL,
-    `lieu_id` int(11) NOT NULL,
-    `site_id` int(11) NOT NULL,
-    `ville_id` int(11) NOT NULL,
-    `nom` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
-    `date_debut` datetime NOT NULL,
-    `duree` int(11) NOT NULL,
-    `date_cloture` datetime NOT NULL,
-    `nb_inscription_max` int(11) NOT NULL,
-    `commentaire` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-    `motif` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-    PRIMARY KEY (`id`),
-    KEY `IDX_3C3FD3F2D5E86FF` (`etat_id`),
-    KEY `IDX_3C3FD3F2D936B2FA` (`organisateur_id`),
-    KEY `IDX_3C3FD3F26AB213CC` (`lieu_id`),
-    KEY `IDX_3C3FD3F2F6BD1646` (`site_id`),
-    KEY `IDX_3C3FD3F2A73F0036` (`ville_id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+CREATE TABLE `sortie` (
+                          `id` int(11) NOT NULL,
+                          `etat_id` int(11) NOT NULL,
+                          `organisateur_id` int(11) NOT NULL,
+                          `lieu_id` int(11) NOT NULL,
+                          `site_id` int(11) NOT NULL,
+                          `ville_id` int(11) NOT NULL,
+                          `nom` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
+                          `date_debut` datetime NOT NULL,
+                          `duree` int(11) NOT NULL,
+                          `date_cloture` datetime NOT NULL,
+                          `nb_inscription_max` int(11) NOT NULL,
+                          `commentaire` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                          `motif` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `sortie`
@@ -280,23 +285,18 @@ INSERT INTO `sortie` (`id`, `etat_id`, `organisateur_id`, `lieu_id`, `site_id`, 
 -- Structure de la table `utilisateur`
 --
 
-DROP TABLE IF EXISTS `utilisateur`;
-CREATE TABLE IF NOT EXISTS `utilisateur` (
-    `id` int(11) NOT NULL AUTO_INCREMENT,
-    `site_id` int(11) DEFAULT NULL,
-    `username` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-    `nom` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-    `prenom` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-    `telephone` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-    `mail` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-    `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-    `admin` tinyint(1) NOT NULL,
-    `actif` tinyint(1) NOT NULL,
-    PRIMARY KEY (`id`),
-    UNIQUE KEY `UNIQ_1D1C63B3F85E0677` (`username`),
-    UNIQUE KEY `UNIQ_1D1C63B35126AC48` (`mail`),
-    KEY `IDX_1D1C63B3F6BD1646` (`site_id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+CREATE TABLE `utilisateur` (
+                               `id` int(11) NOT NULL,
+                               `site_id` int(11) DEFAULT NULL,
+                               `username` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                               `nom` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+                               `prenom` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+                               `telephone` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+                               `mail` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+                               `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                               `admin` tinyint(1) NOT NULL,
+                               `actif` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `utilisateur`
@@ -322,13 +322,11 @@ INSERT INTO `utilisateur` (`id`, `site_id`, `username`, `nom`, `prenom`, `teleph
 -- Structure de la table `ville`
 --
 
-DROP TABLE IF EXISTS `ville`;
-CREATE TABLE IF NOT EXISTS `ville` (
-    `id` int(11) NOT NULL AUTO_INCREMENT,
-    `nom` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
-    `code_postal` varchar(6) COLLATE utf8mb4_unicode_ci NOT NULL,
-    PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+CREATE TABLE `ville` (
+                         `id` int(11) NOT NULL,
+                         `nom` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
+                         `code_postal` varchar(6) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `ville`
@@ -381,4 +379,174 @@ INSERT INTO `ville` (`id`, `nom`, `code_postal`) VALUES
 (44, 'Rouen', '76000'),
 (45, 'Montpellier', '34000'),
 (46, 'Chartres-de-Bretagne', '35131');
+
+--
+-- Index pour les tables déchargées
+--
+
+--
+-- Index pour la table `etat`
+--
+ALTER TABLE `etat`
+    ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `group`
+--
+ALTER TABLE `group`
+    ADD PRIMARY KEY (`id`),
+  ADD KEY `IDX_6DC044C573A201E5` (`createur_id`);
+
+--
+-- Index pour la table `group_utilisateur`
+--
+ALTER TABLE `group_utilisateur`
+    ADD PRIMARY KEY (`group_id`,`utilisateur_id`),
+  ADD KEY `IDX_38A47C72FE54D947` (`group_id`),
+  ADD KEY `IDX_38A47C72FB88E14F` (`utilisateur_id`);
+
+--
+-- Index pour la table `inscription`
+--
+ALTER TABLE `inscription`
+    ADD PRIMARY KEY (`id`),
+  ADD KEY `IDX_5E90F6D6CC72D953` (`sortie_id`),
+  ADD KEY `IDX_5E90F6D69D1C3019` (`participant_id`);
+
+--
+-- Index pour la table `lieu`
+--
+ALTER TABLE `lieu`
+    ADD PRIMARY KEY (`id`),
+  ADD KEY `IDX_2F577D59A73F0036` (`ville_id`);
+
+--
+-- Index pour la table `site`
+--
+ALTER TABLE `site`
+    ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `sortie`
+--
+ALTER TABLE `sortie`
+    ADD PRIMARY KEY (`id`),
+  ADD KEY `IDX_3C3FD3F2D5E86FF` (`etat_id`),
+  ADD KEY `IDX_3C3FD3F2D936B2FA` (`organisateur_id`),
+  ADD KEY `IDX_3C3FD3F26AB213CC` (`lieu_id`),
+  ADD KEY `IDX_3C3FD3F2F6BD1646` (`site_id`),
+  ADD KEY `IDX_3C3FD3F2A73F0036` (`ville_id`);
+
+--
+-- Index pour la table `utilisateur`
+--
+ALTER TABLE `utilisateur`
+    ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `UNIQ_1D1C63B3F85E0677` (`username`),
+  ADD UNIQUE KEY `UNIQ_1D1C63B35126AC48` (`mail`),
+  ADD KEY `IDX_1D1C63B3F6BD1646` (`site_id`);
+
+--
+-- Index pour la table `ville`
+--
+ALTER TABLE `ville`
+    ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT pour les tables déchargées
+--
+
+--
+-- AUTO_INCREMENT pour la table `etat`
+--
+ALTER TABLE `etat`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT pour la table `group`
+--
+ALTER TABLE `group`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `inscription`
+--
+ALTER TABLE `inscription`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
+
+--
+-- AUTO_INCREMENT pour la table `lieu`
+--
+ALTER TABLE `lieu`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+
+--
+-- AUTO_INCREMENT pour la table `site`
+--
+ALTER TABLE `site`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT pour la table `sortie`
+--
+ALTER TABLE `sortie`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT pour la table `utilisateur`
+--
+ALTER TABLE `utilisateur`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT pour la table `ville`
+--
+ALTER TABLE `ville`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+
+--
+-- Contraintes pour les tables déchargées
+--
+
+--
+-- Contraintes pour la table `group`
+--
+ALTER TABLE `group`
+    ADD CONSTRAINT `FK_6DC044C573A201E5` FOREIGN KEY (`createur_id`) REFERENCES `utilisateur` (`id`);
+
+--
+-- Contraintes pour la table `group_utilisateur`
+--
+ALTER TABLE `group_utilisateur`
+    ADD CONSTRAINT `FK_38A47C72FB88E14F` FOREIGN KEY (`utilisateur_id`) REFERENCES `utilisateur` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `FK_38A47C72FE54D947` FOREIGN KEY (`group_id`) REFERENCES `group` (`id`) ON DELETE CASCADE;
+
+--
+-- Contraintes pour la table `inscription`
+--
+ALTER TABLE `inscription`
+    ADD CONSTRAINT `FK_5E90F6D69D1C3019` FOREIGN KEY (`participant_id`) REFERENCES `utilisateur` (`id`),
+  ADD CONSTRAINT `FK_5E90F6D6CC72D953` FOREIGN KEY (`sortie_id`) REFERENCES `sortie` (`id`);
+
+--
+-- Contraintes pour la table `lieu`
+--
+ALTER TABLE `lieu`
+    ADD CONSTRAINT `FK_2F577D59A73F0036` FOREIGN KEY (`ville_id`) REFERENCES `ville` (`id`);
+
+--
+-- Contraintes pour la table `sortie`
+--
+ALTER TABLE `sortie`
+    ADD CONSTRAINT `FK_3C3FD3F26AB213CC` FOREIGN KEY (`lieu_id`) REFERENCES `lieu` (`id`),
+  ADD CONSTRAINT `FK_3C3FD3F2A73F0036` FOREIGN KEY (`ville_id`) REFERENCES `ville` (`id`),
+  ADD CONSTRAINT `FK_3C3FD3F2D5E86FF` FOREIGN KEY (`etat_id`) REFERENCES `etat` (`id`),
+  ADD CONSTRAINT `FK_3C3FD3F2D936B2FA` FOREIGN KEY (`organisateur_id`) REFERENCES `utilisateur` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `FK_3C3FD3F2F6BD1646` FOREIGN KEY (`site_id`) REFERENCES `site` (`id`);
+
+--
+-- Contraintes pour la table `utilisateur`
+--
+ALTER TABLE `utilisateur`
+    ADD CONSTRAINT `FK_1D1C63B3F6BD1646` FOREIGN KEY (`site_id`) REFERENCES `site` (`id`);
 COMMIT;
