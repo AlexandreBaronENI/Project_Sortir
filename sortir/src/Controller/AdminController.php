@@ -7,9 +7,11 @@ use App\Entity\Lieu;
 use App\Entity\Site;
 use App\Entity\Utilisateur;
 use App\Entity\Ville;
+use App\Entity\Group;
 use App\Form\AddLocationType;
 use App\Form\AddSiteType;
 use App\Form\AddTownType;
+use App\Form\AddGroupType;
 use App\Form\AddUserAdminType;
 use App\Form\AdminAddUsersType;
 use App\Form\EditLocationType;
@@ -350,5 +352,28 @@ class AdminController extends AbstractController
         $this->addFlash('success', 'Utilisateur supprimé !');
 
         return $this->redirectToRoute('admin-users');
+    }
+
+    /**
+     * Ajout d'un groupe
+     * @Route("/groups/add", name="admin-add-group")
+     */
+    function addGroup(EntityManagerInterface $em, Request $request)
+    {
+        $group = new Group();
+        $groupForm = $this->createForm(AddGroupType::class, $group);
+        $groupForm->handleRequest($request);
+
+        if ($groupForm->isSubmitted() && $groupForm->isValid()) {
+            $group->setCreateur($this->getUser());
+            $em->persist($group);
+            $em->flush();
+
+            $this->addFlash('success', 'Nouveau groupe ajouté !');
+        }
+
+        return $this->render('admin/group/add.html.twig', [
+            'groupForm' => $groupForm->createView()
+        ]);
     }
 }

@@ -20,13 +20,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AddSortieType extends AbstractType
 {
-    private $lieuRepository;
-
-    public function __construct(LieuRepository $lieuRepository)
-    {
-        $this->lieuRepository = $lieuRepository;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
