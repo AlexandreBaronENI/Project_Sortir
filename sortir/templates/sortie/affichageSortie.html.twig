@@ -3,74 +3,93 @@
     <link rel="stylesheet" href="{{ asset('css/affichageSortie.css') }}">{% endblock %}
 {% block main %}
     <div class="container-fluid">
-        <h2>Info sortie</h2>
+        <h1>{{ sortie.nom }}</h1>
         {% if sortie.motif != null %}
-            <h2 class="text-danger">Attention, cette sortie est annulée !</h2>
+            <h1 class="text-danger">Attention, cette sortie est annulée !</h1>
         {% endif %}
-        <div class="container-fluid row">
-            <div class="col-sm-12 col-md-6 col-lg-6 card item  py-3" id="sortie_name">
-                <span class="col-form-label-lg">Nom de la sortie</span>
-                <span class="col-form-label-lg displayed-data">{{ sortie.nom }}</span>
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-6 card item  py-3" id="lieu">
-                <div class="card-icon">
-                    <i class="fas fa-map-marker-alt" style="font-size: xx-large"></i>
+
+        <div class="col-md-12 blabla ">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-1">
+                        <i class="text-danger far fa-calendar-alt" style="font-size: xx-large"></i>
+                        </div>
+                        <div class="col-md-5">
+                            <h6 class="mb-0">Date limite d'inscription:</h6>
+                        </div>
+                        <div class="col-md-6 text-secondary text-center">
+                            {{ sortie.dateCloture|date("d/m/Y") }}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <i class="fas fa-users" style="font-size: xx-large"></i>
+                        </div>
+                        <div class="col-md-5">
+                            <h6 class="mb-0">Nombre de places:</h6>
+                        </div>
+                        <div class="col-md-6 text-secondary text-center">
+                            {{ sortie.nbInscriptionMax }}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <i class="far fa-calendar-alt" style="font-size: xx-large"></i>
+                        </div>
+                        <div class="col-md-5">
+                            <h6 class="mb-0">Date  et heure:</h6>
+                        </div>
+                        <div class="col-md-6 text-secondary text-center">
+                            {{ sortie.dateDebut|date("d/m/Y H:i") }}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <i class="far fa-clock" style="font-size: xx-large"></i>
+                        </div>
+                        <div class="col-md-5">
+                            <h6 class="mb-0">Durée:</h6>
+                        </div>
+                        <div class="col-md-6 text-secondary text-center">
+                            {{ sortie.duree }}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <i class="fas fa-info-circle" style="font-size: xx-large"></i>
+                        </div>
+                        <div class="col-md-5">
+                            <h6 class="mb-0">Description et info:</h6>
+                        </div>
+                        <div class="col-md-6 text-secondary text-center">
+                            {{ sortie.commentaire }}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <i class="fas fa-map-marker-alt" style="font-size: xx-large"></i>
+
+                        </div>
+                        <div class="col-md-5">
+                            <h6 class="mb-0">Lieu:</h6>
+                        </div>
+                        <div class="col-md-6 text-secondary text-center">
+                            {{ sortie.lieu.nom }}<hr>
+                            {{ sortie.ville.nom }}{{ sortie.ville.codePostal }}<hr>
+                            {{ sortie.lieu.adresse }}
+                        </div>
+                    </div>
+                    <hr>
                 </div>
-                <span class="col-form-label-lg">  Lieu </span>
-                <span class="col-form-label-lg displayed-data">{{ sortie.lieu.nom }}</span></div>
-            <div class="col-sm-12 col-md-6 col-lg-6 card item  py-3" id="date_sortie">
-                <div class="col-sm-12 col-md-6 col-lg-6 card-icon">
-                    <i class="far fa-calendar-alt" style="font-size: xx-large"></i>
-                </div>
-                <span class="col-form-label-lg">Date  et heure</span>
-                <span class="col-form-label-lg displayed-data">{{ sortie.dateDebut|date("d/m/Y H:i") }}
             </div>
-            <div class="col-sm-12 col-md-6 col-lg-6 card item  py-3" id="rue">
-                <div class="card-icon">
-                    <i class="fas fa-map-marker-alt" style="font-size: xx-large"></i>
-                </div>
-                <span class="col-form-label-lg">Rue</span>
-                <span class="col-form-label-lg displayed-data">{{ sortie.lieu.adresse }}
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-6 card item  py-3" id="date_limite_inscription">
-                <div class="card-icon">
-                    <i class="text-danger far fa-calendar-alt" style="font-size: xx-large"></i>
-                </div>
-                <span class="col-form-label-lg">Date limite d'inscription</span>
-                <span class="col-form-label-lg displayed-data">{{ sortie.dateCloture|date("d/m/Y") }}
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-6 card item  py-3" id="ville_sortie">
-                <div class="card-icon">
-                    <i class="fas fa-city" style="font-size: xx-large"></i>
-                </div>
-                <span class="col-form-label-lg">Ville</span>
-                <span class="col-form-label-lg displayed-data">{{ sortie.ville.nom }}</span>
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-6 card item  py-3" id="nb_place">
-                <div class="card-icon">
-                    <i class="fas fa-users" style="font-size: xx-large"></i>
-                </div>
-                <span class="col-form-label-lg">Nombre de places</span>
-                <span class="col-form-label-lg displayed-data">{{ sortie.nbInscriptionMax }}
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-6 card item  py-3" id="code_postal">
-                <span class="col-form-label-lg">Code postal</span>
-                <span class="col-form-label-lg displayed-data">{{ sortie.ville.codePostal }}</span>
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-6 card item  py-3" id="duration">
-                <div class="card-icon">
-                    <i class="far fa-clock" style="font-size: xx-large"></i>
-                </div>
-                <span class="col-form-label-lg">Durée</span>
-                <span class="col-form-label-lg displayed-data">{{ sortie.duree }}</span>
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-6 card item  py-3" id="description">
-                <div class="card-icon">
-                    <i class="fas fa-info-circle" style="font-size: xx-large"></i>
-                </div>
-                <span class="col-form-label-lg">Description et info</span>
-                <span class="col-form-label-lg displayed-data">{{ sortie.commentaire }}
-            </div>
+        </div>
+
             {% if sortie.motif != null %}
                 <div class="col-sm-12 col-md-6 col-lg-6 card item  py-3" id="description">
                     <div class="card-icon">
@@ -80,43 +99,46 @@
                     <span class="col-form-label-lg displayed-data text-danger">{{ sortie.motif }}
                 </div>
             {% endif %}
+
+        <div>
+
+                <table class="table table-striped table-responsive" style="width:100%">
+                    <thead>
+                    <tr>
+                        <th>Participants</th>
+                        <th>Pseudo</th>
+                        <th>Nom</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for inscrit in (sortie.inscriptions) %}
+                    <tr>
+                        <td>{{loop.index}}</td>
+                        <td>{{inscrit.participant.username}}</td>
+                        <td>{{inscrit.participant.nom}} {{inscrit.participant.prenom}}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
         </div>
-    <div>
-        {% for inscrit in (sortie.inscriptions) %}
-            <table class="table table-bordered table-responsive" style="width:100%">
-                <thead>
-                <tr>
-                    <th>Participants</th>
-                    <th>Pseudo</th>
-                    <th>Nom</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>{{loop.index}}</td>
-                    <td>{{inscrit.participant.username}}</td>
-                    <td>{{inscrit.participant.nom}} {{inscrit.participant.prenom}}</td>
-                </tr>
-                </tbody>
-            </table>
-        {% endfor %}
+        {%  if sortie.etat.id == 1  %}
+            {% set dejaInscrit = false %}
+            {% for inscrit in (sortie.inscriptions) %}
+                {% if inscrit.participant.id == app.user.getId() %}
+                    {% set dejaInscrit = true %}
+                {% endif %}
+            {% endfor %}
+            {% if not dejaInscrit %}
+                <div>
+                    <a class="btn btn-primary" href="{{ path('sortie-register',{id:sortie.id,sortie:sortie}) }}">S'inscrire</a>
+                </div>
+            {% else%}
+                <div>
+                    <a class="btn btn-danger" href="{{ path('sortie-withdraw', {id:sortie.id,sortie:sortie}) }}">Se désister</a>
+                </div>
+            {% endif %}
+        {%  endif%}
     </div>
-    {%  if sortie.etat.id == 1  %}
-        {% set dejaInscrit = false %}
-        {% for inscrit in (sortie.inscriptions) %}
-            {% if inscrit.participant.id == app.user.getId() %}
-            {% set dejaInscrit = true %}
-            {% endif %}
-        {% endfor %}
-        {% if not dejaInscrit %}
-            <div>
-                <a class="btn btn-primary" href="{{ path('sortie-register',{id:sortie.id,sortie:sortie}) }}">S'inscrire</a>
-            </div>
-        {% else%}
-            <div>
-                <a class="btn btn-danger" href="{{ path('sortie-withdraw', {id:sortie.id,sortie:sortie}) }}">Se désister</a>
-            </div>
-            {% endif %}
-    {%  endif%}
-</div>
 {% endblock %}
+
