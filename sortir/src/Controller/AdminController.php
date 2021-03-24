@@ -15,6 +15,7 @@ use App\Form\AdminAddUsersType;
 use App\Form\EditLocationType;
 use App\Form\EditSiteType;
 use DateTime;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -257,22 +258,40 @@ class AdminController extends AbstractController
                     $row = 0;
                     while (($line = fgetcsv($readFile)) !== FALSE) {
                         if ($row > 0) {
+                            str_replace(";", ",", $line[0]);
                             $user = explode(";", $line[0]);
-                            $site = $this->getDoctrine()->getRepository(Site::class)->findOneBy(['nom' => $user[0]]);
-                            if ($site) {
-                                $userToInsert = new Utilisateur();
-                                $hashed = $encoder->encodePassword($userToInsert, $user[6]);
-                                $userToInsert->setUsername($user[1]);
-                                $userToInsert->setPassword($hashed);
-                                $userToInsert->setSite($site);
-                                $userToInsert->setMail($user[5]);
-                                $userToInsert->setNom($user[2]);
-                                $userToInsert->setPrenom($user[3]);
-                                $userToInsert->setTelephone($user[4]);
-                                $userToInsert->setAdmin($user[7]);
-                                $userToInsert->setActif(true);
-                                $em->persist($userToInsert);
-                                $em->flush();
+                            if(count($user) === 8){
+                                $site = $this->getDoctrine()->getRepository(Site::class)->findOneBy(['nom' => $user[0]]);
+                                if ($site) {
+                                    $userToInsert = new Utilisateur();
+                                    $hashed = $encoder->encodePassword($userToInsert, $user[6]);
+                                    $userToInsert->setUsername($user[1]);
+                                    $userToInsert->setPassword($hashed);
+                                    $userToInsert->setSite($site);
+                                    $userToInsert->setMail($user[5]);
+                                    $userToInsert->setNom($user[2]);
+                                    $userToInsert->setPrenom($user[3]);
+                                    $userToInsert->setTelephone($user[4]);
+                                    $userToInsert->setAdmin($user[7]);
+                                    $userToInsert->setActif(true);
+                                    try{
+                                        $em->persist($userToInsert);
+                                        $em->flush();
+                                    }catch (UniqueConstraintViolationException $e)
+                                    {
+                                        $this->addFlash('error', 'L\'utilisateur '.$user[1].' n\'a pas pu être importé, le nom d\'utilisateur ou l\'adresse mail existe déjà !');
+                                        $em = $this->getDoctrine()->resetManager();
+                                    }catch (\Exception $e)
+                                    {
+                                        $this->addFlash('error', 'Il y a eu une erreur à l\'importation de l\'utilisateur '.$user[1].' !');
+                                        $em = $this->getDoctrine()->resetManager();
+                                    }
+                                    $this->addFlash('error', $user[1].' importé !');
+                                }else{
+                                    $this->addFlash('error', 'Le site '.$user[0].' n\'existe pas !');
+                                }
+                            }else{
+                                $this->addFlash('error', 'Merci de remplir tous les champs pour chaque utilisateur !');
                             }
                         }
                         $row++;
