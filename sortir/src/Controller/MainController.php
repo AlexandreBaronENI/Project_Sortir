@@ -77,7 +77,9 @@ class MainController extends AbstractController
                 $site,
                 $searchForm->getData()['nom'],
                 $searchForm->getData()['dateDebut'],
-                $searchForm->getData()['dateCloture']);
+                $searchForm->getData()['dateCloture'],
+                $this->getUser()->getId()
+            );
 
             $choices = $searchForm->getData()['choices'];
             if (!empty($choices)) {

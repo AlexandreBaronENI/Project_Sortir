@@ -403,6 +403,7 @@ class AdminController extends AbstractController
             $em->flush();
 
             $this->addFlash('success', 'Nouveau groupe ajouté !');
+            return $this->redirectToRoute('admin-groups');
         }
 
         return $this->render('admin/group/add.html.twig', [
