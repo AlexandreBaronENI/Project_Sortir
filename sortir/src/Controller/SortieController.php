@@ -48,7 +48,7 @@ class SortieController extends AbstractController
                     $em->persist($sortie);
                     $em->flush();
 
-                    
+                    $this->addFlash('success', 'La sortie à bien été enregistrée !');
                 } elseif ($sortieForm->get('publish')->isClicked()) {
                     $etat = $etatManager->getOpen();
                     $sortie->setOrganisateur($this->getUser());
@@ -58,6 +58,8 @@ class SortieController extends AbstractController
                     $em->persist($sortie);
                     $em->flush();
                     $this->addGroup($sortie, $em);
+
+                    $this->addFlash('success', 'La sortie à bien été publié !');
                 }
                 return $this->redirectToRoute('home');
             } else {
@@ -94,30 +96,30 @@ class SortieController extends AbstractController
 
         $sortieForm = $this->createForm(EditSortieType::class, $sortie);
         $sortieForm->handleRequest($request);
+        if ($sortie->getDateCloture() >= new DateTime() && $sortie->getDateDebut() > $sortie->getDateCloture()) {
 
-        if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
-            if ($sortie->getDateCloture() >= new DateTime() && $sortie->getDateDebut() > $sortie->getDateCloture()) {
-
-                if ($etatManager->IsDraft($sortie->getEtat()->getId()) && $sortieForm->get('save')->isClicked()) {
-                    $em->persist($sortie);
-                    $em->flush();
-                } elseif ($etatManager->IsDraft($sortie->getEtat()->getId()) && $sortieForm->get('publish')->isClicked()) {
-                    $etat = $etatManager->getOpen();
-                    $sortie->setEtat($etat);
-
-                    $em->persist($sortie);
-                    $em->flush();
-
-                    $this->addGroup($sortie, $em);
-
-                } elseif ($etatManager->IsDraft($sortie->getEtat()->getId()) && $sortieForm->get('delete')->isClicked()) {
-                    $em->remove($sortie);
-                    $em->flush();
-                    return $this->redirectToRoute('home');
-                }
+            if ($etatManager->IsDraft($sortie->getEtat()->getId()) && $sortieForm->get('save')->isClicked()) {
+                $em->persist($sortie);
+                $em->flush();
                 $this->addFlash('success', 'La sortie à bien été modifiée !');
+            } elseif ($etatManager->IsDraft($sortie->getEtat()->getId()) && $sortieForm->get('publish')->isClicked()) {
+                $etat = $etatManager->getOpen();
+                $sortie->setEtat($etat);
+
+                $em->persist($sortie);
+                $em->flush();
+
+                $this->addGroup($sortie, $em);
+
+                $this->addFlash('success', 'La sortie à bien été publiée !');
+            } elseif ($etatManager->IsDraft($sortie->getEtat()->getId()) && $sortieForm->get('delete')->isClicked()) {
+                $em->remove($sortie);
+                $em->flush();
+                $this->addFlash('success', 'La sortie à bien été supprimée !');
+                return $this->redirectToRoute('home');
             }
-        } else {
+        }
+        else {
             $this->addFlash('error', 'La date de clôture des inscriptions doit être avant la date de début !');
         }
 
