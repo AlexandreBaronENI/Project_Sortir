@@ -27,27 +27,42 @@ class SortieRepository extends ServiceEntityRepository
             ->execute();
     }
 
-    public function findSorties($site, $nom, $dateDebut, $dateCloture)
+    public function findSorties($site, $nom, $dateDebut, $dateCloture, $userId)
     {
-        $query = $this->createQueryBuilder('s');
+        $query = $this->createQueryBuilder('s')
+            ->where('s.etat != 2')
+            ->andWhere('s.etat != 7');
+        $queryDraft = $this->createQueryBuilder('s')
+            ->where('s.etat = 2')
+            ->andWhere('s.organisateur = '.$userId);
         if ($site != null && $site->getId() != null) {
             $query->andWhere('s.site = :id')
+                ->setParameter(':id', $site->getId());
+            $queryDraft->andWhere('s.site = :id')
                 ->setParameter(':id', $site->getId());
         }
         if ($nom != null) {
             $query->andWhere('s.nom like :nom')
                 ->setParameter(':nom', '%' . $nom . '%');
+            $queryDraft->andWhere('s.nom like :nom')
+                ->setParameter(':nom', '%' . $nom . '%');
         }
         if ($dateDebut != null) {
             $query->andWhere('s.dateDebut >= :dateDebut')
+                ->setParameter(':dateDebut', $dateDebut);
+            $queryDraft->andWhere('s.dateDebut >= :dateDebut')
                 ->setParameter(':dateDebut', $dateDebut);
         }
         if ($dateCloture != null) {
             $query->andWhere('s.dateCloture <= :dateCloture')
                 ->setParameter(':dateCloture', $dateCloture);
+            $queryDraft->andWhere('s.dateCloture <= :dateCloture')
+                ->setParameter(':dateCloture', $dateCloture);
         }
-        $result = $query->getQuery()
+        $resultAll = $query->getQuery()
             ->getResult();
-        return $result;
+        $resultDraft = $queryDraft->getQuery()
+            ->getResult();
+        return array_merge($resultAll, $resultDraft);
     }
 }
