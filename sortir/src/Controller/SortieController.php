@@ -172,7 +172,7 @@ class SortieController extends AbstractController
 
 
     /**
-     * Se desinscrire d'une sortie
+     * Publier une sortie
      * @Route("/publish/{id}", name="sortie-publish", requirements={"id"="\d+"})
      */
     public function publish($id, EntityManagerInterface $em, Request $request)
@@ -200,7 +200,7 @@ class SortieController extends AbstractController
     }
 
     /**
-     * Se desinscrire d'une sortie
+     * Annuler une sortie
      * @Route("/cancel/{id}", name="sortie-cancel", requirements={"id"="\d+"})
      */
     public function cancel($id, EntityManagerInterface $em, Request $request)
@@ -241,18 +241,20 @@ class SortieController extends AbstractController
      */
     public function register(int $id, EntityManagerInterface $em, Sortie $sortie)
     {
+        if($sortie->getnbInscription() < $sortie->getNbInscriptionMax()){
+            $inscription = new Inscription($em->getRepository(Inscription::class));
+            $inscription->setSortie($sortie);
+            $inscription->setParticipant($this->getUser());
+            $inscription->setDateInscription(new DateTime());
+            $em->persist($inscription);
+            $em->flush();
 
-        $inscription = new Inscription($em->getRepository(Inscription::class));
-        $inscription->setSortie($sortie);
-        $inscription->setParticipant($this->getUser());
-        $inscription->setDateInscription(new DateTime());
-        $em->persist($inscription);
-        $em->flush();
+            $this->addFlash('success', 'Inscription à la sortie réussie !');
 
-        $this->addFlash('success', 'Inscription à la sortie réussie !');
+        }else{
+            $this->addFlash('error', 'Le nombre de participants est déjà au maximum !');
+        }
         return $this->redirectToRoute('home');
-
-
     }
 
     /**
