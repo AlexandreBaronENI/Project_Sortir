@@ -126,11 +126,11 @@
             {% set dejaInscrit = true %}
             {% endif %}
         {% endfor %}
-        {% if not dejaInscrit %}
+        {% if not dejaInscrit and sortie.nbInscription < sortie.nbInscriptionMax %}
             <div>
                 <a class="btn btn-primary" href="{{ path('sortie-register',{id:sortie.id,sortie:sortie}) }}">S'inscrire</a>
             </div>
-        {% else%}
+        {% elseif dejaInscrit %}
             <div>
                 <a class="btn btn-danger" href="{{ path('sortie-withdraw', {id:sortie.id,sortie:sortie}) }}">Se désister</a>
             </div>
